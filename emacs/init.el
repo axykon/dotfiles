@@ -72,7 +72,11 @@
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
 
+;; YAML
+(use-package yaml-mode)
+
 ;; Magit
 (use-package magit
   :bind
   ("C-x g" . magit-status))
+
