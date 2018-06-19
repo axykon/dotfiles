@@ -80,3 +80,11 @@
   :bind
   ("C-x g" . magit-status))
 
+;; Projectile
+(use-package projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-mode-line
+        '(:eval (format "  %s"
+                        (projectile-project-name)))))
