@@ -1,6 +1,7 @@
 # -*- sh -*-
 
 layout_venv() {
-    [ -d .env ] || python3 -m venv .env
-    source .env/bin/activate
+    local venv_dir=".venv"
+    [ -d $venv_dir ] || python3 -m venv $venv_dir
+    source $venv_dir/bin/activate
 }
