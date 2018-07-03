@@ -27,9 +27,15 @@
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
 
+;; Packages
 (require 'package)
 (setq package-enable-at-startup nil)
+
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(setq package-archive-priorities
+      '(("melpa-stable" . 10)
+        ("melpa"        . 5)))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -39,9 +45,10 @@
 (eval-when-compile
   (require 'use-package))
 (setq use-package-always-ensure t)
-(require 'diminish)
 (require 'bind-key)
 
+;; Diminish
+(use-package diminish)
 
 ;; Org
 (use-package org
@@ -88,3 +95,14 @@
   (setq projectile-mode-line
         '(:eval (format "  %s"
                         (projectile-project-name)))))
+
+;; Direnv
+(use-package direnv
+  :config
+  (direnv-mode))
+
+;; Company
+(use-package company)
+
+;; Eglot
+(use-package eglot)
