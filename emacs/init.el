@@ -18,11 +18,6 @@
 ;; Do not fold long lines
 (setq-default truncate-lines t)
 
-;; Custom file
-(setq custom-file "~/.emacs.d/custom.el")
-(if (file-readable-p custom-file)
-    (load-file custom-file))
-
 ;; Tramp
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
@@ -31,8 +26,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (setq package-archive-priorities
       '(("melpa-stable" . 10)
         ("melpa"        . 5)))
@@ -48,7 +43,7 @@
 (require 'bind-key)
 
 ;; Diminish
-(use-package diminish)
+;;(use-package diminish)
 
 ;; Org
 (use-package org
@@ -96,6 +91,9 @@
         '(:eval (format "  %s"
                         (projectile-project-name)))))
 
+;; Go
+(use-package go-mode)
+
 ;; Direnv
 (use-package direnv
   :config
@@ -105,4 +103,17 @@
 (use-package company)
 
 ;; Eglot
-(use-package eglot)
+(use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs '(go-mode . ("go-langserver" "-gocodecompletion"))))
+
+;; Winum
+(use-package winum)
+
+;; Vue
+(use-package vue-mode)
+
+;; Custom file
+(setq custom-file "~/.emacs.d/custom.el")
+(if (file-readable-p custom-file)
+    (load-file custom-file))
