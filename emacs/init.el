@@ -67,7 +67,7 @@
 ;; Themes
 (use-package darktooth-theme :defer t)
 (use-package gruvbox-theme :defer t)
-(load-theme 'gruvbox-dark-medium t)
+(load-theme 'gruvbox-dark-hard t)
 ;;(load-theme 'darktooth t)
 
 
@@ -108,10 +108,15 @@
   (add-to-list 'eglot-server-programs '(go-mode . ("go-langserver" "-gocodecompletion"))))
 
 ;; Winum
-(use-package winum)
+(use-package winum
+  :config
+  (winum-mode))
 
 ;; Vue
 (use-package vue-mode)
+
+;; Elisp
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
 
 ;; Custom file
 (setq custom-file "~/.emacs.d/custom.el")
