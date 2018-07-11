@@ -35,6 +35,7 @@
 (setq package-archive-priorities
       '(("melpa-stable" . 10)
         ("melpa"        . 5)))
+(setq package-pinned-packages '())
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
