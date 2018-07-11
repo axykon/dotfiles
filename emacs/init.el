@@ -124,6 +124,25 @@
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
 
+
+(use-package highlight-indent-guides
+  :defer t
+  :config
+  (setq highlight-indent-guides-method 'character))
+
+(use-package smartparens
+  :defer t)
+
+;; Python
+(use-package elpy
+  :defer t
+  :init
+  (add-hook 'python-mode-hook 'elpy-mode))
+  
+(add-hook 'python-mode-hook 'smartparens-mode)
+(add-hook 'python-mode-hook 'rainbow-delimiters-mode)
+;;(add-hook 'python-mode-hook 'highlight-indent-guides-mode)
+
 ;; Custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (if (file-readable-p custom-file)
