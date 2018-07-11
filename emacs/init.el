@@ -22,6 +22,10 @@
 (setq tramp-default-method "ssh"
       tramp-terminal-type "tramp")
 
+;; Ediff
+(setq 
+ ediff-window-setup-function 'ediff-setup-windows-plain)
+
 ;; Packages
 (require 'package)
 (setq package-enable-at-startup nil)
