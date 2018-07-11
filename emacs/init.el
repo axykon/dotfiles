@@ -92,8 +92,10 @@
   (projectile-global-mode)
   (setq projectile-completion-system 'ivy)
   (setq projectile-mode-line
-        '(:eval (format "  %s"
-                        (projectile-project-name)))))
+        '(:eval 
+          (if (file-remote-p default-directory)
+              "  [-]"
+            (format "  [%s]" (projectile-project-name))))))
 
 ;; Go
 (use-package go-mode)
