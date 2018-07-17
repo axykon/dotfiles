@@ -100,6 +100,7 @@
 
 ;; Go
 (use-package go-mode)
+(use-package go-playground)
 
 ;; Direnv
 (use-package direnv
