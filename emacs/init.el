@@ -145,6 +145,10 @@
 (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
 ;;(add-hook 'python-mode-hook 'highlight-indent-guides-mode)
 
+;; REST-client
+(use-package restclient
+  :defer t)
+
 ;; Custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (if (file-readable-p custom-file)
