@@ -100,6 +100,7 @@
 
 ;; Go
 (use-package go-mode)
+(use-package go-playground)
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 (setq-default gofmt-command "goimports")
@@ -125,6 +126,18 @@
 
 ;; Winum
 (use-package winum
+  :demand t
+  :bind (("C-`" . winum-select-window-by-number)
+         ("M-0" . winum-select-window-0-or-10)
+         ("M-1" . winum-select-window-1)
+         ("M-2" . winum-select-window-2)
+         ("M-3" . winum-select-window-3)
+         ("M-4" . winum-select-window-4)
+         ("M-5" . winum-select-window-5)
+         ("M-6" . winum-select-window-6)
+         ("M-7" . winum-select-window-7)
+         ("M-8" . winum-select-window-8)
+         ("M-9" . winum-select-window-9))
   :config
   (winum-mode))
 
@@ -153,7 +166,27 @@
 (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
 ;;(add-hook 'python-mode-hook 'highlight-indent-guides-mode)
 
+;; REST-client
+(use-package restclient
+  :defer t)
+
+;; SQL-mode
+(use-package sql
+  :init
+  (setq sql-postgres-program "docker-psql"
+        sql-mysql-program "docker-mysql"))
+
+(use-package sqlup-mode
+  :defer t)
+
+;; Multiple cursors
+(use-package multiple-cursors)
+
+;; Additional library path
+(add-to-list 'load-path "~/.emacs.d/lib")
+
 ;; Custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (if (file-readable-p custom-file)
     (load-file custom-file))
+(put 'narrow-to-region 'disabled nil)
