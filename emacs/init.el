@@ -35,7 +35,7 @@
 (setq package-archive-priorities
       '(("melpa-stable" . 10)
         ("melpa"        . 5)))
-(setq package-pinned-packages '())
+(setq package-pinned-packages '((gruber-darker-theme . "melpa")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -72,8 +72,10 @@
 ;; Themes
 (use-package darktooth-theme :defer t)
 (use-package gruvbox-theme :defer t)
-(load-theme 'gruvbox-dark-hard t)
+;;(load-theme 'gruvbox-dark-hard t)
 ;;(load-theme 'darktooth t)
+(use-package gruber-darker-theme :defer t)
+(load-theme 'gruber-darker t)
 
 
 ;; Rainbow delimiters
