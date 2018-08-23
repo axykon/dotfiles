@@ -73,11 +73,12 @@
 ;; Themes
 (use-package darktooth-theme :defer t)
 (use-package gruvbox-theme :defer t)
+(use-package gruber-darker-theme :defer t)
+(use-package lush-theme :defer t)
 ;;(load-theme 'gruvbox-dark-hard t)
 ;;(load-theme 'darktooth t)
-(use-package gruber-darker-theme :defer t)
-(load-theme 'gruber-darker t)
-
+;;(load-theme 'gruber-darker t)
+(load-theme 'lush t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
