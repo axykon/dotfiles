@@ -107,6 +107,7 @@
 ;; Go
 (use-package go-mode)
 (use-package go-playground)
+(use-package company-go)
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 (setq-default gofmt-command "goimports")
