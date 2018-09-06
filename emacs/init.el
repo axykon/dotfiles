@@ -76,11 +76,13 @@
 (use-package gruber-darker-theme :defer t)
 (use-package lush-theme :defer t)
 (use-package zeno-theme :defer t)
+(use-package dracula-theme :defer t)
 ;;(load-theme 'gruvbox-dark-hard t)
 ;;(load-theme 'darktooth t)
 ;;(load-theme 'gruber-darker t)
 ;;(load-theme 'lush t)
-(load-theme 'zeno t)
+;;(load-theme 'zeno t)
+(load-theme 'dracula t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
@@ -108,15 +110,16 @@
 (use-package go-mode)
 (use-package go-playground)
 (use-package company-go)
+(use-package go-eldoc)
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 (setq-default gofmt-command "goimports")
-;;(add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook (lambda ()
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
 (add-hook 'go-mode-hook 'yas-minor-mode)
 ;;(add-hook 'go-mode-hook 'flycheck-mode)
+;;(add-hook 'go-mode-hook 'go-eldoc-setup)
 
 ;; Direnv
 (use-package direnv
