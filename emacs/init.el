@@ -13,7 +13,9 @@
 	      (height . 35)))))
 
 ;; Use spaces instead of tabs
+;; Also set default tab-width to 4
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 ;; Do not fold long lines
 (setq-default truncate-lines t)
@@ -51,6 +53,9 @@
 ;; Diminish
 ;;(use-package diminish)
 
+;; ob-http
+(use-package ob-http)
+
 ;; Org
 (use-package org
   :config
@@ -60,7 +65,8 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)
-     (shell . t))))
+     (shell . t)
+     (http . t))))
 
 ;; Counsel
 (use-package counsel
@@ -77,12 +83,12 @@
 (use-package lush-theme :defer t)
 (use-package zeno-theme :defer t)
 (use-package dracula-theme :defer t)
-;;(load-theme 'gruvbox-dark-hard t)
+(load-theme 'gruvbox-dark-hard t)
 ;;(load-theme 'darktooth t)
 ;;(load-theme 'gruber-darker t)
 ;;(load-theme 'lush t)
 ;;(load-theme 'zeno t)
-(load-theme 'dracula t)
+;;(load-theme 'dracula t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
@@ -117,6 +123,7 @@
 (add-hook 'go-mode-hook (lambda ()
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
+                   
 (add-hook 'go-mode-hook 'yas-minor-mode)
 ;;(add-hook 'go-mode-hook 'flycheck-mode)
 ;;(add-hook 'go-mode-hook 'go-eldoc-setup)
