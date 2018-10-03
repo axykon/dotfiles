@@ -1,12 +1,13 @@
 ;; UI
 (setq inhibit-startup-screen t)
 (menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
 
 (if (display-graphic-p)
     (progn
+      (tool-bar-mode 0)
+      (scroll-bar-mode 0)
       (setq-default cursor-type 'bar)
+      (setq-default frame-title-format "%b - %f")
       (setq font-use-system-font t)
       (setq default-frame-alist
             '((width . 129)
@@ -19,6 +20,13 @@
 
 ;; Do not fold long lines
 (setq-default truncate-lines t)
+
+;; Backup and autosave
+(setq backup-directory-alist '((".*" . "~/.emacs.d/backup")))
+(setq version-control t)
+(setq delete-old-versions t)
+(setq auto-save-list-file-prefix "~/.emacs.d/autosave/")
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosave/" t)))
 
 ;; Tramp
 (setq tramp-default-method "ssh"
@@ -83,12 +91,6 @@
 (use-package lush-theme :defer t)
 (use-package zeno-theme :defer t)
 (use-package dracula-theme :defer t)
-(load-theme 'gruvbox-dark-hard t)
-;;(load-theme 'darktooth t)
-;;(load-theme 'gruber-darker t)
-;;(load-theme 'lush t)
-;;(load-theme 'zeno t)
-;;(load-theme 'dracula t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
@@ -130,8 +132,7 @@
 
 ;; Direnv
 (use-package direnv
-  :config
-  (direnv-mode))
+  :defer t)
 
 ;; Company
 (use-package company)
@@ -143,6 +144,8 @@
 
 ;; Ace-window
 (use-package ace-window
+  :config
+  (setq aw-scope 'frame)
   :bind ("M-o" . ace-window))
 
 ;; Vue
