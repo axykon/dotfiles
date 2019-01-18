@@ -2,16 +2,19 @@
 (setq inhibit-startup-screen t)
 (menu-bar-mode 0)
 
+(setq ring-bell-function 'ignore)
+
 (if (display-graphic-p)
     (progn
       (tool-bar-mode 0)
       (scroll-bar-mode 0)
       (setq-default cursor-type 'bar)
-      (setq-default frame-title-format "%b - %f")
+      (setq-default frame-title-format "Emacs: %b - %f")
       (setq font-use-system-font t)
       (setq default-frame-alist
             '((width . 129)
-	      (height . 35)))))
+              (height . 35)
+              (fullscreen . maximized)))))
 
 ;; Use spaces instead of tabs
 ;; Also set default tab-width to 4
@@ -33,8 +36,7 @@
       tramp-terminal-type "tramp")
 
 ;; Ediff
-(setq 
- ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; Packages
 (require 'package)
@@ -46,7 +48,8 @@
       '(("melpa-stable" . 10)
         ("melpa"        . 5)))
 (setq package-pinned-packages '((gruber-darker-theme . "melpa")
-                                (ace-window . "melpa")))
+                                (ace-window . "melpa")
+                                (plantuml-mode . "melpa")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -64,17 +67,24 @@
 ;; ob-http
 (use-package ob-http)
 
+;; plantuml
+(use-package plantuml-mode
+  :defer t)
+
 ;; Org
 (use-package org
   :config
   (setq org-babel-python-command "python3"
-        org-src-fontify-natively t)
+        org-src-fontify-natively t
+        org-hide-emphasis-markers t
+        org-confirm-babel-evaluate nil)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)
      (shell . t)
-     (http . t))))
+     (http . t)
+     (plantuml .t))))
 
 ;; Counsel
 (use-package counsel
@@ -106,19 +116,22 @@
 ;; Projectile
 (use-package projectile
   :config
-  (projectile-global-mode)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  ;;(projectile-global-mode)
   (setq projectile-completion-system 'ivy)
   (setq projectile-mode-line
         '(:eval 
           (if (file-remote-p default-directory)
               "  [-]"
-            (format "  [%s]" (projectile-project-name))))))
+            (format "  [%s]" (projectile-project-name)))))
+  (projectile-mode "+1"))
 
 ;; Go
-(use-package go-mode)
+(use-package go-mode
+  :bind (([f9] . compile)))
 (use-package go-playground)
 (use-package company-go)
-(use-package go-eldoc)
+;;(use-package go-eldoc)
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 (setq-default gofmt-command "goimports")
@@ -127,8 +140,6 @@
                           (company-mode)))
                    
 (add-hook 'go-mode-hook 'yas-minor-mode)
-;;(add-hook 'go-mode-hook 'flycheck-mode)
-;;(add-hook 'go-mode-hook 'go-eldoc-setup)
 
 ;; Direnv
 (use-package direnv
@@ -140,7 +151,7 @@
 ;; Eglot
 (use-package eglot
   :config
-  (add-to-list 'eglot-server-programs '(go-mode . ("go-langserver" "-gocodecompletion"))))
+  (add-to-list 'eglot-server-programs '(go-mode . ("bingo"))))
 
 ;; Ace-window
 (use-package ace-window
@@ -149,11 +160,11 @@
   :bind ("M-o" . ace-window))
 
 ;; Vue
-(use-package vue-mode)
+(use-package vue-mode
+  :defer t)
 
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
-
 
 (use-package highlight-indent-guides
   :defer t
@@ -179,9 +190,7 @@
 
 ;; SQL-mode
 (use-package sql
-  :init
-  (setq sql-postgres-program "docker-psql"
-        sql-mysql-program "docker-mysql"))
+  :defer t)
 
 (use-package sqlup-mode
   :defer t)
@@ -192,8 +201,14 @@
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
+;; Fix line numbers font size
+(eval-after-load "linum"
+  '(set-face-attribute 'linum nil :height 100))
+
 ;; Custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (if (file-readable-p custom-file)
     (load-file custom-file))
 (put 'narrow-to-region 'disabled nil)
+
+
