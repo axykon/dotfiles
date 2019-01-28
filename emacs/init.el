@@ -96,10 +96,8 @@
 ;; Themes
 (use-package darktooth-theme :defer t)
 (use-package gruvbox-theme :defer t)
-(use-package gruber-darker-theme :defer t)
-(use-package lush-theme :defer t)
-(use-package zeno-theme :defer t)
 (use-package dracula-theme :defer t)
+(use-package monokai-theme :defer t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
