@@ -138,6 +138,10 @@
                    
 (add-hook 'go-mode-hook 'yas-minor-mode)
 
+;; Rust
+(use-package rust-mode
+     :defer t)
+
 ;; Direnv
 (use-package direnv
   :defer t)
