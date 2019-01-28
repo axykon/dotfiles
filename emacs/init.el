@@ -8,7 +8,6 @@
     (progn
       (tool-bar-mode 0)
       (scroll-bar-mode 0)
-      (setq-default cursor-type 'bar)
       (setq-default frame-title-format "Emacs: %b - %f")
       (setq font-use-system-font t)
       (setq default-frame-alist
