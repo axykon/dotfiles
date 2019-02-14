@@ -124,12 +124,15 @@
   (projectile-mode "+1"))
 
 ;; Go
+;; Used tools:
+;; github.com/stamblerre/gocode
+;; github.com/zmb3/gogetdoc
 (use-package go-mode
-  :bind (([f9] . compile)))
+  :bind (([f9] . compile))
+  :config
+  (setq godoc-at-point-function 'godoc-gogetdoc))
 (use-package go-playground)
 (use-package company-go)
-;;(use-package go-eldoc)
-
 (add-hook 'before-save-hook 'gofmt-before-save)
 (setq-default gofmt-command "goimports")
 (add-hook 'go-mode-hook (lambda ()
