@@ -127,6 +127,7 @@
 ;; Used tools:
 ;; github.com/stamblerre/gocode
 ;; github.com/zmb3/gogetdoc
+;; golang.org/x/tools/cmd/goimports
 (use-package go-mode
   :bind (([f9] . compile))
   :config
