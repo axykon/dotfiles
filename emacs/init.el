@@ -1,3 +1,6 @@
+;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; UI
 (setq inhibit-startup-screen t)
 (menu-bar-mode 0)
@@ -14,6 +17,9 @@
             '((width . 129)
               (height . 35)
               (fullscreen . maximized)))))
+
+;; Descreas long lines impact
+(setq-default bidi-display-reordering nil)
 
 ;; Use spaces instead of tabs
 ;; Also set default tab-width to 4
@@ -49,6 +55,7 @@
 (setq package-pinned-packages '((gruber-darker-theme . "melpa")
                                 (ace-window . "melpa")
                                 (plantuml-mode . "melpa")))
+
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -68,6 +75,7 @@
 
 ;; plantuml
 (use-package plantuml-mode
+  :pin melpa
   :defer t)
 
 ;; Org
@@ -98,6 +106,7 @@
 (use-package gruvbox-theme :defer t)
 (use-package dracula-theme :defer t)
 (use-package monokai-theme :defer t)
+(use-package kaolin-themes :defer t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
@@ -123,6 +132,10 @@
             (format "  [%s]" (projectile-project-name)))))
   (projectile-mode "+1"))
 
+;; LSP
+(use-package lsp-mode
+  :commands (lsp lsp-deferred))
+
 ;; Go
 ;; Used tools:
 ;; github.com/stamblerre/gocode
@@ -132,14 +145,15 @@
   :bind (([f9] . compile))
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc))
-(use-package go-playground)
-(use-package company-go)
-(add-hook 'before-save-hook 'gofmt-before-save)
-(setq-default gofmt-command "goimports")
-(add-hook 'go-mode-hook (lambda ()
-                          (set (make-local-variable 'company-backends) '(company-go))
-                          (company-mode)))
-                   
+;; (use-package go-playground)
+;; (use-package company-go)
+;; (add-hook 'before-save-hook 'gofmt-before-save)
+;; (setq-default gofmt-command "goimports")
+;; (add-hook 'go-mode-hook (lambda ()
+;;                           (set (make-local-variable 'company-backends) '(company-go))
+;;                           (company-mode)))
+(add-hook 'go-mode-hook #'lsp-deferred)
+(add-hook 'go-mode-hook #'display-line-numbers-mode)
 (add-hook 'go-mode-hook 'yas-minor-mode)
 
 ;; Rust
@@ -156,7 +170,7 @@
 ;; Eglot
 (use-package eglot
   :config
-  (add-to-list 'eglot-server-programs '(go-mode . ("bingo"))))
+  (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
 ;; Ace-window
 (use-package ace-window
@@ -183,7 +197,9 @@
 (use-package elpy
   :defer t
   :init
-  (add-hook 'python-mode-hook 'elpy-mode))
+  (add-hook 'python-mode-hook 'elpy-mode)
+  :config
+  (setq elpy-rpc-python-command "python3"))
   
 (add-hook 'python-mode-hook 'smartparens-mode)
 (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
@@ -205,10 +221,6 @@
 
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
-
-;; Fix line numbers font size
-(eval-after-load "linum"
-  '(set-face-attribute 'linum nil :height 100))
 
 ;; Custom file
 (setq custom-file "~/.emacs.d/custom.el")
