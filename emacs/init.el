@@ -9,6 +9,8 @@
 
 (if (display-graphic-p)
     (progn
+      (let* ((wid (frame-parameter (car (frame-list)) 'outer-window-id)))
+        (shell-command (format "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT dark -id %s" wid)))
       (tool-bar-mode 0)
       (scroll-bar-mode 0)
       (setq-default frame-title-format "Emacs: %b - %f")
