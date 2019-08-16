@@ -141,6 +141,9 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred))
 
+(use-package company-lsp
+  :config (push 'company-lsp company-backends))
+
 ;; Go
 ;; Used tools:
 ;; github.com/stamblerre/gocode
@@ -152,8 +155,8 @@
   (setq godoc-at-point-function 'godoc-gogetdoc))
 ;; (use-package go-playground)
 ;; (use-package company-go)
-;; (add-hook 'before-save-hook 'gofmt-before-save)
-;; (setq-default gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
+(setq-default gofmt-command "goimports")
 ;; (add-hook 'go-mode-hook (lambda ()
 ;;                           (set (make-local-variable 'company-backends) '(company-go))
 ;;                           (company-mode)))
