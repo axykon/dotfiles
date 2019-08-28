@@ -88,6 +88,7 @@
 ;; Org
 (use-package org
   :config
+  (require 'org-tempo)
   (setq org-babel-python-command "python3"
         org-src-fontify-natively t
         org-hide-emphasis-markers t
