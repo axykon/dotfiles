@@ -1,0 +1,36 @@
+* Install Minikube
+  #+begin_src sh :results output silent :dir /sudo::
+    curl -sL "https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64" \
+        -o /usr/local/bin/minikube
+
+    curl -sL "https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2" \
+        -o /usr/local/bin/docker-machine-driver-kvm2
+
+    chmod 0755 /usr/local/bin/{minikube,docker-machine-driver-kvm2}
+    minikube completion bash > /etc/bash_completion.d/_minikube
+  #+end_src
+
+* Install kubectl
+  #+begin_src sh :results output silent :dir /sudo::
+    curl -sL "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
+         -o /usr/local/bin/kubectl
+
+    chmod 0755 /usr/local/bin/kubectl
+    kubectl completion bash  > /etc/bash_completion.d/_kubectl
+  #+end_src
+
+* Install docker-compose
+  #+begin_src sh :results output silent :dir /sudo::
+    curl -sL "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
+         -o /usr/local/bin/docker-compose
+
+    chmod 0755 /usr/local/bin/docker-compose
+  #+end_src
+
+* Helm
+  #+begin_src sh :results output silent :dir /sudo::
+    curl -sL "https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz" \
+        | tar -C /usr/local/bin -xz --strip-components=1 --mode=0755 \
+              linux-amd64/helm linux-amd64/tiller
+  #+end_src
+
