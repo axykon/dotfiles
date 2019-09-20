@@ -1,9 +1,9 @@
 * Install Minikube
-  #+begin_src sh :results output silent :dir /sudo::
-    curl -sL "https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64" \
+  #+begin_src sh :results output silent :var version="v1.4.0" :dir /sudo::
+    curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
 
-    curl -sL "https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2" \
+    curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/docker-machine-driver-kvm2" \
         -o /usr/local/bin/docker-machine-driver-kvm2
 
     chmod 0755 /usr/local/bin/{minikube,docker-machine-driver-kvm2}
