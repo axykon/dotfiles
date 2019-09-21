@@ -10,6 +10,20 @@
     minikube completion bash > /etc/bash_completion.d/_minikube
   #+end_src
 
+  KVM requires a CPU with virtualization extensions, found on most
+  consumer CPUs. These extensions are called Intel VT or AMD-V. To
+  check whether you have CPU support, run the following command:
+  #+begin_src sh :results output silent
+    egrep '^flags.*(vmx|svm)' /proc/cpuinfo
+  #+end_src
+
+  Things to remember:
+  #+begin_example sh
+    sudo usermod -aG libvirt $USER
+    minikube config set vm-driver kvm2
+    systemctl start libvirtd
+  #+end_example
+
 * Install kubectl
   #+begin_src sh :results output silent :dir /sudo::
     curl -sL "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
