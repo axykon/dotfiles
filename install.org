@@ -48,3 +48,22 @@
               linux-amd64/helm linux-amd64/tiller
   #+end_src
 
+* Fonts
+  #+name: font-list
+  - Source Code Pro 14
+  - Go Mono 14
+  - Fira Mono Light 14
+  - Fira Code 14
+  - Iosevka 15
+  - Liberation Mono 14
+
+  #+name: select-font
+  #+begin_src elisp :var fonts=font-list
+    (ivy-read "select font: " fonts)
+  #+end_src
+
+  #+name: set-monospace-font
+  #+begin_src sh :var font=select-font() :results output silent
+    gsettings set org.gnome.desktop.interface monospace-font-name "$font"
+  #+end_src
+  
