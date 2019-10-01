@@ -49,21 +49,28 @@
   #+end_src
 
 * Fonts
-  #+name: font-list
-  - Source Code Pro 14
-  - Go Mono 14
-  - Fira Mono Light 14
-  - Fira Code 14
-  - Iosevka 15
-  - Liberation Mono 14
+** Install Go fonts
+   #+begin_src sh :results output silent
+     curl -sL "https://go.googlesource.com/image/+archive/master/font/gofont/ttfs.tar.gz" \
+         | tar -C ~/.fonts -xz --mode=0644 --wildcards '*.ttf'
+   #+end_src
 
-  #+name: select-font
-  #+begin_src elisp :var fonts=font-list
-    (ivy-read "select font: " fonts)
-  #+end_src
+** Set default monospace font
+   #+name: font-list
+   - Source Code Pro 14
+   - Go Mono 14
+   - Fira Mono Light 14
+   - Fira Code 14
+   - Iosevka 15
+   - Liberation Mono 14
 
-  #+name: set-monospace-font
-  #+begin_src sh :var font=select-font() :results output silent
-    gsettings set org.gnome.desktop.interface monospace-font-name "$font"
-  #+end_src
+   #+name: select-font
+   #+begin_src elisp :var fonts=font-list
+     (ivy-read "select font: " fonts)
+   #+end_src
+
+   #+name: set-monospace-font
+   #+begin_src sh :var font=select-font() :results output silent
+     gsettings set org.gnome.desktop.interface monospace-font-name "$font"
+   #+end_src
   
