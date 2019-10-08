@@ -150,23 +150,17 @@
 
 ;; Go
 ;; Used tools:
-;; github.com/stamblerre/gocode
 ;; github.com/zmb3/gogetdoc
-;; golang.org/x/tools/cmd/goimports
 (use-package go-mode
   :bind (([f9] . compile))
   :config
-  (setq godoc-at-point-function 'godoc-gogetdoc))
-;; (use-package go-playground)
-;; (use-package company-go)
-(add-hook 'before-save-hook 'gofmt-before-save)
-(setq-default gofmt-command "goimports")
-;; (add-hook 'go-mode-hook (lambda ()
-;;                           (set (make-local-variable 'company-backends) '(company-go))
-;;                           (company-mode)))
-(add-hook 'go-mode-hook #'lsp-deferred)
-(add-hook 'go-mode-hook #'display-line-numbers-mode)
-(add-hook 'go-mode-hook 'yas-minor-mode)
+  (setq godoc-at-point-function 'godoc-gogetdoc)
+  (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook #'display-line-numbers-mode)
+  (add-hook 'go-mode-hook #'yas-minor-mode))
+
+(use-package go-playground)
 
 ;; Rust
 (use-package rust-mode
