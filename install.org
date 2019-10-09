@@ -74,3 +74,25 @@
      gsettings set org.gnome.desktop.interface monospace-font-name "$font"
    #+end_src
   
+* IDEA
+  :properties:
+  :header-args: :var SCTL_FILE="/etc/sysctl.d/50-idea.conf"
+  :header-args+: :dir /sudo:: :results output silent
+  :end:
+
+  #+name: check-max-user-watches
+  #+begin_src sh
+    echo -ne "File contents: "
+    [[ -f $SCTL_FILE ]] && cat $SCTL_FILE || echo "---"
+    echo -ne "Actual value: "
+    sysctl fs.inotify.max_user_watches
+  #+end_src
+
+  #+name: set-max-user-watches
+  #+begin_SRC sh
+    cat > $SCTL_FILE <<EOF
+    fs.inotify.max_user_watches = 524288
+    EOF
+
+    sysctl -p --system
+  #+end_SRC
