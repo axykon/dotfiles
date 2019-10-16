@@ -151,6 +151,7 @@
 ;; Go
 ;; Used tools:
 ;; github.com/zmb3/gogetdoc
+;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
 (use-package go-mode
   :bind (([f9] . compile))
   :config
