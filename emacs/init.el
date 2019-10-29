@@ -226,6 +226,9 @@
 ;; Multiple cursors
 (use-package multiple-cursors)
 
+;; Dired
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
