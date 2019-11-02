@@ -19,6 +19,7 @@
 
   Things to remember:
   #+begin_example sh
+    sudo dnf install libvirt
     sudo usermod -aG libvirt $USER
     minikube config set vm-driver kvm2
     systemctl start libvirtd
@@ -42,10 +43,10 @@
   #+end_src
 
 * Helm
-  #+begin_src sh :results output silent :dir /sudo::
-    curl -sL "https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz" \
+  #+begin_src sh :var version="v2.15.2" :results output silent :dir /sudo::
+    curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
         | tar -C /usr/local/bin -xz --strip-components=1 --mode=0755 \
-              linux-amd64/helm linux-amd64/tiller
+              linux-amd64/helm
   #+end_src
 
 * Fonts
