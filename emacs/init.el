@@ -19,11 +19,7 @@
       (tool-bar-mode 0)
       (scroll-bar-mode 0)
       (setq-default frame-title-format "Emacs: %b - %f")
-      (setq font-use-system-font t)
-      (setq default-frame-alist
-            '((width . 129)
-              (height . 35)
-              (fullscreen . maximized)))))
+      (setq font-use-system-font t)))
 
 ;; Descreas long lines impact
 (setq-default bidi-display-reordering nil)
