@@ -154,7 +154,6 @@
   (setq godoc-at-point-function 'godoc-gogetdoc)
   (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
   (add-hook 'go-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'display-line-numbers-mode)
   (add-hook 'go-mode-hook #'yas-minor-mode))
 
 (use-package go-playground)
