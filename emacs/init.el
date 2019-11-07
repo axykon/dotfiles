@@ -139,6 +139,7 @@
 
 ;; LSP
 (use-package lsp-mode
+  :pin melpa
   :commands (lsp lsp-deferred))
 
 (use-package company-lsp
@@ -150,6 +151,7 @@
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
 (setq lsp-implementation "eglot")
 (use-package go-mode
+  :pin melpa
   :bind (([f9] . compile))
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc)
@@ -180,6 +182,7 @@
 
 ;; Eglot
 (use-package eglot
+  :pin melpa
   :config
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
