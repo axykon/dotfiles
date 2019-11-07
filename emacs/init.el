@@ -152,14 +152,22 @@
 ;; Used tools:
 ;; github.com/zmb3/gogetdoc
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
+(setq lsp-implementation "eglot")
 (use-package go-mode
   :bind (([f9] . compile))
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc)
-  (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
-  (add-hook 'go-mode-hook #'lsp-deferred)
   (add-hook 'go-mode-hook #'display-line-numbers-mode)
-  (add-hook 'go-mode-hook #'yas-minor-mode))
+  (add-hook 'go-mode-hook #'yas-minor-mode)
+  (if (string= lsp-implementation "eglot")
+      (progn
+        (add-hook 'go-mode-hook #'eglot-ensure)
+        (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer nil t))))
+    (progn
+      (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
+      (add-hook 'go-mode-hook #'lsp-deferred))))
+
+
 
 (use-package go-playground)
 
