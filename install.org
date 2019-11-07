@@ -1,5 +1,5 @@
 * Install Minikube
-  #+begin_src sh :results output silent :var version="v1.5.1" :dir /sudo::
+  #+begin_src sh :results output silent :var version="v1.5.2" :dir /sudo::
     curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
 
@@ -19,6 +19,7 @@
 
   Things to remember:
   #+begin_example sh
+    sudo dnf install libvirt
     sudo usermod -aG libvirt $USER
     minikube config set vm-driver kvm2
     systemctl start libvirtd
@@ -42,10 +43,10 @@
   #+end_src
 
 * Helm
-  #+begin_src sh :results output silent :dir /sudo::
-    curl -sL "https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz" \
+  #+begin_src sh :var version="v2.15.2" :results output silent :dir /sudo::
+    curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
         | tar -C /usr/local/bin -xz --strip-components=1 --mode=0755 \
-              linux-amd64/helm linux-amd64/tiller
+              linux-amd64/helm
   #+end_src
 
 * Fonts
@@ -96,6 +97,7 @@
 
     sysctl -p --system
   #+end_SRC
+
 * Rpmfusion
   #+begin_src sh :dir /sudo:: :results output silent
     RELEASE=$(rpm -E %fedora)
@@ -103,3 +105,4 @@
         https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$RELEASE.noarch.rpm \
         https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$RELEASE.noarch.rpm \
   #+end_src
+
