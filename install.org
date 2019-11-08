@@ -50,10 +50,23 @@
   #+end_src
 
 * Fonts
+  :properties:
+  :header-args: :results output silent
+  :end:
+
 ** Install Go fonts
-   #+begin_src sh :results output silent
+   #+begin_src sh
      curl -sL "https://go.googlesource.com/image/+archive/master/font/gofont/ttfs.tar.gz" \
          | tar -C ~/.fonts -xz --mode=0644 --wildcards '*.ttf'
+   #+end_src
+
+** Install FiraCode fonts
+   #+begin_src sh
+     TEMPFILE=$(mktemp fira-code-XXX.zip)
+     curl -sL "https://github.com/tonsky/FiraCode/releases/download/2/FiraCode_2.zip" \
+          -o $TEMPFILE
+     rm -f ~/.fonts/FiraCode*.ttf
+     unzip -jd ~/.fonts $TEMPFILE ttf/\*.ttf
    #+end_src
 
 ** Set default monospace font
