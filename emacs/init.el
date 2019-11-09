@@ -140,7 +140,10 @@
 ;; LSP
 (use-package lsp-mode
   :pin melpa
-  :commands (lsp lsp-deferred))
+  :defer t
+  :commands (lsp lsp-deferred)
+  :config
+  (setq lsp-keep-workspace-alive nil))
 
 (use-package company-lsp
   :config (push 'company-lsp company-backends))
@@ -149,7 +152,11 @@
 ;; Used tools:
 ;; github.com/zmb3/gogetdoc
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
-(setq lsp-implementation "eglot")
+(defcustom lsp-implementation "lsp"
+  "Current LPS implementation"
+  :type '(string)
+  :group 'local)
+
 (use-package go-mode
   :pin melpa
   :bind (([f9] . compile))
@@ -157,15 +164,14 @@
   (setq godoc-at-point-function 'godoc-gogetdoc)
   (add-hook 'go-mode-hook #'display-line-numbers-mode)
   (add-hook 'go-mode-hook #'yas-minor-mode)
-  (if (string= lsp-implementation "eglot")
-      (progn
-        (add-hook 'go-mode-hook #'eglot-ensure)
-        (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer nil t))))
-    (progn
-      (add-hook 'go-mode-hook (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
-      (add-hook 'go-mode-hook #'lsp-deferred))))
-
-
+  (add-hook 'go-mode-hook (lambda ()
+                            (if (string= lsp-implementation "eglot")
+                                (progn
+                                  (eglot-ensure)
+                                  (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+                              (progn
+                                (lsp-deferred)
+                                (add-hook 'before-save-hook #'lsp-organize-imports nil t))))))
 
 (use-package go-playground)
 
@@ -183,7 +189,9 @@
 ;; Eglot
 (use-package eglot
   :pin melpa
+  :defer t
   :config
+  (setq eglot-autoshutdown t)
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
 ;; Ace-window
