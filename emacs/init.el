@@ -165,13 +165,12 @@
   (add-hook 'go-mode-hook #'display-line-numbers-mode)
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
-                            (if (string= lsp-implementation "eglot")
-                                (progn
-                                  (eglot-ensure)
-                                  (add-hook 'before-save-hook #'eglot-format-buffer nil t))
-                              (progn
-                                (lsp-deferred)
-                                (add-hook 'before-save-hook #'lsp-organize-imports nil t))))))
+                            (cond ((string= lsp-implementation "eglot")
+                                   (eglot-ensure)
+                                   (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+                                  ((string= lsp-implementation "lsp")
+                                   (lsp-deferred)
+                                   (add-hook 'before-save-hook #'lsp-organize-imports nil t))))))
 
 (use-package go-playground)
 
