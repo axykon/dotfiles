@@ -148,15 +148,17 @@
 (use-package company-lsp
   :config (push 'company-lsp company-backends))
 
+
+(defcustom lsp-implementation "lsp"
+  "Current LPS implementation"
+  :type '(choice (const "lsp")
+                 (const "eglot"))
+  :group 'local)
+
 ;; Go
 ;; Used tools:
 ;; github.com/zmb3/gogetdoc
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
-(defcustom lsp-implementation "lsp"
-  "Current LPS implementation"
-  :type '(string)
-  :group 'local)
-
 (use-package go-mode
   :pin melpa
   :bind (([f9] . compile))
