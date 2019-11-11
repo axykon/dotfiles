@@ -71,21 +71,23 @@
 
 ** Set default monospace font
    #+name: font-list
-   - Source Code Pro 14
-   - Go Mono 14
-   - Fira Mono Light 14
-   - Fira Code 14
-   - Iosevka 15
-   - Liberation Mono 14
+   - Source Code Pro
+   - Go Mono
+   - Fira Mono
+   - Fira Mono Light
+   - Fira Code
+   - Fira Code Light
+   - Iosevka
+   - Liberation Mono
 
    #+name: select-font
-   #+begin_src elisp :var fonts=font-list
-     (ivy-read "select font: " fonts)
+   #+begin_src elisp :var fonts=font-list :results value
+     (ivy-read "Font name: " fonts)
    #+end_src
 
    #+name: set-monospace-font
-   #+begin_src sh :var font=select-font() :results output silent
-     gsettings set org.gnome.desktop.interface monospace-font-name "$font"
+   #+begin_src sh :var font=select-font() size=(read-from-minibuffer "Font size: ") :results output silent
+     gsettings set org.gnome.desktop.interface monospace-font-name "$font $size"
    #+end_src
   
 * IDEA
