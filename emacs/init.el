@@ -96,7 +96,8 @@
      (python . t)
      (shell . t)
      (http . t)
-     (plantuml .t))))
+     (plantuml .t)
+     (sql .t))))
 
 ;; Counsel
 (use-package counsel
