@@ -112,6 +112,7 @@
 (use-package dracula-theme :defer t)
 (use-package monokai-theme :defer t)
 (use-package kaolin-themes :defer t)
+(use-package doom-themes :defer t :pin melpa)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
