@@ -159,8 +159,8 @@
 
 ;; Go
 ;; Used tools:
-;; github.com/zmb3/gogetdoc
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
+;; GO111MODULE=on go get golang.org/x/lint/golint@latest
 (use-package go-mode
   :pin melpa
   :bind (([f10] . compile))
