@@ -174,7 +174,8 @@
                                    (add-hook 'before-save-hook #'eglot-format-buffer nil t))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
-                                   (add-hook 'before-save-hook #'lsp-organize-imports nil t))))))
+                                   (add-hook 'before-save-hook #'lsp-organize-imports nil t)
+                                   (add-hook 'before-save-hook #'lsp-format-buffer))))))
 
 (use-package go-playground)
 
