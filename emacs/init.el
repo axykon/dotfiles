@@ -252,6 +252,10 @@
   :bind (([f9] . dired-sidebar-toggle-sidebar))
   :commands (dired-sidebar-toggle-sidebar))
 
+;; Modline
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode))
+
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
