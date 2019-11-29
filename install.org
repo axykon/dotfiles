@@ -25,6 +25,13 @@
     systemctl start libvirtd
   #+end_example
 
+  To pull images from cloud repositories this minikube addon may help:
+  #+begin_example
+    minikube addons configure registry-creds
+    minikube addons enable registry-creds
+  #+end_example
+  But see [[https://github.com/kubernetes/minikube/issues/5753#issuecomment-548858200][this]].
+
 * Install kubectl
   #+begin_src sh :results output silent :dir /sudo::
     curl -sL "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
