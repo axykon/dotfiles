@@ -163,7 +163,8 @@
 ;; GO111MODULE=on go get golang.org/x/lint/golint@latest
 (use-package go-mode
   :pin melpa
-  :bind (([f10] . compile))
+  :bind (([f10] . compile)
+         ("C-c ." . counsel-imenu))
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc)
   (add-hook 'go-mode-hook #'display-line-numbers-mode)
