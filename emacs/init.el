@@ -148,6 +148,7 @@
   (setq lsp-keep-workspace-alive nil))
 
 (use-package company-lsp
+  :defer t
   :config (push 'company-lsp company-backends))
 
 
@@ -165,13 +166,26 @@
   :pin melpa
   :bind (([f10] . compile)
          ("C-c ." . counsel-imenu))
+  :preface
+  (defun go-setup ()
+    (when buffer-file-name
+      (setq-local compile-command
+                  (if (string-suffix-p "_test.go" buffer-file-name)
+                      "go test -v"
+                    "go build"))))
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc)
+  (add-hook 'go-mode-hook #'go-setup)
   (add-hook 'go-mode-hook #'display-line-numbers-mode)
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (cond ((string= lsp-implementation "eglot")
+                                   (setq eglot-workspace-configuration '((gopls . (:hoverKind "SynopsisDocumentation"))))
+                                   (setq eglot-put-doc-in-help-buffer t)
+                                   (define-advice eglot-imenu (:override () ignore)
+                                     (imenu-default-create-index-function))
                                    (eglot-ensure)
+                                   (company-mode)
                                    (add-hook 'before-save-hook #'eglot-format-buffer nil t))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
@@ -189,7 +203,15 @@
   :defer t)
 
 ;; Company
-(use-package company)
+(use-package company
+  :init
+  (add-hook 'prog-mode-hook #'company-mode)
+  :config
+  (setq-default company-backends
+                '(company-capf
+                  company-files
+                  (company-dabbrev-code company-keywords)
+                  company-dabbrev)))
 
 ;; Eglot
 (use-package eglot
