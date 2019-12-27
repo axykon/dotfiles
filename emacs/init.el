@@ -176,7 +176,6 @@
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc)
   (add-hook 'go-mode-hook #'go-setup)
-  (add-hook 'go-mode-hook #'display-line-numbers-mode)
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (cond ((string= lsp-implementation "eglot")
