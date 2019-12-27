@@ -223,7 +223,7 @@
 ;; Ace-window
 (use-package ace-window
   :config
-  (setq aw-scope 'frame)
+  ;;(setq aw-scope 'frame)
   :bind ("M-o" . ace-window))
 
 ;; Vue
@@ -276,6 +276,7 @@
 
 ;; Modline
 (use-package doom-modeline
+  :disabled t
   :config
   (setq doom-modeline-buffer-file-name-style 'relative-to-project)
   :hook (after-init . doom-modeline-mode))
@@ -284,9 +285,11 @@
 (add-to-list 'load-path "~/.emacs.d/lib")
 
 ;; Custom file
-(setq custom-file "~/.emacs.d/custom.el")
-(if (file-readable-p custom-file)
-    (load-file custom-file))
+(let ((custom-file "~/.emacs.d/custom.el"))
+  (if (file-readable-p custom-file)
+      (load-file custom-file)))
+
+;; Enable narrowing to region
 (put 'narrow-to-region 'disabled nil)
 
 
