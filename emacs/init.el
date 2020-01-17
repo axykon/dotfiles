@@ -3,19 +3,25 @@
            (version<= emacs-version "26.2"))
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
+(setq custom-file "~/.emacs.d/custom.el")
+
 ;; UI
 (setq inhibit-startup-screen t)
 (menu-bar-mode 0)
 
 (setq ring-bell-function 'ignore)
 
+(defun set-gtk-theme-variant (frame)
+  "Set dark GTK theme variant"
+  (start-process "set-theme-variant" nil
+                 "xprop" "-f" "_GTK_THEME_VARIANT" "8u"
+                 "-set" "_GTK_THEME_VARIANT" "dark" "-id"
+                 (frame-parameter frame 'outer-window-id)))
+
 (if (display-graphic-p)
     (progn
-      (let* ((wid (frame-parameter (car (frame-list)) 'outer-window-id)))
-        (start-process "set-theme-variant" nil
-                       "xprop" "-f" "_GTK_THEME_VARIANT" "8u"
-                       "-set" "_GTK_THEME_VARIANT" "dark" "-id"
-                       wid))
+      (add-to-list 'after-make-frame-functions 'set-gtk-theme-variant t)
+      (set-gtk-theme-variant (car (frame-list)))
       (tool-bar-mode 0)
       (scroll-bar-mode 0)
       (setq-default frame-title-format "Emacs: %b - %f")
@@ -276,7 +282,6 @@
 
 ;; Modline
 (use-package doom-modeline
-  :disabled t
   :config
   (setq doom-modeline-buffer-file-name-style 'relative-to-project)
   :hook (after-init . doom-modeline-mode))
@@ -284,12 +289,9 @@
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
-;; Custom file
-(let ((custom-file "~/.emacs.d/custom.el"))
-  (if (file-readable-p custom-file)
-      (load-file custom-file)))
+;; Load custom file if exists
+(if (file-readable-p custom-file)
+    (load-file custom-file))
 
 ;; Enable narrowing to region
 (put 'narrow-to-region 'disabled nil)
-
-
