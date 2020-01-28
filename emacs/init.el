@@ -58,12 +58,10 @@
 
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 (setq package-archive-priorities
-      '(("melpa-stable" . 10)
-        ("melpa"        . 5)))
-(setq package-pinned-packages '((gruber-darker-theme . "melpa")
-                                (ace-window . "melpa")
-                                (plantuml-mode . "melpa")))
+      '(("melpa" . 10)
+        ("melpa-stable" . 5)))
 
 (package-initialize)
 
@@ -80,15 +78,16 @@
 ;;(use-package diminish)
 
 ;; ob-http
-(use-package ob-http)
+(use-package ob-http
+  :defer t)
 
 ;; plantuml
 (use-package plantuml-mode
-  :pin melpa
   :defer t)
 
 ;; Org
 (use-package org
+  :pin gnu
   :config
   (require 'org-tempo)
   (setq org-babel-python-command "python3"
@@ -147,7 +146,6 @@
 
 ;; LSP
 (use-package lsp-mode
-  :pin melpa
   :defer t
   :commands (lsp lsp-deferred)
   :config
@@ -169,7 +167,6 @@
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
 ;; GO111MODULE=on go get golang.org/x/lint/golint@latest
 (use-package go-mode
-  :pin melpa
   :bind (([f10] . compile)
          ("C-c ." . counsel-imenu))
   :preface
@@ -220,17 +217,13 @@
 
 ;; Eglot
 (use-package eglot
-  :pin melpa
   :defer t
   :config
   (setq eglot-autoshutdown t)
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
-;; Ace-window
-(use-package ace-window
-  :config
-  ;;(setq aw-scope 'frame)
-  :bind ("M-o" . ace-window))
+;; Winum
+(use-package winum)
 
 ;; Vue
 (use-package vue-mode
