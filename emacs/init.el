@@ -223,7 +223,9 @@
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
 ;; Winum
-(use-package winum)
+(use-package winum
+  :config
+  (winum-mode 1))
 
 ;; Vue
 (use-package vue-mode
