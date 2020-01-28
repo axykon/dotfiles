@@ -222,10 +222,12 @@
   (setq eglot-autoshutdown t)
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
-;; Winum
-(use-package winum
+;; Ace-window
+(use-package ace-window
   :config
-  (winum-mode 1))
+  (setq aw-scope 'frame)
+  (ace-window-display-mode 1)
+  :bind ("M-o" . ace-window))
 
 ;; Vue
 (use-package vue-mode
