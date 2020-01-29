@@ -93,8 +93,7 @@
   (setq org-babel-python-command "python3"
         org-src-fontify-natively t
         org-hide-emphasis-markers t
-        ;; org-confirm-babel-evaluate nil
-        org-babel-min-lines-for-block-output 1)
+        org-babel-min-lines-for-block-output 2)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
