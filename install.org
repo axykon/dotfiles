@@ -51,9 +51,12 @@
 
 * Helm
   #+begin_src sh :var version="v3.1.0" :results output silent :dir /sudo::
+    set -e
     curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
         | tar -C /usr/local/bin -xz --strip-components=1 --mode=0755 \
               linux-amd64/helm
+
+    helm completion bash > /etc/bash_completion.d/_helm
   #+end_src
 
 * Fonts
