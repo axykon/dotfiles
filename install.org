@@ -1,4 +1,4 @@
-* Install Minikube
+* Install minikube
   #+begin_src sh :results output silent :var version="v1.9.2" :dir /sudo::
     curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
@@ -41,15 +41,15 @@
     kubectl completion bash  > /etc/bash_completion.d/_kubectl
   #+end_src
 
-* Install docker-compose
-  #+begin_src sh :results output silent :dir /sudo::
-    curl -sL "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
-         -o /usr/local/bin/docker-compose
-
-    chmod 0755 /usr/local/bin/docker-compose
+* Install scaffold
+  #+begin_src sh :results output silent :dir "/sudo::/tmp"
+    set -e
+    curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+    mv skaffold /usr/local/bin
+    chmod +x /usr/local/bin/skaffold
   #+end_src
 
-* Helm
+* Install helm
   #+begin_src sh :var version="v3.1.0" :results output silent :dir /sudo::
     set -e
     curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
