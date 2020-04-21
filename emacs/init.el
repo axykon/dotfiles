@@ -277,11 +277,10 @@
   :bind (([f9] . dired-sidebar-toggle-sidebar))
   :commands (dired-sidebar-toggle-sidebar))
 
-;; Modline
-(use-package doom-modeline
+;; Modeline
+(use-package telephone-line
   :config
-  (setq doom-modeline-buffer-file-name-style 'relative-to-project)
-  :hook (after-init . doom-modeline-mode))
+  (telephone-line-mode 1))
 
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
