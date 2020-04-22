@@ -46,7 +46,9 @@
     set -e
     curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
     mv skaffold /usr/local/bin
-    chmod +x /usr/local/bin/skaffold
+    chmod 755 /usr/local/bin/skaffold
+
+    skaffold completion bash > /etc/bash_completion.d/_skaffold
   #+end_src
 
 * Install helm
