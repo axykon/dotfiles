@@ -226,7 +226,6 @@
   :config
   (setq aw-scope 'frame
         aw-display-mode-overlay nil)
-  (ace-window-display-mode 1)
   :bind ("M-o" . ace-window))
 
 ;; Vue
