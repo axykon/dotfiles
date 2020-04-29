@@ -41,14 +41,24 @@
     kubectl completion bash  > /etc/bash_completion.d/_kubectl
   #+end_src
 
-* Install scaffold
-  #+begin_src sh :results output silent :dir "/sudo::/tmp"
+* Install kustomize
+  #+begin_src sh :var version="v3.5.4" :results output silent :dir /sudo::/tmp
     set -e
-    curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-    mv skaffold /usr/local/bin
-    chmod 755 /usr/local/bin/skaffold
+    curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${version}/kustomize_v3.5.4_linux_amd64.tar.gz \
+    | tar -C /usr/local/bin -xz --mode=0755 kustomize
+
+    echo 'complete -C /usr/local/bin/kustomize kustomize' > /etc/bash_completion.d/_kustomize
+    chmod 0644 /etc/bash_completion.d/_kustomize
+  #+end_src
+
+* Install scaffold
+  #+begin_src sh :results output silent :dir /sudo::/tmp
+    set -e
+    curl -Lo /usr/local/bin/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+    chmod 0755 /usr/local/bin/skaffold
 
     skaffold completion bash > /etc/bash_completion.d/_skaffold
+    chmod 0644 /etc/bash_completion.d/_skaffold
   #+end_src
 
 * Install helm
