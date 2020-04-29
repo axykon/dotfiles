@@ -244,7 +244,7 @@
 (use-package highlight-indent-guides
   :defer t
   :config
-  (setq highlight-indent-guides-method 'character))
+  (setq highlight-indent-guides-method 'fill))
 
 (use-package smartparens
   :defer t)
