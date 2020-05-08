@@ -251,6 +251,7 @@
 
 ;; Python
 (use-package elpy
+  :disabled
   :defer t
   :init
   (add-hook 'python-mode-hook 'elpy-mode)
