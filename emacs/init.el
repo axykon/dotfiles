@@ -27,7 +27,7 @@
       (setq-default frame-title-format "Emacs: %b - %f")
       (setq font-use-system-font t)))
 
-;; Descreas long lines impact
+;; Descrease long lines impact
 (setq-default bidi-display-reordering nil)
 
 ;; Use spaces instead of tabs
@@ -278,6 +278,10 @@
 
 ;; Dired
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(use-package dired-subtree
+  :bind (:map dired-mode-map
+              ("<tab>" . 'dired-subtree-toggle)))
+
 (use-package dired-sidebar
   :ensure t
   :bind (([f9] . dired-sidebar-toggle-sidebar))
