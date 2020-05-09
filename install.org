@@ -10,7 +10,7 @@
 
     zshcomp=/usr/local/share/zsh/completions/_minikube
     install -m 0755 -d $(dirname $zshcomp)
-    kubectl completion zsh > $zshcomp
+    minikube completion zsh > $zshcomp
     chmod 0644 $zshcomp
   #+end_src
 
