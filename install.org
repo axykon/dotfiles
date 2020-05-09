@@ -4,7 +4,14 @@
         -o /usr/local/bin/minikube
 
     chmod 0755 /usr/local/bin/{minikube}
-    minikube completion bash > /etc/bash_completion.d/_minikube
+    bashcomp=/etc/bash_completion.d/_minikube
+    minikube completion bash > $bashcomp
+    chmod 0644 $bashcomp
+
+    zshcomp=/usr/local/share/zsh/completions/_minikube
+    install -m 0755 -d $(dirname $zshcomp)
+    kubectl completion zsh > $zshcomp
+    chmod 0644 $zshcomp
   #+end_src
 
   KVM requires a CPU with virtualization extensions, found on most
@@ -35,7 +42,14 @@
          -o /usr/local/bin/kubectl
 
     chmod 0755 /usr/local/bin/kubectl
-    kubectl completion bash  > /etc/bash_completion.d/_kubectl
+    bashcomp=/etc/bash_completion.d/_kubectl     
+    kubectl completion bash  > $bashcomp
+    chmod 0644 $bashcomp
+
+    zshcomp=/usr/local/share/zsh/completions/_kubectl
+    install -m 0755 -d $(dirname $zshcomp)
+    kubectl completion zsh > $zshcomp
+    chmod 0644 $zshcomp
   #+end_src
 
 * Install kustomize
