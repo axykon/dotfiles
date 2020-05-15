@@ -1,10 +1,10 @@
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.9.2" :dir /sudo::
+  #+begin_src sh :results output silent :var version="v1.10.1" :dir /sudo::
     curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
 
     chmod 0755 /usr/local/bin/{minikube}
-    bashcomp=/etc/bash_completion.d/_minikube
+    bashcomp=/etc/bash_completion.d/minikube
     minikube completion bash > $bashcomp
     chmod 0644 $bashcomp
 
@@ -42,7 +42,7 @@
          -o /usr/local/bin/kubectl
 
     chmod 0755 /usr/local/bin/kubectl
-    bashcomp=/etc/bash_completion.d/_kubectl     
+    bashcomp=/etc/bash_completion.d/kubectl     
     kubectl completion bash  > $bashcomp
     chmod 0644 $bashcomp
 
@@ -58,8 +58,9 @@
     curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${version}/kustomize_${version}_linux_amd64.tar.gz \
     | tar -C /usr/local/bin -xz --mode=0755 kustomize
 
-    echo 'complete -C /usr/local/bin/kustomize kustomize' > /etc/bash_completion.d/_kustomize
-    chmod 0644 /etc/bash_completion.d/_kustomize
+    bashcomp=/etc/bash_completion.d/kustomize
+    echo 'complete -C /usr/local/bin/kustomize kustomize' > $bashcomp
+    chmod 0644 $bashcomp
   #+end_src
 
 * Install scaffold
