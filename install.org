@@ -53,7 +53,7 @@
   #+end_src
 
 * Install kustomize
-  #+begin_src sh :var version="v3.5.4" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="v3.5.5" :results output silent :dir /sudo::/tmp
     set -e
     curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${version}/kustomize_${version}_linux_amd64.tar.gz \
     | tar -C /usr/local/bin -xz --mode=0755 kustomize
