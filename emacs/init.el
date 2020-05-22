@@ -289,8 +289,13 @@
 
 ;; Modeline
 (use-package telephone-line
+  :disabled
   :config
   (telephone-line-mode 1))
+
+(use-package mood-line
+  :config
+  (mood-line-mode 1))
 
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
