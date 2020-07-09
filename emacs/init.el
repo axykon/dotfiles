@@ -187,10 +187,9 @@
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (cond ((string= lsp-implementation "eglot")
-                                   (setq eglot-workspace-configuration '((gopls . (:hoverKind "SynopsisDocumentation"))))
-                                   (setq eglot-put-doc-in-help-buffer t)
-                                   (define-advice eglot-imenu (:override () ignore)
-                                     (imenu-default-create-index-function))
+                                   ;; (setq eglot-workspace-configuration '((gopls . (:hoverKind "FullDocumentation"))))
+                                   ;; (define-advice eglot-imenu (:override () ignore)
+                                   ;;   (imenu-default-create-index-function))
                                    (eglot-ensure)
                                    (company-mode)
                                    (add-hook 'before-save-hook #'eglot-format-buffer nil t))
@@ -306,3 +305,23 @@
 
 ;; Enable narrowing to region
 (put 'narrow-to-region 'disabled nil)
+
+;; k8s
+(defun k8s-select-pod ()
+  (interactive)
+  (let ((pod-list (split-string (shell-command-to-string "kubectl get pods -o jsonpath='{.items[*].metadata.name}'"))))
+    (ivy-read "Select Pod: " pod-list)))
+
+
+(defun k8s-log ()
+  (interactive)
+  (let* ((pod (k8s-select-pod))
+         (process-name (format "k8s-log-%s" pod))
+         (buffer-name (format "*k8s-log-%s*" pod)))
+    (unless (get-buffer buffer-name)
+      (progn
+        (start-process process-name buffer-name "kubectl" "logs" "-f" pod)
+        (set-buffer buffer-name)
+        (view-mode t)
+        (toggle-truncate-lines nil)))
+    (switch-to-buffer buffer-name)))
