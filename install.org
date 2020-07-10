@@ -1,5 +1,5 @@
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.11.0" :dir /sudo::
+  #+begin_src sh :results output silent :var version="v1.12.0" :dir /sudo::
     curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
 
