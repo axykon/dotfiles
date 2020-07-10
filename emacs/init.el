@@ -77,6 +77,10 @@
 ;; Diminish
 ;;(use-package diminish)
 
+;; eldoc
+(use-package eldoc
+  :ensure t)
+
 ;; ob-http
 (use-package ob-http
   :defer t)
@@ -94,8 +98,10 @@
 ;; Org
 (use-package org
   :pin gnu
+  :ensure t
   :config
-  (require 'org-tempo)
+  (when (version<= "9.2" (org-version))
+    (require 'org-tempo))
   (setq org-babel-python-command "python3"
         org-src-fontify-natively t
         org-hide-emphasis-markers t
@@ -118,10 +124,7 @@
   (setq ivy-use-virtual-buffers nil))
 
 ;; Themes
-(use-package darktooth-theme :defer t)
 (use-package gruvbox-theme :defer t)
-(use-package dracula-theme :defer t)
-(use-package monokai-theme :defer t)
 (use-package kaolin-themes :defer t)
 (use-package doom-themes :defer t)
 
@@ -160,7 +163,6 @@
   :defer t
   :config (push 'company-lsp company-backends))
 
-
 (defcustom lsp-implementation "lsp"
   "Current LPS implementation"
   :type '(choice (const "lsp")
@@ -182,7 +184,7 @@
                       "go test -v"
                     "go build"))))
   :config
-  (setq godoc-at-point-function 'godoc-gogetdoc)
+  ;;(setq godoc-at-point-function 'godoc-gogetdoc)
   (add-hook 'go-mode-hook #'go-setup)
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
