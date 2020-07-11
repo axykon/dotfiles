@@ -280,10 +280,12 @@
 ;; Dired
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 (use-package dired-subtree
+  :disabled
   :bind (:map dired-mode-map
               ("<tab>" . 'dired-subtree-toggle)))
 
 (use-package dired-sidebar
+  :disabled
   :ensure t
   :bind (([f9] . dired-sidebar-toggle-sidebar))
   :commands (dired-sidebar-toggle-sidebar))
