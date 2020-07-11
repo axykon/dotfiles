@@ -14,6 +14,20 @@
     chmod 0644 $zshcomp
   #+end_src
 
+  #+name: minikube-config
+  #+BEGIN_SRC sh :results output silent
+    declare -A CONFIG=(
+        [cpus]=4
+        [memory]=4096
+        [vm-driver]=kvm2
+        [container-runtime]=crio
+    )
+
+    for K in ${!CONFIG[@]}; do
+        minikube config set $K ${CONFIG[$K]}
+    done
+  #+END_SRC
+
   KVM requires a CPU with virtualization extensions, found on most
   consumer CPUs. These extensions are called Intel VT or AMD-V. To
   check whether you have CPU support, run the following command:
