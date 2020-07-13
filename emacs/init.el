@@ -159,10 +159,6 @@
   :config
   (setq lsp-keep-workspace-alive nil))
 
-(use-package company-lsp
-  :defer t
-  :config (push 'company-lsp company-backends))
-
 (defcustom lsp-implementation "lsp"
   "Current LPS implementation"
   :type '(choice (const "lsp")
