@@ -1,5 +1,5 @@
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.12.0" :dir /sudo::
+  #+begin_src sh :results output silent :var version="v1.12.1" :dir /sudo::
     curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
 
@@ -20,7 +20,6 @@
         [cpus]=4
         [memory]=$(( $MEM * 1024 ))
         [vm-driver]=kvm2
-        [container-runtime]=crio
     )
 
     for K in ${!CONFIG[@]}; do
