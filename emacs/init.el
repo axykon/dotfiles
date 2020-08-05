@@ -154,7 +154,16 @@
   :defer t
   :commands (lsp lsp-deferred)
   :config
-  (setq lsp-keep-workspace-alive nil))
+  (setq lsp-keep-workspace-alive nil
+        lsp-eldoc-render-all nil
+        lsp-idle-delay 0.500))
+
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-enable nil)
+  :bind
+  (:map lsp-mode-map
+        ("C-c C-b" . lsp-ui-doc-glance)))
 
 (defcustom lsp-implementation "lsp"
   "Current LPS implementation"
@@ -177,12 +186,11 @@
                       "go test -v"
                     "go build"))))
   :config
-  ;;(setq godoc-at-point-function 'godoc-gogetdoc)
   (add-hook 'go-mode-hook #'go-setup)
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (cond ((string= lsp-implementation "eglot")
-                                   ;; (setq eglot-workspace-configuration '((gopls . (:hoverKind "FullDocumentation"))))
+                                   (setq eglot-workspace-configuration '((gopls . (:hoverKind "SingleLine"))))
                                    ;; (define-advice eglot-imenu (:override () ignore)
                                    ;;   (imenu-default-create-index-function))
                                    (eglot-ensure)
