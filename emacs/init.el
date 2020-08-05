@@ -313,7 +313,6 @@
 
 ;; k8s
 (defun k8s-select-pod ()
-  (interactive)
   (let ((pod-list (split-string (shell-command-to-string "kubectl get pods -o jsonpath='{.items[*].metadata.name}'"))))
     (ivy-read "Select Pod: " pod-list)))
 
