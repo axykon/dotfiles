@@ -1,8 +1,5 @@
-;; https://www.reddit.com/r/orgmode/comments/cvmjjr/workaround_for_tlsrelated_bad_request_and_package/
-(when (and (>= libgnutls-version 30603)
-           (version<= emacs-version "26.2"))
-  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq custom-file "~/.emacs.d/custom.el")
 
 ;; UI
