@@ -20,7 +20,7 @@
         [cpus]=4
         [memory]=$(( $MEM * 1024 ))
         [vm-driver]=kvm2
-        [container-runtime]=crio
+        [container-runtime]=docker
     )
 
     for K in ${!CONFIG[@]}; do
