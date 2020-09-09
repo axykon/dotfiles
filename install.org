@@ -1,5 +1,5 @@
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.12.2" :dir /sudo::
+  #+begin_src sh :results output silent :var version="v1.13.0" :dir /sudo::
     curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
         -o /usr/local/bin/minikube
 
@@ -67,7 +67,7 @@
   #+end_src
 
 * Install kustomize
-  #+begin_src sh :var version="v3.6.1" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="v3.8.2" :results output silent :dir /sudo::/tmp
     set -e
     curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${version}/kustomize_${version}_linux_amd64.tar.gz \
     | tar -C /usr/local/bin -xz --mode=0755 kustomize
@@ -88,7 +88,7 @@
   #+end_src
 
 * Install helm
-  #+begin_src sh :var version="v3.1.0" :results output silent :dir /sudo::
+  #+begin_src sh :var version="v3.3.1" :results output silent :dir /sudo::
     set -e
     curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
         | tar -C /usr/local/bin -xz --strip-components=1 --mode=0755 \
