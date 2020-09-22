@@ -96,6 +96,17 @@
     helm completion bash > /etc/bash_completion.d/_helm
   #+end_src
 
+* Install istio
+  #+begin_src sh :var version="1.7.2" :results output silent :dir /tmp
+    set -e
+    [[ -d istio-$version ]] \
+        || curl -sL "https://github.com/istio/istio/releases/download/$version/istio-$version-linux-amd64.tar.gz" \
+            | tar -xz
+
+    cd istio-$version
+    install --mode=0755 bin/istioctl $HOME/.local/bin
+    install --mode=0644 tools/istioctl.bash $HOME/.local/share/bash-completion/completions/_istioctl
+  #+end_src
 * Fonts
   :properties:
   :header-args: :results output silent
