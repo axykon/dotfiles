@@ -72,6 +72,8 @@ PS1="\$(echo -n \$PS1_PREFIX)\[${txtred}\][\[${txtrst}\]\u@\h\[${txtgrn}\]\$(par
 
 alias k=kubectl
 
+[[ -d ~/.krew/bin ]] && export PATH=$PATH:~/.krew/bin
+
 # Local definitions
 if [ -f ~/.bashrc.local ]; then
 	. ~/.bashrc.local
