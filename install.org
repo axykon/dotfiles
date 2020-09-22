@@ -1,17 +1,15 @@
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.13.0" :dir /sudo::
-    curl -sL "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
-        -o /usr/local/bin/minikube
-
-    chmod 0755 /usr/local/bin/minikube
-    bashcomp=/etc/bash_completion.d/minikube
-    minikube completion bash > $bashcomp
+  #+begin_src sh :results output silent :var version="v1.13.1"
+    set -e
+    mk=$HOME/.local/bin/minikube
+    curl -Lf --no-progress-meter "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
+         -o $mk
+    chmod 0755 $mk
+    bashcompdir=$HOME/.local/share/bash-completion/completions
+    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+    bashcomp=$bashcompdir/_minikube
+    $mk completion bash > $bashcomp
     chmod 0644 $bashcomp
-
-    zshcomp=/usr/local/share/zsh/completions/_minikube
-    install -m 0755 -d $(dirname $zshcomp)
-    minikube completion zsh > $zshcomp
-    chmod 0644 $zshcomp
   #+end_src
 
   #+name: minikube-config
