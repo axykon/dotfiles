@@ -111,6 +111,7 @@
      (shell . t)
      (http . t)
      (plantuml .t)
+     (dot .t)
      (sql .t))))
 
 ;; Counsel
