@@ -73,13 +73,17 @@
   #+end_src
 
 * Install scaffold
-  #+begin_src sh :results output silent :dir /sudo::/tmp
+  #+begin_src sh :results output silent :dir /tmp
     set -e
-    curl -Lo /usr/local/bin/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-    chmod 0755 /usr/local/bin/skaffold
+    skaffold=$HOME/.local/bin/skaffold
+    curl -Lo $skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+    chmod 0755 $skaffold
 
-    skaffold completion bash > /etc/bash_completion.d/_skaffold
-    chmod 0644 /etc/bash_completion.d/_skaffold
+    bashcompdir=$HOME/.local/share/bash-completion/completions
+    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+    bashcomp=$bashcompdir/_skaffold
+    skaffold completion bash > $bashcomp
+    chmod 0644 $bashcomp
   #+end_src
 
 * Install helm
