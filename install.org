@@ -97,7 +97,7 @@
   #+end_src
 
 * Install istio
-  #+begin_src sh :var version="1.7.2" :results output silent :dir /tmp
+  #+begin_src sh :var version="1.7.3" :results output silent :dir /tmp
     set -e
     [[ -d istio-$version ]] \
         || curl -sL "https://github.com/istio/istio/releases/download/$version/istio-$version-linux-amd64.tar.gz" \
@@ -109,6 +109,7 @@
     mkdir -p $HOME/.local/share/istio
     cp -r samples $HOME/.local/share/istio
   #+end_src
+  Then run ~istio install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
 
 * Fonts
   :properties:
