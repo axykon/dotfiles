@@ -109,7 +109,7 @@
     mkdir -p $HOME/.local/share/istio
     cp -r samples $HOME/.local/share/istio
   #+end_src
-  Then run ~istio install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
+  Then run ~istioctl install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
 
 * Fonts
   :properties:
