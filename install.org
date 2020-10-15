@@ -1,3 +1,5 @@
+#+startup: overview
+
 * Install minikube
   #+begin_src sh :results output silent :var version="v1.13.1"
     set -e
@@ -46,6 +48,20 @@
     minikube addons enable registry-creds
     minikube addons configure registry-creds
   #+end_example
+
+* Install kind
+  #+begin_src sh :var version="0.9.0" :results output silent
+    set -e
+    kind=$HOME/.local/bin/kind
+    curl -sL https://kind.sigs.k8s.io/dl/v${version}/kind-linux-amd64 \
+         -o $kind
+    chmod 0755 $kind
+    bashcompdir=$HOME/.local/share/bash-completion/completions
+    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+    bashcomp=$bashcompdir/_kind
+    kind completion bash  > $bashcomp
+    chmod 0644 $bashcomp
+  #+end_src
 
 * Install kubectl
   #+begin_src sh :results output silent
