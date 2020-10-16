@@ -103,13 +103,18 @@
   #+end_src
 
 * Install helm
-  #+begin_src sh :var version="v3.3.1" :results output silent :dir /sudo::
+  #+begin_src sh :var version="v3.3.4" :results output silent
     set -e
     curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
-        | tar -C /usr/local/bin -xz --strip-components=1 --mode=0755 \
+        | tar -C $HOME/.local/bin -xz --strip-components=1 --mode=0755 \
               linux-amd64/helm
 
-    helm completion bash > /etc/bash_completion.d/_helm
+    bashcompdir=$HOME/.local/share/bash-completion/completions
+    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+    bashcomp=$bashcompdir/_helm
+    helm completion bash  > $bashcomp
+    chmod 0644 $bashcomp
+
   #+end_src
 
 * Install istio
