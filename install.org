@@ -78,13 +78,16 @@
   #+end_src
 
 * Install kustomize
-  #+begin_src sh :var version="v3.8.2" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="v3.8.5" :results output silent :dir /tmp
     set -e
+    kustomize=$HOME/.local/bin/kustomize
     curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${version}/kustomize_${version}_linux_amd64.tar.gz \
-    | tar -C /usr/local/bin -xz --mode=0755 kustomize
+        | tar -C $(dirname $kustomize) -xz --mode=0755 kustomize
 
-    bashcomp=/etc/bash_completion.d/kustomize
-    echo 'complete -C /usr/local/bin/kustomize kustomize' > $bashcomp
+    bashcompdir=$HOME/.local/share/bash-completion/completions
+    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+    bashcomp=$bashcompdir/_kustomize
+    echo 'complete -C kustomize kustomize' > $bashcomp
     chmod 0644 $bashcomp
   #+end_src
 
