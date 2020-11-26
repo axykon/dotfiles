@@ -72,11 +72,12 @@
 (require 'bind-key)
 
 ;; Diminish
-;;(use-package diminish)
+(use-package diminish)
 
 ;; eldoc
 (use-package eldoc
-  :ensure t)
+  :ensure t
+  :diminish)
 
 ;; ob-http
 (use-package ob-http
@@ -216,6 +217,7 @@
 
 ;; Company
 (use-package company
+  :diminish
   :init
   (add-hook 'prog-mode-hook #'company-mode)
   :config
@@ -301,6 +303,7 @@
   (telephone-line-mode 1))
 
 (use-package mood-line
+  :disabled
   :config
   (mood-line-mode 1))
 
