@@ -115,6 +115,10 @@
      (dot .t)
      (sql .t))))
 
+
+(use-package ivy
+  :diminish)
+
 ;; Counsel
 (use-package counsel
   :bind
@@ -122,6 +126,7 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil))
+
 
 ;; Themes
 (use-package gruvbox-theme :defer t)
@@ -145,12 +150,8 @@
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   ;;(projectile-global-mode)
-  (setq projectile-completion-system 'ivy)
-  (setq projectile-mode-line
-        '(:eval 
-          (if (file-remote-p default-directory)
-              "  [-]"
-            (format "  [%s]" (projectile-project-name)))))
+  (setq projectile-completion-system 'ivy
+        projectile-mode-line-prefix "  ")
   (projectile-mode "+1"))
 
 ;; LSP
@@ -306,6 +307,9 @@
   :disabled
   :config
   (mood-line-mode 1))
+
+(use-package flycheck
+  :diminish)
 
 (use-package treemacs
   :bind
