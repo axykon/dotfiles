@@ -136,7 +136,8 @@
 ;; Magit
 (use-package magit
   :bind
-  ("C-x g" . magit-status))
+  ("C-x g" . magit-status)
+  ("C-x M-g" . magit-file-dispatch))
 
 ;; Projectile
 (use-package projectile
