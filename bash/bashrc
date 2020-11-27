@@ -73,7 +73,10 @@ PS1="\$(echo -n \$PS1_PREFIX)\[${txtred}\][\[${txtrst}\]\u@\h\[${txtgrn}\]\$(par
 alias k=kubectl
 
 # Sometimes it gets broken
-alias fix-keys="gsettings set org.gnome.desktop.input-sources xkb-options \"['ctrl:nocaps', 'grp:toggle']\""
+fix_keys() {
+  gsettings reset org.gnome.desktop.input-sources xkb-options
+  gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps', 'grp:toggle']"
+}
 
 [[ -d ~/.krew/bin ]] && export PATH=$PATH:~/.krew/bin
 
