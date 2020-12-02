@@ -78,8 +78,6 @@ fix_keys() {
   gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps', 'grp:toggle']"
 }
 
-[[ -d ~/.krew/bin ]] && export PATH=$PATH:~/.krew/bin
-
 # Local definitions
 if [ -f ~/.bashrc.local ]; then
 	. ~/.bashrc.local
