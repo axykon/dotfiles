@@ -71,6 +71,8 @@ parse_git_branch () {
 PS1="\$(echo -n \$PS1_PREFIX)\[${txtred}\][\[${txtrst}\]\u@\h\[${txtgrn}\]\$(parse_git_branch) \[${txtcyn}\]\W\[${txtred}\]]\[${txtrst}\]\n\[${txtgrn}\]\$\[${txtrst}\] "
 
 alias k=kubectl
+alias o=xdg-open
+alias e=$EDITOR
 
 # Sometimes it gets broken
 fix_keys() {
