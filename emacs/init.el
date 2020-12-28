@@ -98,8 +98,6 @@
   :pin gnu
   :ensure t
   :config
-  (when (version<= "9.2" (org-version))
-    (require 'org-tempo))
   (setq org-babel-python-command "python3"
         org-src-fontify-natively t
         org-hide-emphasis-markers t
