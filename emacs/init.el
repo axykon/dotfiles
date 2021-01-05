@@ -193,7 +193,7 @@
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (cond ((string= lsp-implementation "eglot")
-                                   (setq eglot-workspace-configuration '((gopls . (:hoverKind "SingleLine"))))
+                                   (setq eglot-workspace-configuration '((gopls . (:hoverKind "FullDocumentation"))))
                                    ;; (define-advice eglot-imenu (:override () ignore)
                                    ;;   (imenu-default-create-index-function))
                                    (eglot-ensure)
