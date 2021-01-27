@@ -50,7 +50,7 @@
   #+end_example
 
 * Install kind
-  #+begin_src sh :var version="0.9.0" :results output silent
+  #+begin_src sh :var version="0.10.0" :results output silent
     set -e
     kind=$HOME/.local/bin/kind
     curl -sL https://kind.sigs.k8s.io/dl/v${version}/kind-linux-amd64 \
