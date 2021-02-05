@@ -145,6 +145,7 @@
 
 ;; Projectile
 (use-package projectile
+  :disabled
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   ;;(projectile-global-mode)
@@ -284,12 +285,16 @@
 
 ;; Dired
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(add-hook 'dired-load-hook
+          (lambda ()
+            (load "dired-x")))
 (use-package dired-subtree
   :disabled
   :bind (:map dired-mode-map
               ("<tab>" . 'dired-subtree-toggle)))
 
 (use-package dired-sidebar
+  :disabled
   :ensure t
   :bind (([f9] . dired-sidebar-toggle-sidebar))
   :commands (dired-sidebar-toggle-sidebar)
@@ -318,11 +323,16 @@
   :config
   (mood-line-mode 1))
 
+(use-package doom-modeline
+  :init
+  (doom-modeline-mode 1))
+
 (use-package flycheck
   :diminish)
 
+(use-package treemacs-all-the-icons)
+
 (use-package treemacs
-  :disabled
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
@@ -330,7 +340,9 @@
         ("C-x t t"   . treemacs)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+        ("C-x t M-t" . treemacs-find-tag))
+  :config
+  (treemacs-load-theme "all-the-icons"))
 
 (use-package project
   :ensure nil
