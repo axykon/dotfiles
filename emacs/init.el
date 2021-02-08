@@ -366,6 +366,9 @@
       (eval `(or ,@ results))))
   (add-to-list 'project-find-functions #'aorst/project-find-root))
 
+;; Dockerfile
+(use-package dockerfile-mode)
+
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
