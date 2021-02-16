@@ -92,7 +92,7 @@
   #+end_src
 
 * Install scaffold
-  #+begin_src sh :results output silent :var version="1.16.0" :dir /tmp
+  #+begin_src sh :results output silent :var version="1.20.0" :dir /tmp
     set -e
     skaffold=$HOME/.local/bin/skaffold
     curl -Lo $skaffold https://storage.googleapis.com/skaffold/releases/v${version}/skaffold-linux-amd64
