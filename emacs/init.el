@@ -259,8 +259,13 @@
 
 (use-package highlight-indent-guides
   :defer t
+  :disabled
   :config
-  (setq highlight-indent-guides-method 'fill))
+  (setq highlight-indent-guides-method 'column))
+
+(use-package highlight-indentation
+  :defer t
+  :hook (yaml-mode . highlight-indentation-mode))
 
 (use-package smartparens
   :defer t)
@@ -333,6 +338,7 @@
   (mood-line-mode 1))
 
 (use-package doom-modeline
+  :disabled
   :init
   (doom-modeline-mode 1))
 
