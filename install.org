@@ -1,7 +1,7 @@
 #+startup: overview
 
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.13.1"
+  #+begin_src sh :results output silent :var version="v1.18.1"
     set -e
     mk=$HOME/.local/bin/minikube
     curl -Lf --no-progress-meter "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
@@ -19,7 +19,7 @@
     declare -A CONFIG=(
         [cpus]=4
         [memory]=$(( $MEM * 1024 ))
-        [vm-driver]=kvm2
+        [vm-driver]=docker
         [container-runtime]=docker
     )
 
