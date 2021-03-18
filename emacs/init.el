@@ -90,7 +90,8 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "multimarkdown"
+              markdown-hide-markup t))
 
 ;; plantuml
 (use-package plantuml-mode
@@ -107,11 +108,11 @@
   :pin gnu
   :ensure t
   :config
-  (setq org-babel-python-command "python3"
-        org-src-fontify-natively t
+  (setq org-src-fontify-natively t
         org-hide-emphasis-markers t
         org-plantuml-jar-path "~/plantuml.jar"
-        org-babel-min-lines-for-block-output 2)
+        org-babel-min-lines-for-block-output 2
+        org-babel-results-keyword "results")
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -184,13 +185,18 @@
                  (const "eglot"))
   :group 'local)
 
+(use-package yasnippet
+  :config
+  (yas-reload-all))
+
 ;; Go
 ;; Used tools:
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
 ;; GO111MODULE=on go get golang.org/x/lint/golint@latest
 (use-package go-mode
   :bind (([f10] . compile)
-         ("C-c ." . counsel-imenu))
+         ;; ("C-c ." . counsel-imenu)
+         )
   :preface
   (defun go-setup ()
     (when buffer-file-name
@@ -202,15 +208,23 @@
   (add-hook 'go-mode-hook #'go-setup)
   (add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
+                            (go-setup)
+                            (yas-minor-mode)
                             (cond ((string= lsp-implementation "eglot")
-                                   (setq eglot-workspace-configuration '((gopls . (:hoverKind "FullDocumentation"))))
+                                   (setq eglot-workspace-configuration '((gopls .
+                                                                                (:hoverKind "FullDocumentation"
+                                                                                :staticcheck t)
+                                                                                )))
                                    ;; (define-advice eglot-imenu (:override () ignore)
                                    ;;   (imenu-default-create-index-function))
                                    (eglot-ensure)
                                    (company-mode)
-                                   (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+                                   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
+                                   (lsp-register-custom-settings
+                                    '(("gopls.completeUnimported" t t)
+                                      ("gopls.staticcheck" t t)))
                                    (add-hook 'before-save-hook #'lsp-organize-imports nil t)
                                    (add-hook 'before-save-hook #'lsp-format-buffer))))))
 
@@ -241,6 +255,9 @@
   :defer t
   :config
   (setq eglot-autoshutdown t)
+  (advice-add 'eglot--format-markup :filter-return
+              (lambda (r)
+                (replace-regexp-in-string "\\\\\\([-.\\'()\\\\:]\\)" "\\1" r)))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
 ;; Ace-window
@@ -259,11 +276,12 @@
 
 (use-package highlight-indent-guides
   :defer t
-  :disabled
   :config
-  (setq highlight-indent-guides-method 'column))
+  (setq highlight-indent-guides-method 'column)
+  :hook (yaml-mode . highlight-indent-guides-mode))
 
 (use-package highlight-indentation
+  :disabled
   :defer t
   :hook (yaml-mode . highlight-indentation-mode))
 
