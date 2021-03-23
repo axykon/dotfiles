@@ -123,18 +123,19 @@
      (dot .t)
      (sql .t))))
 
-
-(use-package ivy
-  :diminish)
-
-;; Counsel
-(use-package counsel
-  :bind
-  ("C-s" . swiper)
+;; Selectrum
+(use-package selectrum
   :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers nil))
+  (selectrum-mode 1))
 
+(use-package selectrum-prescient
+  :config
+  (selectrum-prescient-mode 1))
+
+(use-package consult
+  :bind (
+         ("C-c ." . consult-imenu)
+         ("C-s" . consult-line)))
 
 ;; Themes
 (use-package gruvbox-theme :defer t)
@@ -296,7 +297,7 @@
   (add-hook 'python-mode-hook 'elpy-mode)
   :config
   (setq elpy-rpc-python-command "python3"))
-  
+
 (add-hook 'python-mode-hook 'smartparens-mode)
 (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
 ;;(add-hook 'python-mode-hook 'highlight-indent-guides-mode)
@@ -321,7 +322,6 @@
           (lambda ()
             (load "dired-x")))
 (use-package dired-subtree
-  :disabled
   :bind (:map dired-mode-map
               ("<tab>" . 'dired-subtree-toggle)))
 
@@ -338,7 +338,7 @@
   :config
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
-  
+
   (setq dired-sidebar-subtree-line-prefix "__")
   (setq dired-sidebar-theme 'ascii)
   (setq dired-sidebar-use-term-integration t)
@@ -363,9 +363,11 @@
 (use-package flycheck
   :diminish)
 
-(use-package treemacs-all-the-icons)
+(use-package treemacs-all-the-icons
+  :disabled)
 
 (use-package treemacs
+  :disabled
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
@@ -380,27 +382,16 @@
 (use-package project
   :ensure nil
   :config
-  (defvar project-root-markers '("go.mod")
-    "Files or directories that indicate the root of a project.")
-  (defun aorst/project-find-root (path)
-    "Tail-recursive search in PATH for root markers."
-    (let* ((this-dir (file-name-as-directory (file-truename path)))
-           (parent-dir (expand-file-name (concat this-dir "../")))
-           (system-root-dir (expand-file-name "/")))
-      (cond
-       ((aorst/project-root-p this-dir) (cons 'transient this-dir))
-       ((equal system-root-dir this-dir) nil)
-       (t (aorst/project-find-root parent-dir)))))
-  (defun aorst/project-root-p (path)
-    "Check if current PATH has any of project root markers."
-    (let ((results (mapcar (lambda (marker)
-                             (file-exists-p (concat path marker)))
-                           project-root-markers)))
-      (eval `(or ,@ results))))
-  (add-to-list 'project-find-functions #'aorst/project-find-root))
+  (defun project-find-go-module (dir)
+    (when-let ((root (locate-dominating-file dir "go.mod")))
+      (cons 'go-module root)))
+  (cl-defmethod project-root ((project (head go-module)))
+    (cdr project))
+  (add-hook 'project-find-functions #'project-find-go-module))
 
 ;; Dockerfile
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :defer t)
 
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
