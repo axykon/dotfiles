@@ -121,7 +121,7 @@
   #+end_src
 
 * Install istio
-  #+begin_src sh :var version="1.8.2" :results output silent :dir /tmp
+  #+begin_src sh :var version="1.9.1" :results output silent :dir /tmp
     set -e
     [[ -d istio-$version ]] \
         || curl -sL "https://github.com/istio/istio/releases/download/$version/istio-$version-linux-amd64.tar.gz" \
