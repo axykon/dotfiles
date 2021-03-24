@@ -137,6 +137,10 @@
          ("C-c ." . consult-imenu)
          ("C-s" . consult-line)))
 
+;; Avy
+(use-package avy
+  :bind ("C-'" . avy-goto-char-timer))
+
 ;; Themes
 (use-package gruvbox-theme :defer t)
 (use-package kaolin-themes :defer t)
