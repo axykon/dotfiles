@@ -214,3 +214,8 @@
         https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$RELEASE.noarch.rpm \
   #+end_src
 
+* F5
+  https://support.f5.com/csp/article/K47922841
+  <access-point>/public/download/linux_f5epi.x86_64.rpm
+  <access-point>/public/download/linux_f5vpn.x86_64.rpm
+
