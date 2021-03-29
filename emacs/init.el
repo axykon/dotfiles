@@ -321,10 +321,15 @@
 (use-package multiple-cursors)
 
 ;; Dired
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 (add-hook 'dired-load-hook
           (lambda ()
             (load "dired-x")))
+
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (dired-omit-mode 1)
+            (dired-hide-details-mode)))
+
 (use-package dired-subtree
   :bind (:map dired-mode-map
               ("<tab>" . 'dired-subtree-toggle)))
