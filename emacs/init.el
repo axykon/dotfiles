@@ -264,6 +264,7 @@
               (lambda (r)
                 (replace-regexp-in-string "\\\\\\([.'()\\:\";]\\|-\\|/\\)" "\\1" r)))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
+                (replace-regexp-in-string "\\\\\\([.'()\\:\";=]\\|-\\|/\\)" "\\1" r)))
 
 ;; Ace-window
 (use-package ace-window
