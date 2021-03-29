@@ -262,7 +262,7 @@
   (setq eglot-autoshutdown t)
   (advice-add 'eglot--format-markup :filter-return
               (lambda (r)
-                (replace-regexp-in-string "\\\\\\([-.\\'()\\\\:]\\)" "\\1" r)))
+                (replace-regexp-in-string "\\\\\\([.'()\\:\";]\\|-\\|/\\)" "\\1" r)))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
 
 ;; Ace-window
