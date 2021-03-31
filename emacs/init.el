@@ -199,9 +199,7 @@
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
 ;; GO111MODULE=on go get golang.org/x/lint/golint@latest
 (use-package go-mode
-  :bind (([f10] . compile)
-         ;; ("C-c ." . counsel-imenu)
-         )
+  :bind (([f10] . compile))
   :preface
   (defun go-setup ()
     (when buffer-file-name
@@ -216,15 +214,11 @@
                             (go-setup)
                             (yas-minor-mode)
                             (cond ((string= lsp-implementation "eglot")
-                                   (setq eglot-workspace-configuration '((gopls .
-                                                                                (:hoverKind "FullDocumentation"
-                                                                                :staticcheck t)
-                                                                                )))
-                                   ;; (define-advice eglot-imenu (:override () ignore)
-                                   ;;   (imenu-default-create-index-function))
-                                   (eglot-ensure)
-                                   (company-mode)
-                                   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+                                   (setq eglot-workspace-configuration '((gopls .(:hoverKind "FullDocumentation" :staticcheck t))))
+                                   (when (or (eq buffer-file-name nil) (file-writable-p buffer-file-name))
+                                     (eglot-ensure)
+                                     (company-mode)
+                                     (add-hook 'before-save-hook #'eglot-format-buffer -10 t)))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
                                    (lsp-register-custom-settings
@@ -262,9 +256,11 @@
   (setq eglot-autoshutdown t)
   (advice-add 'eglot--format-markup :filter-return
               (lambda (r)
-                (replace-regexp-in-string "\\\\\\([.'()\\:\";]\\|-\\|/\\)" "\\1" r)))
-  (add-to-list 'eglot-server-programs '(go-mode . ("gopls"))))
                 (replace-regexp-in-string "\\\\\\([.'()\\:\";=]\\|-\\|/\\)" "\\1" r)))
+  (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
+  (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
+  (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
+
 
 ;; Ace-window
 (use-package ace-window
