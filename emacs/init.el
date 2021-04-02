@@ -83,6 +83,10 @@
 (use-package ob-http
   :defer t)
 
+(use-package js
+  :defer t
+  :init (setq js-indent-level 2))
+
 ;; Markdown
 (use-package markdown-mode
   :ensure t
@@ -107,6 +111,11 @@
 (use-package org
   :pin gnu
   :ensure t
+  :init
+  (require 'org-tempo)
+  (setenv "NODE_PATH"
+      (concat (getenv "HOME") "/org/node_modules"  ":"
+              (getenv "NODE_PATH")))
   :config
   (setq org-src-fontify-natively t
         org-hide-emphasis-markers t
@@ -121,7 +130,8 @@
      (http . t)
      (plantuml .t)
      (dot .t)
-     (sql .t))))
+     (sql .t)
+     (js . t))))
 
 ;; Selectrum
 (use-package selectrum
