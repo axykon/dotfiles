@@ -1,6 +1,7 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq custom-file "~/.emacs.d/custom.el")
+(global-so-long-mode)
 
 ;; UI
 (setq inhibit-startup-screen t)
@@ -266,7 +267,7 @@
   (setq eglot-autoshutdown t)
   (advice-add 'eglot--format-markup :filter-return
               (lambda (r)
-                (replace-regexp-in-string "\\\\\\([.'()\\:\";=]\\|-\\|/\\)" "\\1" r)))
+                (replace-regexp-in-string "\\\\\\([.'()\\:\";=]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
