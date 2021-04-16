@@ -267,8 +267,7 @@
   (setq eglot-autoshutdown t)
   (advice-add 'eglot--format-markup :filter-return
               (lambda (r)
-                (replace-regexp-in-string "\\\\\\([.'()\\:\";=]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
-  (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
+                (replace-regexp-in-string "\\\\\\([.'()\\:\";=*<>]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
 
@@ -404,7 +403,8 @@
       (cons 'go-module root)))
   (cl-defmethod project-root ((project (head go-module)))
     (cdr project))
-  (add-hook 'project-find-functions #'project-find-go-module))
+  ;;(add-hook 'project-find-functions #'project-find-go-module)
+  )
 
 ;; Dockerfile
 (use-package dockerfile-mode
