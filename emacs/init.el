@@ -100,7 +100,10 @@
 
 ;; plantuml
 (use-package plantuml-mode
-  :defer t)
+  :mode "\\.puml\\'"
+  :config
+  (setq plantuml-default-exec-mode 'jar
+        plantuml-jar-path "/home/akravtsov/plantuml.jar"))
 
 ;; Flymake
 (use-package flymake
