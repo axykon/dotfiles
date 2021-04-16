@@ -338,6 +338,7 @@
             (dired-hide-details-mode)))
 
 (use-package dired-subtree
+  :disabled
   :bind (:map dired-mode-map
               ("<tab>" . 'dired-subtree-toggle)))
 
