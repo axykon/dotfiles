@@ -290,15 +290,16 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
 
 (use-package highlight-indent-guides
+  :disabled
   :defer t
   :config
   (setq highlight-indent-guides-method 'column)
   :hook (yaml-mode . highlight-indent-guides-mode))
 
 (use-package highlight-indentation
-  :disabled
   :defer t
-  :hook (yaml-mode . highlight-indentation-mode))
+  :hook (yaml-mode . highlight-indentation-mode)
+  :diminish)
 
 (use-package smartparens
   :defer t)
