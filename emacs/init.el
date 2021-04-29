@@ -159,6 +159,7 @@
 (use-package gruvbox-theme :defer t)
 (use-package kaolin-themes :defer t)
 (use-package doom-themes :defer t)
+(use-package modus-themes :defer t)
 
 ;; Rainbow delimiters
 (use-package rainbow-delimiters)
