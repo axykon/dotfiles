@@ -459,34 +459,7 @@
         (org-table-beginning-of-field 1))
       (set-mark-command nil)
       (org-table-end-of-field 1))
-
-    (defhydra hydra-org-table-mark-field
-      (:body-pre (org-table-mark-field)
-       :color red
-       :hint nil)
-      "
-   ^^      ^🠙^     ^^
-   ^^      _p_     ^^
-🠘 _b_  selection  _f_ 🠚          | Org table mark ▯field▮ |
-   ^^      _n_     ^^
-   ^^      ^🠛^     ^^
-"
-      ("x" exchange-point-and-mark "exchange point/mark")
-      ("f" (lambda (arg)
-             (interactive "p")
-             (when (eq 1 arg)
-               (setq arg 2))
-             (org-table-end-of-field arg)))
-      ("b" (lambda (arg)
-             (interactive "p")
-             (when (eq 1 arg)
-               (setq arg 2))
-             (org-table-beginning-of-field arg)))
-      ("n" next-line)
-      ("p" previous-line)
-      ("q" nil "cancel" :color blue))
-
     (bind-keys
      :map org-mode-map
      :filter (org-at-table-p)
-     ("S-SPC" . hydra-org-table-mark-field/body))))
+     ("S-SPC" . org-table-mark-field))))
