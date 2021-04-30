@@ -50,6 +50,14 @@
   #+end_example
 
 * Install kind
+  Need to create a config file for aliasing unqualified repositories:
+
+  ~/etc/containers/registries.conf.d/001-kind.conf~
+  #+begin_example
+    [aliases]
+      "kindest/node" = "docker.io/kindest/node"
+  #+end_example
+
   #+begin_src sh :var version="0.10.0" :results output silent
     set -e
     kind=$HOME/.local/bin/kind
