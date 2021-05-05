@@ -118,7 +118,7 @@
   :init
   (require 'org-tempo)
   (setenv "NODE_PATH"
-      (concat (getenv "HOME") "/org/node_modules"  ":"
+      (concat (getenv "HOME") "/.emacs.d/node_modules"  ":"
               (getenv "NODE_PATH")))
   :config
   (setq org-src-fontify-natively t
