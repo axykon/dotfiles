@@ -1,23 +1,6 @@
-# .bashrc
-
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
-
-# User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
-
+# -*- sh -*-
 export EDITOR="emacs -nw"
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
-# User specific aliases and functions
 # Colors
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
@@ -64,7 +47,8 @@ git_prompt=/usr/share/git-core/contrib/completion/git-prompt.sh
 parse_git_branch () {
     local b=$(__git_ps1 '%s')
     if [ "${b}" != "" ]; then
-	    echo -n "  $b"
+        # fontawesome-fonts package is required
+        echo -n "  $b"
     fi
 }
 
