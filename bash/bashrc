@@ -61,14 +61,14 @@ alias e=$EDITOR
 # Sometimes it gets broken
 fix_keys() {
   gsettings reset org.gnome.desktop.input-sources xkb-options
-  gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps', 'grp:toggle']"
+  gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier', 'grp:toggle']"
 }
 
 # Local definitions
 if [ -f ~/.bashrc.local ]; then
 	. ~/.bashrc.local
 fi
-
+o
 # direnv
 eval "$(direnv hook bash)"
 
