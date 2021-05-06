@@ -253,7 +253,7 @@
 
 * Configuration
 ** tmux
-   #+begin_src text :tangle "~/.tmux.conf"
+   #+begin_src conf :tangle "~/.tmux.conf"
      set-option -g prefix C-q
      unbind-key C-b
      bind-key C-q send-prefix
