@@ -226,8 +226,6 @@
   https://support.f5.com/csp/article/K47922841
   <access-point>/public/download/linux_f5epi.x86_64.rpm
   <access-point>/public/download/linux_f5vpn.x86_64.rpm
-
-
 * Enable chromecast
   #+begin_example
     sudo firewall-cmd --permanent --new-service=chromecast
