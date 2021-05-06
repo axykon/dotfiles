@@ -255,4 +255,7 @@
      set-option -g prefix C-q
      unbind-key C-b
      bind-key C-q send-prefix
+     bind-key r source-file ~/.tmux.conf
+
+     set -g window-status-current-style 'bg=yellow'
    #+end_src

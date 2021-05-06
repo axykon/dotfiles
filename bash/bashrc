@@ -68,7 +68,7 @@ fix_keys() {
 if [ -f ~/.bashrc.local ]; then
 	. ~/.bashrc.local
 fi
-o
+
 # direnv
 eval "$(direnv hook bash)"
 
