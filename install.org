@@ -1,16 +1,25 @@
 #+startup: overview
 
 * Install minikube
-  #+begin_src sh :results output silent :var version="v1.19.0"
+  For =podman= driver it is needed to run ~sudo podman~ without password being asked
+  #+begin_src conf :tangle "/sudo::/etc/sudoers.d/010-podman" :tangle-mode (identity #o440)
+    axykon ALL=(ALL) NOPASSWD: /usr/bin/podman
+  #+end_src
+
+  Check if poman can be sudo-ed without password
+  #+begin_src sh :results output silent
+    sudo -k -n podman version
+  #+end_src
+
+  #+begin_src sh :results output silent :dir /sudo::/tmp
     set -e
-    mk=$HOME/.local/bin/minikube
-    curl -Lf --no-progress-meter "https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64" \
-         -o $mk
-    chmod 0755 $mk
-    bashcompdir=$HOME/.local/share/bash-completion/completions
-    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
-    bashcomp=$bashcompdir/_minikube
-    $mk completion bash > $bashcomp
+    minikube=/usr/local/bin/minikube
+    curl -Lf --no-progress-meter "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64" \
+         -o $minikube
+    chmod 0755 $minikube
+
+    bashcomp=/etc/bash_completion.d/minikube
+    $minikube completion bash > $bashcomp
     chmod 0644 $bashcomp
   #+end_src
 
@@ -50,38 +59,36 @@
   #+end_example
 
 * Install kind
-  Need to create a config file for aliasing unqualified repositories:
+  Need to create a config file for aliasing unqualified repositories
+  in case of using ~podman~
 
-  ~/etc/containers/registries.conf.d/001-kind.conf~
-  #+begin_example
+  #+begin_src conf :tangle "/sudo::/etc/containers/registries.conf.d/010-kind.conf"
     [aliases]
       "kindest/node" = "docker.io/kindest/node"
-  #+end_example
+  #+end_src
 
-  #+begin_src sh :var version="0.10.0" :results output silent
+  #+begin_src sh :var version="0.10.0" :results output silent :dir /sudo::/tmp
     set -e
-    kind=$HOME/.local/bin/kind
+    kind=/usr/local/bin/kind
     curl -sL https://kind.sigs.k8s.io/dl/v${version}/kind-linux-amd64 \
          -o $kind
     chmod 0755 $kind
-    bashcompdir=$HOME/.local/share/bash-completion/completions
-    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
-    bashcomp=$bashcompdir/_kind
-    kind completion bash  > $bashcomp
+
+    bashcomp=/etc/bash_completion.d/kind
+    $kind completion bash  > $bashcomp
     chmod 0644 $bashcomp
   #+end_src
 
 * Install kubectl
-  #+begin_src sh :results output silent
-    kubectl=$HOME/.local/bin/kubectl
+  #+begin_src sh :results output silent :dir /sudo::/tmp
+    set -e
+    kubectl=/usr/local/bin/kubectl
     curl -sL "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
          -o $kubectl
     chmod 0755 $kubectl
 
-    bashcompdir=$HOME/.local/share/bash-completion/completions
-    [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
-    bashcomp=$bashcompdir/_kubectl
-    kubectl completion bash  > $bashcomp
+    bashcomp=/etc/bash_completion.d/kubectl
+    $kubectl completion bash  > $bashcomp
     chmod 0644 $bashcomp
   #+end_src
 
@@ -144,10 +151,10 @@
   Then run ~istioctl install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
 
 * Install k9s
-  #+begin_src sh :var version="v0.24.8" :results output silent :dir /tmp
+  #+begin_src sh :var version="v0.24.9" :results output silent :dir /sudo::/tmp
     set -e
     curl -L https://github.com/derailed/k9s/releases/download/${version}/k9s_Linux_x86_64.tar.gz \
-        | tar -C ~/.local/bin -xz --mode=0755 k9s
+        | tar -C /usr/local/bin -xz --mode=0755 k9s
   #+end_src
   
 * Fonts
