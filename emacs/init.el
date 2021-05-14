@@ -185,14 +185,16 @@
 
 ;; LSP
 (use-package lsp-mode
-  :defer t
   :commands (lsp lsp-deferred)
   :config
   (setq lsp-keep-workspace-alive nil
-        lsp-eldoc-render-all nil
-        lsp-idle-delay 0.500))
+        ;;lsp-eldoc-render-all nil
+        lsp-idle-delay 0.500)
+  :bind
+  ([remap display-local-help] . lsp-describe-thing-at-point))
 
 (use-package lsp-ui
+  :disabled
   :config
   (setq lsp-ui-doc-enable nil)
   :bind
@@ -238,6 +240,7 @@
                                    (lsp-deferred)
                                    (lsp-register-custom-settings
                                     '(("gopls.completeUnimported" t t)
+                                      ("gopls.hoverKind" "FullDocumentation")
                                       ("gopls.staticcheck" t t)))
                                    (add-hook 'before-save-hook #'lsp-organize-imports nil t)
                                    (add-hook 'before-save-hook #'lsp-format-buffer))))))
@@ -290,16 +293,9 @@
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
 
-(use-package highlight-indent-guides
-  :disabled
-  :defer t
-  :config
-  (setq highlight-indent-guides-method 'column)
-  :hook (yaml-mode . highlight-indent-guides-mode))
-
 (use-package highlight-indentation
   :defer t
-  :hook (yaml-mode . highlight-indentation-mode)
+  :hook (yaml-mode . highlight-indentation-current-column-mode)
   :diminish)
 
 (use-package smartparens
@@ -444,6 +440,34 @@
         (view-mode t)
         (toggle-truncate-lines nil)))
     (switch-to-buffer buffer-name)))
+
+;; Ligatures
+(use-package ligature
+  :if (file-directory-p "~/pro/misc/ligature.el")
+  :load-path "~/pro/misc/ligature.el"
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
 
 ;; some borrowed snippets
 (use-package org
