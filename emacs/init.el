@@ -231,11 +231,11 @@
                             (go-setup)
                             (yas-minor-mode)
                             (cond ((string= lsp-implementation "eglot")
-                                   (setq eglot-workspace-configuration '((gopls .(:hoverKind "FullDocumentation" :staticcheck t))))
-                                   (when (or (eq buffer-file-name nil) (file-writable-p buffer-file-name))
-                                     (eglot-ensure)
-                                     (company-mode)
-                                     (add-hook 'before-save-hook #'eglot-format-buffer -10 t)))
+                                   (setq eglot-workspace-configuration
+                                         '((gopls . (:hoverKind "FullDocumentation" :staticcheck t))))
+                                   (eglot-ensure)
+                                   (company-mode)
+                                   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
                                    (lsp-register-custom-settings
@@ -443,6 +443,7 @@
 
 ;; Ligatures
 (use-package ligature
+  :disabled
   :if (file-directory-p "~/pro/misc/ligature.el")
   :load-path "~/pro/misc/ligature.el"
   :config
