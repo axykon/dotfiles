@@ -188,7 +188,7 @@
   :commands (lsp lsp-deferred)
   :config
   (setq lsp-keep-workspace-alive nil
-        ;;lsp-eldoc-render-all nil
+        lsp-headerline-breadcrumb-enable nil
         lsp-idle-delay 0.500)
   :bind
   ([remap display-local-help] . lsp-describe-thing-at-point))
