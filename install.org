@@ -67,7 +67,7 @@
       "kindest/node" = "docker.io/kindest/node"
   #+end_src
 
-  #+begin_src sh :var version="0.10.0" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="0.11.0" :results output silent :dir /sudo::/tmp
     set -e
     kind=/usr/local/bin/kind
     curl -sL https://kind.sigs.k8s.io/dl/v${version}/kind-linux-amd64 \
