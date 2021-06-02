@@ -121,7 +121,7 @@
   #+end_src
 
 * Install helm
-  #+begin_src sh :var version="v3.5.0" :results output silent
+  #+begin_src sh :var version="v3.6.0" :results output silent
     set -e
     curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
         | tar -C $HOME/.local/bin -xz --strip-components=1 --mode=0755 \
