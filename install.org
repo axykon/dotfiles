@@ -143,8 +143,8 @@
             | tar -xz
 
     cd istio-$version
-    install --mode=0755 bin/istioctl $HOME/.local/bin
-    install --mode=0644 tools/istioctl.bash $HOME/.local/share/bash-completion/completions/_istioctl
+    install -D --mode=0755 bin/istioctl $HOME/.local/bin
+    install -D --mode=0644 tools/istioctl.bash $HOME/.local/share/bash-completion/completions/_istioctl
     mkdir -p $HOME/.local/share/istio
     cp -r samples $HOME/.local/share/istio
   #+end_src
