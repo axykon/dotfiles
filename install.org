@@ -151,9 +151,9 @@
   Then run ~istioctl install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
 
 * Install k9s
-  #+begin_src sh :var version="v0.24.9" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="v0.24.10" :results output silent :dir /sudo::/tmp
     set -e
-    curl -L https://github.com/derailed/k9s/releases/download/${version}/k9s_Linux_x86_64.tar.gz \
+    curl -L https://github.com/derailed/k9s/releases/download/${version}/k9s_${version}_Linux_x86_64.tar.gz \
         | tar -C /usr/local/bin -xz --mode=0755 k9s
   #+end_src
   
