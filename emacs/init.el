@@ -385,7 +385,6 @@
   :disabled)
 
 (use-package treemacs
-  :disabled
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
@@ -395,6 +394,7 @@
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag))
   :config
+  (setq treemacs-read-string-input 'from-minibuffer)
   (treemacs-load-theme "all-the-icons"))
 
 (use-package project
