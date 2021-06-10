@@ -170,11 +170,13 @@
 
 ** Install FiraCode fonts
    #+begin_src sh
-     TEMPFILE=$(mktemp fira-code-XXX.zip)
+     TEMPFILE=$(mktemp /tmp/fira-code-XXX.zip)
+     FONTDIR=~/.local/share/fonts
      curl -sL "https://github.com/tonsky/FiraCode/releases/download/2/FiraCode_2.zip" \
           -o $TEMPFILE
-     rm -f ~/.fonts/FiraCode*.ttf
-     unzip -jd ~/.fonts $TEMPFILE ttf/\*.ttf
+     rm -f $FONTDIR/FiraCode*.ttf
+     unzip -jd $FONTDIR $TEMPFILE ttf/\*.ttf
+     rm -f $TEMPFILE
    #+end_src
 
 ** Set default monospace font
