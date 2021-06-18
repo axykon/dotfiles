@@ -408,6 +408,21 @@
   ;;(add-hook 'project-find-functions #'project-find-go-module)
   )
 
+;; Google translate
+(use-package google-translate
+  :ensure t
+  :custom
+  (google-translate-backend-method 'curl)
+  :config
+  (setq
+   google-translate-default-source-language "en"
+   google-translate-default-target-language "ru")
+  (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
+  :bind
+  ("C-c [" . google-translate-at-point)
+  ("C-c ]" . google-translate-query-translate))
+
+
 ;; Dockerfile
 (use-package dockerfile-mode
   :defer t)
@@ -425,7 +440,7 @@
 ;; k8s
 (defun k8s-select-pod ()
   (let ((pod-list (split-string (shell-command-to-string "kubectl get pods -o jsonpath='{.items[*].metadata.name}'"))))
-    (ivy-read "Select Pod: " pod-list)))
+    (completing-read "Select Pod: " pod-list)))
 
 
 (defun k8s-log ()
