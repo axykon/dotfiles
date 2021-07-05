@@ -67,7 +67,7 @@
       "kindest/node" = "docker.io/kindest/node"
   #+end_src
 
-  #+begin_src sh :var version="0.11.0" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="0.11.1" :results output silent :dir /sudo::/tmp
     set -e
     kind=/usr/local/bin/kind
     curl -sL https://kind.sigs.k8s.io/dl/v${version}/kind-linux-amd64 \
@@ -107,7 +107,7 @@
   #+end_src
 
 * Install scaffold
-  #+begin_src sh :results output silent :var version="1.21.0" :dir /tmp
+  #+begin_src sh :results output silent :var version="1.26.1" :dir /tmp
     set -e
     skaffold=$HOME/.local/bin/skaffold
     curl -Lo $skaffold https://storage.googleapis.com/skaffold/releases/v${version}/skaffold-linux-amd64
@@ -115,7 +115,7 @@
 
     bashcompdir=$HOME/.local/share/bash-completion/completions
     [[ -d $bashcompdir ]] || mkdir -p $bashcompdir
-    bashcomp=$bashcompdir/_skaffold
+    bashcomp=$bashcompdir/skaffold
     skaffold completion bash > $bashcomp
     chmod 0644 $bashcomp
   #+end_src
@@ -273,5 +273,5 @@
      bind-key C-q send-prefix
      bind-key r source-file ~/.tmux.conf
 
-     set -g window-status-current-style 'bg=yellow'
+     set -g window-status-current-style 'bg=black fg=yellow'
    #+end_src

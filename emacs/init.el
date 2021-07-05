@@ -103,7 +103,7 @@
   :mode "\\.puml\\'"
   :config
   (setq plantuml-default-exec-mode 'jar
-        plantuml-jar-path "/home/akravtsov/plantuml.jar"))
+        plantuml-jar-path "~/.local/lib/java/plantuml.jar"))
 
 ;; Flymake
 (use-package flymake
@@ -123,7 +123,7 @@
   :config
   (setq org-src-fontify-natively t
         org-hide-emphasis-markers t
-        org-plantuml-jar-path "~/plantuml.jar"
+        org-plantuml-jar-path "~/.local/lib/java/plantuml.jar"
         org-babel-min-lines-for-block-output 2
         org-babel-results-keyword "results")
   (org-babel-do-load-languages
