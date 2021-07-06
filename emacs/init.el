@@ -453,6 +453,7 @@
         (start-process process-name buffer-name "kubectl" "logs" "-f" pod)
         (set-buffer buffer-name)
         (view-mode t)
+        (hl-line-mode)
         (toggle-truncate-lines nil)))
     (switch-to-buffer buffer-name)))
 
