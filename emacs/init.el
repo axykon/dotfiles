@@ -405,7 +405,7 @@
       (cons 'go-module root)))
   (cl-defmethod project-root ((project (head go-module)))
     (cdr project))
-  ;;(add-hook 'project-find-functions #'project-find-go-module)
+    (add-hook 'project-find-functions #'project-find-go-module)
   )
 
 ;; Google translate
@@ -458,8 +458,8 @@
     (switch-to-buffer buffer-name)))
 
 ;; Ligatures
+;; https://github.com/mickeynp/ligature.el
 (use-package ligature
-  :disabled
   :if (file-directory-p "~/pro/misc/ligature.el")
   :load-path "~/pro/misc/ligature.el"
   :config
