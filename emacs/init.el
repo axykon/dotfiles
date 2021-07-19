@@ -247,7 +247,7 @@
                                                            ((hoverKind ."FullDocumentation")
                                                             (staticcheck . t)
                                                             (usePlaceholders . t)
-                                                            (linksInHover . nil)))))
+                                                            (linksInHover . :json-false)))))
                                    (eglot-ensure)
 ;;                                   (company-mode)
                                    (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
