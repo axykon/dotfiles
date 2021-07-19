@@ -236,16 +236,20 @@
                       "go test -v"
                     "go build"))))
   :config
-  (add-hook 'go-mode-hook #'go-setup)
-  (add-hook 'go-mode-hook #'yas-minor-mode)
+  ;;(add-hook 'go-mode-hook #'go-setup)
+  ;;(add-hook 'go-mode-hook #'yas-minor-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (go-setup)
-                            (yas-minor-mode)
+                            (yas-minor-mode-on)
                             (cond ((string= lsp-implementation "eglot")
-                                   (setq eglot-workspace-configuration
-                                         '((gopls . (:hoverKind "FullDocumentation" :staticcheck t))))
+                                   (setq-default eglot-workspace-configuration
+                                                 '((:gopls .
+                                                           ((hoverKind ."FullDocumentation")
+                                                            (staticcheck . t)
+                                                            (usePlaceholders . t)
+                                                            (linksInHover . nil)))))
                                    (eglot-ensure)
-                                   (company-mode)
+;;                                   (company-mode)
                                    (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
