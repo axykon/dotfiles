@@ -388,11 +388,6 @@
   :config
   (mood-line-mode 1))
 
-(use-package doom-modeline
-  :disabled
-  :init
-  (doom-modeline-mode 1))
-
 (use-package flycheck
   :diminish)
 
