@@ -222,6 +222,12 @@
   :config
   (yas-reload-all))
 
+(use-package rfc-mode
+  :defer t)
+
+(use-package page-break-lines
+  :defer t)
+
 ;; Go
 ;; Used tools:
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
