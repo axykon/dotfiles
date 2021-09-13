@@ -471,6 +471,7 @@
 ;; Ligatures
 ;; https://github.com/mickeynp/ligature.el
 (use-package ligature
+  :disabled
   :if (file-directory-p "~/pro/misc/ligature.el")
   :load-path "~/pro/misc/ligature.el"
   :config
