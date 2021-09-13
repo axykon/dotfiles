@@ -218,6 +218,12 @@
   :config
   (yas-reload-all))
 
+(use-package rfc-mode
+  :defer t)
+
+(use-package page-break-lines
+  :defer t)
+
 ;; Go
 ;; Used tools:
 ;; GO111MODULE=on go get golang.org/x/tools/gopls@latest
@@ -383,11 +389,6 @@
   :disabled
   :config
   (mood-line-mode 1))
-
-(use-package doom-modeline
-  :disabled
-  :init
-  (doom-modeline-mode 1))
 
 (use-package flycheck
   :diminish)
