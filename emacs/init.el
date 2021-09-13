@@ -80,10 +80,6 @@
   :ensure t
   :diminish)
 
-;; ob-http
-(use-package ob-http
-  :defer t)
-
 (use-package js
   :defer t
   :init (setq js-indent-level 2))
