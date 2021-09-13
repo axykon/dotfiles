@@ -297,19 +297,6 @@
 (use-package smartparens
   :defer t)
 
-;; Python
-(use-package elpy
-  :disabled
-  :defer t
-  :init
-  (add-hook 'python-mode-hook 'elpy-mode)
-  :config
-  (setq elpy-rpc-python-command "python3"))
-
-(add-hook 'python-mode-hook 'smartparens-mode)
-(add-hook 'python-mode-hook 'rainbow-delimiters-mode)
-;;(add-hook 'python-mode-hook 'highlight-indent-guides-mode)
-
 ;; REST-client
 (use-package restclient
   :defer t)
@@ -322,7 +309,8 @@
   :defer t)
 
 ;; Multiple cursors
-(use-package multiple-cursors)
+(use-package multiple-cursors
+  :defer t)
 
 ;; Dired
 (add-hook 'dired-load-hook
@@ -333,44 +321,6 @@
           (lambda ()
             (dired-omit-mode 1)
             (dired-hide-details-mode)))
-
-(use-package dired-subtree
-  :disabled
-  :bind (:map dired-mode-map
-              ("<tab>" . 'dired-subtree-toggle)))
-
-(use-package dired-sidebar
-  :disabled
-  :ensure t
-  :bind (([f9] . dired-sidebar-toggle-sidebar))
-  :commands (dired-sidebar-toggle-sidebar)
-  :init
-  (add-hook 'dired-sidebar-mode-hook
-            (lambda ()
-              (unless (file-remote-p default-directory)
-                (auto-revert-mode))))
-  :config
-  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
-  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
-
-  (setq dired-sidebar-subtree-line-prefix "__")
-  (setq dired-sidebar-theme 'ascii)
-  (setq dired-sidebar-use-term-integration t)
-  (setq dired-sidebar-use-custom-font t))
-
-;; Modeline
-(use-package telephone-line
-  :disabled
-  :config
-  (telephone-line-mode 1))
-
-(use-package mood-line
-  :disabled
-  :config
-  (mood-line-mode 1))
-
-(use-package flycheck
-  :diminish)
 
 (use-package treemacs-all-the-icons
   :disabled)
@@ -398,21 +348,6 @@
     (cdr project))
     (add-hook 'project-find-functions #'project-find-go-module)
   )
-
-;; Google translate
-(use-package google-translate
-  :ensure t
-  :custom
-  (google-translate-backend-method 'curl)
-  :config
-  (setq
-   google-translate-default-source-language "en"
-   google-translate-default-target-language "ru")
-  (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
-  :bind
-  ("C-c [" . google-translate-at-point)
-  ("C-c ]" . google-translate-query-translate))
-
 
 ;; Dockerfile
 (use-package dockerfile-mode
