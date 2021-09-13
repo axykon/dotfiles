@@ -169,16 +169,6 @@
   ("C-x g" . magit-status)
   ("C-x M-g" . magit-file-dispatch))
 
-;; Projectile
-(use-package projectile
-  :disabled
-  :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  ;;(projectile-global-mode)
-  (setq projectile-completion-system 'ivy
-        projectile-mode-line-prefix "  ")
-  (projectile-mode "+1"))
-
 ;; LSP
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
