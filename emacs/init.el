@@ -133,17 +133,6 @@
      (sql .t)
      (js . t))))
 
-;; Selectrum
-(use-package selectrum
-  :disabled
-  :config
-  (selectrum-mode 1))
-
-(use-package selectrum-prescient
-  :disabled
-  :config
-  (selectrum-prescient-mode 1))
-
 (use-package vertico
   :config
   (vertico-mode))
