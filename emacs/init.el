@@ -176,13 +176,17 @@
   (setq lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-enable nil
         lsp-idle-delay 0.500)
+  (setq lsp-java-vmargs
+        '("-noverify" "-Xmx1G" "-XX:+UseG1GC"
+          "-XX:+UseStringDeduplication"
+          "-javaagent:/home/axykon/.local/lib/java/lombok.jar"
+          "-Xbootclasspath/a:/home/axykon/.local/lib/java/lombok.jar"))
   :bind
   ([remap display-local-help] . lsp-describe-thing-at-point))
 
 (use-package lsp-ui
-  :disabled
   :config
-  (setq lsp-ui-doc-enable nil)
+  ;;(setq lsp-ui-doc-enable nil)
   :bind
   (:map lsp-mode-map
         ("C-c C-b" . lsp-ui-doc-glance)))
