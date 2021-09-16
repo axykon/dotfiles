@@ -230,7 +230,6 @@
                                                             (usePlaceholders . t)
                                                             (linksInHover . :json-false)))))
                                    (eglot-ensure)
-;;                                   (company-mode)
                                    (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
                                   ((string= lsp-implementation "lsp")
                                    (lsp-deferred)
@@ -251,17 +250,11 @@
 (use-package direnv
   :defer t)
 
-;; Company
-(use-package company
+;; Corfu
+(use-package corfu
   :diminish
   :init
-  (add-hook 'prog-mode-hook #'company-mode)
-  :config
-  (setq-default company-backends
-                '(company-capf
-                  company-files
-                  (company-dabbrev-code company-keywords)
-                  company-dabbrev)))
+  (add-hook 'prog-mode-hook #'corfu-mode))
 
 ;; Eglot
 (use-package eglot
@@ -431,3 +424,8 @@
      :map org-mode-map
      :filter (org-at-table-p)
      ("S-SPC" . org-table-mark-field))))
+
+
+(use-package emacs
+  :init
+   (setq tab-always-indent 'complete))
