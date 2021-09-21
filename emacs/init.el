@@ -350,6 +350,12 @@
 (use-package dockerfile-mode
   :defer t)
 
+;; Groovy
+(use-package groovy-mode
+  :config
+  (setq groovy-indent-offset 2))
+
+
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
