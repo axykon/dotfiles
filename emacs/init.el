@@ -357,6 +357,12 @@
 ;; Browse at git remote
 (use-package browse-at-remote)
 
+;; Graphviz
+(use-package graphviz-dot-mode
+  :ensure t
+  :config
+  (setq graphviz-dot-indent-width 2))
+
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
 
