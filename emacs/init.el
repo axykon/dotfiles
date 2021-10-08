@@ -355,6 +355,8 @@
   :config
   (setq groovy-indent-offset 2))
 
+;; Browse at git remote
+(use-package browse-at-remote)
 
 ;; Additional library path
 (add-to-list 'load-path "~/.emacs.d/lib")
