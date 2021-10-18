@@ -267,11 +267,16 @@
 
 * Applications
 ** Customize desktop files
-  #+begin_src sh
+  #+begin_src sh :results output silent
     cat /usr/share/applications/code.desktop  \
         | sed 's|Exec=/usr/share/code/code|Exec=/usr/share/code/code --enable-features=UseOzonePlatform --ozone-platform=wayland|' \
               > ~/.local/share/applications/code.desktop
+
+    cat /usr/share/applications/google-chrome.desktop  \
+        | sed 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland|' \
+              > ~/.local/share/applications/google-chrome.desktop
   #+end_src
+
 * Configuration
 ** tmux
    #+begin_src conf :tangle "~/.tmux.conf"
