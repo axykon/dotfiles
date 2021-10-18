@@ -56,7 +56,6 @@
 
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 (setq package-archive-priorities
       '(("melpa" . 10)
         ("melpa-stable" . 5)))
@@ -354,6 +353,9 @@
 (use-package groovy-mode
   :config
   (setq groovy-indent-offset 2))
+
+;; Browse at git remote
+(use-package browse-at-remote)
 
 ;; Graphviz
 (use-package graphviz-dot-mode
