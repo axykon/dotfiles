@@ -256,8 +256,10 @@
 ;; Corfu
 (use-package corfu
   :diminish
-  :init
-  (add-hook 'prog-mode-hook #'corfu-mode))
+  :hook ((prog-mode . corfu-mode)
+         (eshell-mode . corfu-mode))
+  :config
+  (setq corfu-cycle t))
 
 ;; Eglot
 (use-package eglot
@@ -445,4 +447,5 @@
 
 (use-package emacs
   :init
-   (setq tab-always-indent 'complete))
+  (setq completion-cycle-threshold 3)
+  (setq tab-always-indent 'complete))
