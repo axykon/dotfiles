@@ -1,0 +1,45 @@
+theme = "native"
+icons = "awesome"
+
+[[block]]
+block = "backlight"
+device = "intel_backlight"
+
+[[block]]
+block = "battery"
+interval = 10
+format = "{percentage} {time}"
+
+[[block]]
+block = "memory"
+display_type = "memory"
+
+[[block]]
+block = "cpu"
+interval = 1
+
+[[block]]
+block = "load"
+interval = 1
+format = "{1m}"
+
+[[block]]
+block = "sound"
+step_width = 2
+max_vol = 120
+
+[[block]]
+block = "networkmanager"
+interface_name_exclude = ["docker\\d+", "virbr", "tun"]
+
+[[block]]
+block = "keyboard_layout"
+driver = "sway"
+[block.mappings]
+"English (US)" = "En"
+"Russian (N/A)" = "Ru"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %d/%m %R"

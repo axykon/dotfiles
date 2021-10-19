@@ -273,7 +273,7 @@
               > ~/.local/share/applications/code.desktop
 
     cat /usr/share/applications/google-chrome.desktop  \
-        | sed 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland|' \
+        | sed 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --password-store=gnome|' \
               > ~/.local/share/applications/google-chrome.desktop
   #+end_src
 
