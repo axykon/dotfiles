@@ -268,7 +268,7 @@
   (setq eglot-autoshutdown t)
   (advice-add 'eglot--format-markup :filter-return
               (lambda (r)
-                (replace-regexp-in-string "\\\\\\([.'()\\:\";=*<>]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
+                (replace-regexp-in-string "\\\\\\([.'()\\:\";=*<>_]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
 
