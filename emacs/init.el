@@ -126,7 +126,6 @@
    '((emacs-lisp . t)
      (python . t)
      (shell . t)
-     (http . t)
      (plantuml .t)
      (dot .t)
      (sql .t)
