@@ -106,6 +106,9 @@
               ("M-n" . 'flymake-goto-next-error)
               ("M-p" . 'flymake-goto-prev-error)))
 
+;; VC diff highlight
+(use-package diff-hl)
+
 ;; Org
 (use-package org
   :pin gnu
