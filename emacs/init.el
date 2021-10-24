@@ -148,6 +148,13 @@
          ("C-c ." . consult-imenu)
          ("C-s" . consult-line)))
 
+(use-package marginalia
+  :bind (("M-A" . marginalia-cycle)
+         :map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
 ;; Avy
 (use-package avy
   :bind ("C-'" . avy-goto-char-timer))
@@ -262,6 +269,12 @@
          (eshell-mode . corfu-mode))
   :config
   (setq corfu-cycle t))
+
+;; Company
+(use-package company
+  :disabled
+  :diminish
+  :hook ((prog-mode . company-mode)))
 
 ;; Eglot
 (use-package eglot
