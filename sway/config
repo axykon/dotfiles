@@ -24,7 +24,7 @@ set $menu j4-dmenu-desktop --dmenu="bemenu -i -p Run: -l 10 --scrollbar autohide
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/Wallpapers/stgnjduoe5a51.jpg fill
+output * bg ~/.config/sway/bg fill
 #
 # Example configuration:
 #
