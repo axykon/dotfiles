@@ -287,22 +287,16 @@
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
 
-
-;; Ace-window
-(use-package ace-window
-  :config
-  (setq aw-scope 'frame
-        aw-display-mode-overlay nil)
-  :bind ("M-o" . ace-window))
-
 ;; Vue
 (use-package vue-mode
+  :disabled
   :defer t)
 
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
 
 (use-package highlight-indentation
+  :disabled
   :defer t
   :hook (yaml-mode . highlight-indentation-current-column-mode)
   :diminish)
@@ -312,6 +306,7 @@
 
 ;; REST-client
 (use-package restclient
+  :disabled
   :defer t)
 
 ;; SQL-mode
@@ -463,4 +458,5 @@
 (use-package emacs
   :init
   (setq completion-cycle-threshold 3)
-  (setq tab-always-indent 'complete))
+  (setq tab-always-indent 'complete)
+  (global-set-key (kbd "M-o") 'other-window))
