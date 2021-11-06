@@ -460,4 +460,5 @@
   (setq completion-cycle-threshold 3)
   (setq tab-always-indent 'complete)
   (setq compilation-scroll-output 'first-error)
+  (setq auto-revert-check-vc-info t)
   (global-set-key (kbd "M-o") 'other-window))
