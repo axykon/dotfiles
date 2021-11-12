@@ -132,7 +132,8 @@
      (plantuml .t)
      (dot .t)
      (sql .t)
-     (js . t))))
+     (js . t)))
+  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images))
 
 (use-package vertico
   :config
@@ -453,7 +454,6 @@
      :map org-mode-map
      :filter (org-at-table-p)
      ("S-SPC" . org-table-mark-field))))
-
 
 (use-package emacs
   :init
