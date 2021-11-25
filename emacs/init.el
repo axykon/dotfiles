@@ -268,8 +268,10 @@
   :diminish
   :hook ((prog-mode . corfu-mode)
          (eshell-mode . corfu-mode))
-  :config
-  (setq corfu-cycle t))
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-quit-at-boundary t))
 
 ;; Company
 (use-package company
