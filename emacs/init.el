@@ -194,6 +194,7 @@
   ([remap display-local-help] . lsp-describe-thing-at-point))
 
 (use-package lsp-ui
+  :disabled
   :config
   ;;(setq lsp-ui-doc-enable nil)
   :bind
