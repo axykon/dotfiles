@@ -37,16 +37,23 @@ require('packer').startup(function()
 	-- Additional textobjects for treesitter
 	use 'nvim-treesitter/nvim-treesitter-textobjects'
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+	use 'williamboman/nvim-lsp-installer'
 	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
 	use 'hrsh7th/cmp-nvim-lua'
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip' -- Snippets plugin
-    use 'folke/tokyonight.nvim'
+	use 'folke/tokyonight.nvim'
 	use 'kosayoda/nvim-lightbulb'
 	use 'mhinz/vim-rfc'
 	use 'nvim-telescope/telescope-project.nvim'
 	use 'vim-test/vim-test'
+	-- PlantUML
+	use 'aklt/plantuml-syntax'
+	use {
+		'weirongxu/plantuml-previewer.vim',
+		requires = 'tyru/open-browser.vim'
+	}
 	use {
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
@@ -95,11 +102,11 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme tokyonight]]
 
 --Set statusbar
 vim.g.lightline = {
-	colorscheme = 'onedark',
+	colorscheme = 'tokyonight',
 	active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
 	component_function = { gitbranch = 'fugitive#head' },
 }
@@ -250,16 +257,42 @@ end
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls' }
-for _, lsp in ipairs(servers) do
-	nvim_lsp[lsp].setup {
+-- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'jdtls' }
+-- for _, lsp in ipairs(servers) do
+-- 	nvim_lsp[lsp].setup {
+-- 		on_attach = on_attach,
+-- 		capabilities = capabilities,
+-- 		settings = {
+-- 			gopls = {
+-- 				usePlaceholders = true
+-- 			}
+-- 		}
+-- 	}
+-- end
+local lsp_installer = require("nvim-lsp-installer")
+
+-- Register a handler that will be called for all installed servers.
+-- Alternatively, you may also register handlers on specific server instances instead (see example below).
+lsp_installer.on_server_ready(function(server)
+    local opts = {
 		on_attach = on_attach,
 		capabilities = capabilities,
 	}
-end
+
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function is exactly the same as lspconfig's setup function.
+    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+    server:setup(opts)
+end)
+
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -306,13 +339,14 @@ cmp.setup {
 		end,
 	},
 	sources = {
-		{ name = 'nvim_lsp' },
 		{ name = 'luasnip' },
+		{ name = 'nvim_lsp' },
 		{ name = 'nvim_lua' },
 	},
 }
 
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
 vim.cmd [[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]]
+vim.cmd [[autocmd Filetype html setlocal ts=2 sw=2 expandtab]]
 
 require'telescope'.load_extension('project')
