@@ -181,25 +181,31 @@
 ;; LSP
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :config
-  (setq lsp-keep-workspace-alive nil
-        lsp-headerline-breadcrumb-enable nil
-        lsp-idle-delay 0.500)
-  (setq lsp-java-vmargs
-        '("-noverify" "-Xmx1G" "-XX:+UseG1GC"
-          "-XX:+UseStringDeduplication"
-          "-javaagent:/home/axykon/.local/lib/java/lombok.jar"
-          "-Xbootclasspath/a:/home/axykon/.local/lib/java/lombok.jar"))
+  :custom
+  (lsp-keep-workspace-alive nil)
+  (lsp-idle-delay 0.500)
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-modeline-diagnostics-enable nil)
   :bind
   ([remap display-local-help] . lsp-describe-thing-at-point))
 
+(use-package lsp-java
+  :custom
+  (lsp-java-vmargs
+   '("-noverify" "-Xmx1G" "-XX:+UseG1GC"
+     "-XX:+UseStringDeduplication"
+     "-javaagent:/home/axykon/.local/lib/java/lombok.jar"
+     "-Xbootclasspath/a:/home/axykon/.local/lib/java/lombok.jar"))
+  :hook ((java-mode . lsp-deferred)))
+
 (use-package lsp-ui
-  :disabled
-  :config
-  ;;(setq lsp-ui-doc-enable nil)
+  :custom
+  (lsp-ui-doc-show-with-cursor nil)
+  (lsp-ui-doc-show-with-mouse nil)
+  (lsp-ui-sideline-show-code-actions nil)
   :bind
   (:map lsp-mode-map
-        ("C-c C-b" . lsp-ui-doc-glance)))
+        ("C-c C-d" . lsp-ui-doc-show)))
 
 (defcustom lsp-implementation "lsp"
   "Current LPS implementation"
@@ -266,6 +272,7 @@
 
 ;; Corfu
 (use-package corfu
+  :disabled
   :diminish
   :hook ((prog-mode . corfu-mode)
          (eshell-mode . corfu-mode))
