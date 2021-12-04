@@ -14,7 +14,6 @@ augroup end
 ]],
 false
 )
-
 local use = require('packer').use
 require('packer').startup(function()
 	use 'wbthomason/packer.nvim' -- Package manager
@@ -44,12 +43,33 @@ require('packer').startup(function()
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip' -- Snippets plugin
 	use 'folke/tokyonight.nvim'
+	use 'morhetz/gruvbox'
+	use 'NLKNguyen/papercolor-theme'
+	use 'jacoborus/tender.vim'
 	use 'kosayoda/nvim-lightbulb'
 	use 'mhinz/vim-rfc'
 	use 'nvim-telescope/telescope-project.nvim'
 	use 'vim-test/vim-test'
 	-- PlantUML
 	use 'aklt/plantuml-syntax'
+	use {
+		'kyazdani42/nvim-tree.lua',
+		requires = {
+			'kyazdani42/nvim-web-devicons', -- optional, for file icon
+		},
+		config = function() 
+			vim.g.nvim_tree_group_empty = 1
+			vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {
+				noremap = true,
+				silent = true
+			})
+			require'nvim-tree'.setup {
+				view = {
+					width = 50
+				}
+			} 
+		end
+	}
 	use {
 		'weirongxu/plantuml-previewer.vim',
 		requires = 'tyru/open-browser.vim'
@@ -102,11 +122,11 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
-vim.cmd [[colorscheme tokyonight]]
+vim.cmd [[colorscheme tender]]
 
 --Set statusbar
 vim.g.lightline = {
-	colorscheme = 'tokyonight',
+	colorscheme = 'tender',
 	active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
 	component_function = { gitbranch = 'fugitive#head' },
 }
@@ -156,10 +176,10 @@ require('gitsigns').setup {
 require('telescope').setup {
 	defaults = {
 		mappings = {
-			i = {
-				['<C-u>'] = false,
-				['<C-d>'] = false,
-			},
+			-- i = {
+			-- 	['<C-u>'] = false,
+			-- 	['<C-d>'] = false,
+			-- },
 		},
 	},
 }
