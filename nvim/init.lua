@@ -19,6 +19,7 @@ require('packer').startup(function()
 	use 'wbthomason/packer.nvim' -- Package manager
 	use 'tpope/vim-fugitive' -- Git commands in nvim
 	use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
+	use 'aymericbeaumet/vim-symlink'
 	use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
 	use 'ludovicchabant/vim-gutentags' -- Automatic tags management
 	-- UI to select things (files, grep results, open buffers...)
@@ -122,11 +123,11 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
-vim.cmd [[colorscheme tender]]
+vim.cmd [[colorscheme tokyonight]]
 
 --Set statusbar
 vim.g.lightline = {
-	colorscheme = 'tender',
+	colorscheme = 'tokyonight',
 	active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
 	component_function = { gitbranch = 'fugitive#head' },
 }
