@@ -272,7 +272,6 @@
 
 ;; Corfu
 (use-package corfu
-  :disabled
   :diminish
   :hook ((prog-mode . corfu-mode)
          (eshell-mode . corfu-mode))
