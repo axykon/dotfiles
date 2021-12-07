@@ -19,6 +19,7 @@ require('packer').startup(function()
 	use 'wbthomason/packer.nvim' -- Package manager
 	use 'tpope/vim-fugitive' -- Git commands in nvim
 	use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
+    use 'voldikss/vim-floaterm' 
 	use 'aymericbeaumet/vim-symlink'
 	use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
 	use 'ludovicchabant/vim-gutentags' -- Automatic tags management
@@ -47,30 +48,31 @@ require('packer').startup(function()
 	use 'morhetz/gruvbox'
 	use 'NLKNguyen/papercolor-theme'
 	use 'jacoborus/tender.vim'
+	use 'cideM/yui'
 	use 'kosayoda/nvim-lightbulb'
 	use 'mhinz/vim-rfc'
 	use 'nvim-telescope/telescope-project.nvim'
 	use 'vim-test/vim-test'
 	-- PlantUML
 	use 'aklt/plantuml-syntax'
-	use {
-		'kyazdani42/nvim-tree.lua',
-		requires = {
-			'kyazdani42/nvim-web-devicons', -- optional, for file icon
-		},
-		config = function() 
-			vim.g.nvim_tree_group_empty = 1
-			vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {
-				noremap = true,
-				silent = true
-			})
-			require'nvim-tree'.setup {
-				view = {
-					width = 50
-				}
-			} 
-		end
-	}
+	-- use {
+	-- 	'kyazdani42/nvim-tree.lua',
+	-- 	requires = {
+	-- 		'kyazdani42/nvim-web-devicons', -- optional, for file icon
+	-- 	},
+	-- 	config = function() 
+	-- 		vim.g.nvim_tree_group_empty = 1
+	-- 		vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {
+	-- 			noremap = true,
+	-- 			silent = true
+	-- 		})
+	-- 		require'nvim-tree'.setup {
+	-- 			view = {
+	-- 				width = 50
+	-- 			}
+	-- 		} 
+	-- 	end
+	-- }
 	use {
 		'weirongxu/plantuml-previewer.vim',
 		requires = 'tyru/open-browser.vim'
@@ -177,6 +179,8 @@ require('gitsigns').setup {
 -- Telescope
 require('telescope').setup {
 	defaults = {
+		layout_strategy = 'vertical',
+		layout_config = { height = 0.9, width = 0.9 },
 		mappings = {
 			-- i = {
 			-- 	['<C-u>'] = false,
