@@ -77,17 +77,18 @@ require('packer').startup(function()
 		'weirongxu/plantuml-previewer.vim',
 		requires = 'tyru/open-browser.vim'
 	}
-	use {
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("trouble").setup {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			}
-		end
-	}
+	-- use {
+	-- 	"folke/trouble.nvim",
+	-- 	requires = "kyazdani42/nvim-web-devicons",
+	-- 	config = function()
+	-- 		require("trouble").setup {
+	-- 			-- your configuration comes here
+	-- 			-- or leave it empty to use the default settings
+	-- 			-- refer to the configuration section below
+	-- 		}
+	-- 	end
+	-- }
+	use 'airblade/vim-rooter'
 end)
 
 vim.o.tabstop = 4
