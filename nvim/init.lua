@@ -20,6 +20,7 @@ require('packer').startup(function()
 	use 'tpope/vim-fugitive' -- Git commands in nvim
 	use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
     use 'voldikss/vim-floaterm' 
+	use 'stephpy/vim-yaml'
 	use 'aymericbeaumet/vim-symlink'
 	use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
 	use 'ludovicchabant/vim-gutentags' -- Automatic tags management
