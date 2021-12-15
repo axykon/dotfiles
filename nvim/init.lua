@@ -19,6 +19,7 @@ require('packer').startup(function()
 	use 'wbthomason/packer.nvim' -- Package manager
 	use 'tpope/vim-fugitive' -- Git commands in nvim
 	use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
+	use 'idanarye/vim-merginal'
     use 'voldikss/vim-floaterm' 
 	use 'stephpy/vim-yaml'
 	use 'aymericbeaumet/vim-symlink'
@@ -49,6 +50,7 @@ require('packer').startup(function()
 	use 'morhetz/gruvbox'
 	use 'NLKNguyen/papercolor-theme'
 	use 'jacoborus/tender.vim'
+	use 'sainnhe/gruvbox-material'
 	use 'cideM/yui'
 	use 'kosayoda/nvim-lightbulb'
 	use 'mhinz/vim-rfc'
@@ -92,6 +94,7 @@ require('packer').startup(function()
 	use 'airblade/vim-rooter'
 end)
 
+vim.o.guifont = 'JetBrains Mono:h13'
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.scrolloff = 3
@@ -321,6 +324,14 @@ lsp_installer.on_server_ready(function(server)
 		on_attach = on_attach,
 		capabilities = capabilities,
 	}
+
+	if server.name == 'gopls' then
+		opts.settings = {
+			gopls = {
+				usePlaceholders = true
+			}
+		}
+	end
 
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
