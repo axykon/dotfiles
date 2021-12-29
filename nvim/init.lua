@@ -17,6 +17,7 @@ false
 local use = require('packer').use
 require('packer').startup(function()
 	use 'wbthomason/packer.nvim' -- Package manager
+	use 'kyazdani42/nvim-web-devicons'
 	use 'tpope/vim-fugitive' -- Git commands in nvim
 	use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
 	use 'idanarye/vim-merginal'
@@ -31,6 +32,7 @@ require('packer').startup(function()
 	use 'AlessandroYorba/Alduin'
 	use 'arcticicestudio/nord-vim'
 	use 'itchyny/lightline.vim' -- Fancier statusline
+	-- use 'ggandor/lightspeed.nvim'
 	-- Add indentation guides even on blank lines
 	use 'lukas-reineke/indent-blankline.nvim'
 	-- Add git related info in the signs columns and popups
@@ -51,6 +53,7 @@ require('packer').startup(function()
 	use 'NLKNguyen/papercolor-theme'
 	use 'jacoborus/tender.vim'
 	use 'sainnhe/gruvbox-material'
+	use 'rebelot/kanagawa.nvim'
 	use 'cideM/yui'
 	use 'kosayoda/nvim-lightbulb'
 	use 'mhinz/vim-rfc'
@@ -65,7 +68,7 @@ require('packer').startup(function()
 	-- 	},
 	-- 	config = function() 
 	-- 		vim.g.nvim_tree_group_empty = 1
-	-- 		vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {
+	-- 		vim.api.nvim_set_keymap('n', '<f9>', ':NvimTreeToggle<cr>', {
 	-- 			noremap = true,
 	-- 			silent = true
 	-- 		})
@@ -186,6 +189,7 @@ require('telescope').setup {
 	defaults = {
 		layout_strategy = 'vertical',
 		layout_config = { height = 0.9, width = 0.9 },
+		scroll_strategy = 'limit',
 		vimgrep_arguments = {
 			'rg',
 			'--hidden',
