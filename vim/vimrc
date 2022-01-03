@@ -6,6 +6,9 @@ set updatetime=300
 set nowrap
 set fillchars=vert:\│
 
+nnoremap <space> <nop>
+map <space> <leader>
+
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -27,6 +30,8 @@ Plug 'sainnhe/sonokai'
 Plug 'vim-test/vim-test'
 Plug 'airblade/vim-rooter'
 Plug 'aymericbeaumet/vim-symlink'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
@@ -34,7 +39,7 @@ let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
 let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 set termguicolors
 
-if &term =~? 'xterm-kitty' || &term == 'tmux-256color'
+if &term =~? 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty'
 	let &t_SI .= "\<Esc>[6 q"
 	let &t_EI .= "\<Esc>[2 q"
 endif
@@ -60,6 +65,10 @@ set number
 set relativenumber
 set signcolumn=number
 
+" FZF
+nnoremap <leader><space> :Buffers<cr>
+nnoremap <leader>? :History<cr>
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -75,13 +84,9 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-	inoremap <silent><expr> <c-space> coc#refresh()
-else
-	inoremap <silent><expr> <c-@> coc#refresh()
-endif
+inoremap <silent><expr> <c-@> coc#refresh()
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
+" Make <cr> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ?  coc#_select_confirm()
 			\ : "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
