@@ -1,0 +1,53 @@
+let data_dir = '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'arcticicestudio/nord-vim'
+Plug 'sainnhe/everforest'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-commentary'
+Plug 'romainl/apprentice'
+Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/sonokai'
+call plug#end()
+
+" Correct RGB escape codes for vim inside tmux
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+set termguicolors
+
+set tabstop=4
+set shiftwidth=4
+set hidden
+
+if &term =~? 'xterm-kitty' || &term == 'tmux-256color'
+	let &t_SI .= "\<Esc>[6 q"
+	let &t_EI .= "\<Esc>[2 q"
+endif
+
+set laststatus=2
+set noshowmode
+let g:lightline = {
+			\ 'colorscheme': 'sonokai',
+			\ 'active': {
+				\ 'left': [ [ 'mode', 'paste'],
+				\           [ 'gitbranch', 'readonly', 'modified' ] ]
+		    \ },
+			\ 'component_function': {
+				\ 'gitbranch': 'FugitiveHead'
+			\ }
+			\ }
+set background=dark
+
+let g:sonokai_style = 'shusia'
+colorscheme sonokai
+
+set number
+set relativenumber
+set signcolumn=number
