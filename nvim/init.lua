@@ -59,6 +59,7 @@ require('packer').startup(function()
 	use 'mhinz/vim-rfc'
 	use 'nvim-telescope/telescope-project.nvim'
 	use 'vim-test/vim-test'
+	use 'sainnhe/sonokai'
 	-- PlantUML
 	use 'aklt/plantuml-syntax'
 	-- use {
@@ -133,12 +134,12 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.g.onedark_terminal_italics = 2
-vim.cmd [[colorscheme tokyonight]]
+-- vim.g.sonokai_style = 'shusia'
+vim.cmd [[colorscheme sonokai]]
 
 --Set statusbar
 vim.g.lightline = {
-	colorscheme = 'tokyonight',
+	colorscheme = 'sonokai',
 	active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
 	component_function = { gitbranch = 'fugitive#head' },
 }
