@@ -16,22 +16,22 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'arcticicestudio/nord-vim'
-Plug 'sainnhe/everforest'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-commentary'
-Plug 'romainl/apprentice'
-Plug 'morhetz/gruvbox'
-Plug 'sainnhe/gruvbox-material'
-Plug 'sainnhe/sonokai'
-Plug 'vim-test/vim-test'
 Plug 'airblade/vim-rooter'
+Plug 'arcticicestudio/nord-vim'
 Plug 'aymericbeaumet/vim-symlink'
+Plug 'felipec/vim-felipec'
+Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'morhetz/gruvbox'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'romainl/apprentice'
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/sonokai'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'vim-test/vim-test'
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
@@ -50,15 +50,17 @@ let g:lightline = {
 			\ 'colorscheme': 'sonokai',
 			\ 'active': {
 				\ 'left': [ [ 'mode', 'paste'],
-				\           [ 'gitbranch', 'readonly', 'modified' ] ]
+				\           [ 'gitbranch', 'cocstatus', 'readonly', 'modified' ] ]
 		    \ },
 			\ 'component_function': {
-				\ 'gitbranch': 'FugitiveHead'
+				\ 'gitbranch': 'FugitiveHead',
+				\ 'cocstatus': 'coc#status'
 			\ }
 			\ }
 set background=dark
 
 let g:sonokai_style = 'shusia'
+" colorscheme sonokai
 colorscheme sonokai
 
 set number
@@ -68,7 +70,9 @@ set signcolumn=number
 " FZF
 nnoremap <leader><space> :Buffers<cr>
 nnoremap <leader>? :History<cr>
+nnoremap <leader>g :GFiles<cr>
 
+" === LSP settings ===
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -160,11 +164,11 @@ omap ac <Plug>(coc-classobj-a)
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
 	nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ?  coc#float#scroll(1) : "\<C-f>"
-	nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  coc#float#scroll(0) : "\<C-b>"
+	nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  coc#float#scroll(0) : "\<C-d>"
 	inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ?  "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
 	inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 	vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ?  coc#float#scroll(1) : "\<C-f>"
-	vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  coc#float#scroll(0) : "\<C-b>"
+	vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ?  coc#float#scroll(0) : "\<C-d>"
 endif
 
 " Use CTRL-S for selections ranges.
@@ -180,11 +184,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
