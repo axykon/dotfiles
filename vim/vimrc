@@ -73,6 +73,9 @@ set number
 set relativenumber
 set signcolumn=number
 
+nnoremap <leader>tn :TestNearest<cr>
+nnoremap <leader>tl :TestLast<cr>
+
 " FZF
 nnoremap <leader><space> :Buffers<cr>
 nnoremap <leader>? :History<cr>
