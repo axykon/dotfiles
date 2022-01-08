@@ -16,6 +16,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'aymericbeaumet/vim-symlink'
@@ -26,6 +27,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'romainl/apprentice'
+Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/gruvbox-material'
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-commentary'
@@ -33,7 +35,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-test/vim-test'
 Plug 'voldikss/vim-floaterm'
-Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
