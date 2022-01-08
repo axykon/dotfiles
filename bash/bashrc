@@ -1,5 +1,5 @@
 # -*- sh -*-
-export EDOTOR=nvim
+export EDITOR=vim
 
 # Colors
 txtblk='\e[0;30m' # Black - Regular
