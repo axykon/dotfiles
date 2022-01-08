@@ -32,6 +32,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-test/vim-test'
+Plug 'voldikss/vim-floaterm'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
@@ -47,6 +49,9 @@ endif
 set laststatus=2
 set noshowmode
 let g:lightline = {
+			\ 'enable': {
+				\ 'tabline': 0
+			\ },
 			\ 'colorscheme': 'sonokai',
 			\ 'active': {
 				\ 'left': [ [ 'mode', 'paste'],
