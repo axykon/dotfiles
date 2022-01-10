@@ -134,7 +134,7 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
--- vim.g.sonokai_style = 'shusia'
+vim.g.sonokai_style = 'espresso'
 vim.cmd [[colorscheme sonokai]]
 
 --Set statusbar
