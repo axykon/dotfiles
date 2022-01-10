@@ -18,6 +18,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
+Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 Plug 'arcticicestudio/nord-vim'
 Plug 'aymericbeaumet/vim-symlink'
 Plug 'felipec/vim-felipec'
@@ -33,6 +34,7 @@ Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-vinegar'
 Plug 'vim-test/vim-test'
 Plug 'voldikss/vim-floaterm'
 call plug#end()
@@ -47,12 +49,13 @@ if &term =~? 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty'
 	let &t_EI .= "\<Esc>[2 q"
 endif
 
+if &term == 'xterm-kitty'
+	let &t_ut=''
+endif
+
 set laststatus=2
 set noshowmode
 let g:lightline = {
-			\ 'enable': {
-				\ 'tabline': 0
-			\ },
 			\ 'colorscheme': 'sonokai',
 			\ 'active': {
 				\ 'left': [ [ 'mode', 'paste'],
@@ -66,8 +69,8 @@ let g:lightline = {
 set background=dark
 
 let g:sonokai_style = 'shusia'
-" colorscheme sonokai
 colorscheme sonokai
+
 
 set number
 set relativenumber
