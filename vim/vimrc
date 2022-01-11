@@ -25,6 +25,8 @@ Plug 'felipec/vim-felipec'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'romainl/apprentice'
@@ -44,7 +46,7 @@ let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
 let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 set termguicolors
 
-if &term =~? 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty'
+if &term == 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty'
 	let &t_SI .= "\<Esc>[6 q"
 	let &t_EI .= "\<Esc>[2 q"
 endif
