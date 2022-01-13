@@ -151,7 +151,7 @@
   Then run ~istioctl install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
 
 * Install k9s
-  #+begin_src sh :var version="v0.25.7" :results output silent :dir /sudo::/tmp
+  #+begin_src sh :var version="v0.25.18" :results output silent :dir /sudo::/tmp
     set -e
     curl -L https://github.com/derailed/k9s/releases/download/${version}/k9s_Linux_x86_64.tar.gz \
         | tar -C /usr/local/bin -xz --mode=0755 k9s
@@ -273,7 +273,7 @@
               > ~/.local/share/applications/code.desktop
 
     cat /usr/share/applications/google-chrome.desktop  \
-        | sed 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --password-store=gnome --enable-features=WebRTCPipeWireCapturer|' \
+        | sed 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --ozone-platform-hint=auto --password-store=gnome --enable-features=WebRTCPipeWireCapturer|' \
               > ~/.local/share/applications/google-chrome.desktop
   #+end_src
 
