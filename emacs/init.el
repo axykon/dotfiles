@@ -83,6 +83,9 @@
   :defer t
   :init (setq js-indent-level 2))
 
+(use-package typescript-mode
+  :defer t)
+
 ;; Markdown
 (use-package markdown-mode
   :ensure t
