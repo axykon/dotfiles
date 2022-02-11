@@ -178,41 +178,6 @@
   ("C-x g" . magit-status)
   ("C-x M-g" . magit-file-dispatch))
 
-;; LSP
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :custom
-  (lsp-keep-workspace-alive nil)
-  (lsp-idle-delay 0.500)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-modeline-diagnostics-enable nil)
-  :bind
-  ([remap display-local-help] . lsp-describe-thing-at-point))
-
-(use-package lsp-java
-  :custom
-  (lsp-java-vmargs
-   '("-noverify" "-Xmx1G" "-XX:+UseG1GC"
-     "-XX:+UseStringDeduplication"
-     "-javaagent:/home/axykon/.local/lib/java/lombok.jar"
-     "-Xbootclasspath/a:/home/axykon/.local/lib/java/lombok.jar"))
-  :hook ((java-mode . lsp-deferred)))
-
-(use-package lsp-ui
-  :custom
-  (lsp-ui-doc-show-with-cursor nil)
-  (lsp-ui-doc-show-with-mouse nil)
-  (lsp-ui-sideline-show-code-actions nil)
-  :bind
-  (:map lsp-mode-map
-        ("C-c C-d" . lsp-ui-doc-show)))
-
-(defcustom lsp-implementation "lsp"
-  "Current LPS implementation"
-  :type '(choice (const "lsp")
-                 (const "eglot"))
-  :group 'local)
-
 (use-package yasnippet
   :config
   (yas-reload-all))
@@ -242,7 +207,6 @@
   (add-hook 'go-mode-hook (lambda ()
                             (go-setup)
                             (yas-minor-mode-on)
-                            (cond ((string= lsp-implementation "eglot")
                                    (setq-default eglot-workspace-configuration
                                                  '((:gopls .
                                                            ((hoverKind ."FullDocumentation")
@@ -250,15 +214,7 @@
                                                             (usePlaceholders . t)
                                                             (linksInHover . :json-false)))))
                                    (eglot-ensure)
-                                   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-                                  ((string= lsp-implementation "lsp")
-                                   (lsp-deferred)
-                                   (lsp-register-custom-settings
-                                    '(("gopls.completeUnimported" t t)
-                                      ("gopls.hoverKind" "FullDocumentation")
-                                      ("gopls.staticcheck" t t)))
-                                   (add-hook 'before-save-hook #'lsp-organize-imports nil t)
-                                   (add-hook 'before-save-hook #'lsp-format-buffer))))))
+                                   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))))
 
 (use-package go-playground)
 
@@ -276,15 +232,18 @@
   :hook ((prog-mode . corfu-mode)
          (eshell-mode . corfu-mode))
   :custom
-  (corfu-cycle t)
   (corfu-auto t)
-  (corfu-quit-at-boundary t))
+  (corfu-quit-at-boundary t)
+  :config
+  (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle))
 
-;; Company
-(use-package company
-  :disabled
-  :diminish
-  :hook ((prog-mode . company-mode)))
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;; Eglot
 (use-package eglot
@@ -296,11 +255,6 @@
                 (replace-regexp-in-string "\\\\\\([.'()\\:\";=*<>_%]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
-
-;; Vue
-(use-package vue-mode
-  :disabled
-  :defer t)
 
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
@@ -317,17 +271,6 @@
 ;; REST-client
 (use-package restclient
   :disabled
-  :defer t)
-
-;; SQL-mode
-(use-package sql
-  :defer t)
-
-(use-package sqlup-mode
-  :defer t)
-
-;; Multiple cursors
-(use-package multiple-cursors
   :defer t)
 
 ;; Dired
@@ -399,7 +342,6 @@
 (defun k8s-select-pod ()
   (let ((pod-list (split-string (shell-command-to-string "kubectl get pods -o jsonpath='{.items[*].metadata.name}'"))))
     (completing-read "Select Pod: " pod-list)))
-
 
 (defun k8s-log ()
   (interactive)
