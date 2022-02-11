@@ -119,8 +119,8 @@
   :init
   (require 'org-tempo)
   (setenv "NODE_PATH"
-      (concat (getenv "HOME") "/.emacs.d/node_modules"  ":"
-              (getenv "NODE_PATH")))
+          (concat (getenv "HOME") "/.emacs.d/node_modules"  ":"
+                  (getenv "NODE_PATH")))
   :config
   (setq org-src-fontify-natively t
         org-hide-emphasis-markers t
