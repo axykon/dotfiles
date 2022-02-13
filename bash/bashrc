@@ -57,10 +57,10 @@ k8s_current_context () {
         return
     fi
 
-    kubectl config current-context
+    echo "⚙ $(kubectl config current-context)"
 }
 
-PS1="\$(echo -n \$PS1_PREFIX)\[${txtred}\][\[${txtrst}\]\u@\h\[${txtgrn}\]\$(parse_git_branch) | $(k8s_current_context) \[${txtcyn}\]\W\[${txtred}\]]\[${txtrst}\]\n\[${txtgrn}\]\$\[${txtrst}\] "
+PS1="\$(echo -n \$PS1_PREFIX)\[${txtred}\][\[${txtrst}\]\u@\h\[${txtgrn}\]\$(parse_git_branch) | \$(k8s_current_context) \[${txtcyn}\]\W\[${txtred}\]]\[${txtrst}\]\n\[${txtgrn}\]\$\[${txtrst}\] "
 
 alias k=kubectl
 alias o=xdg-open
