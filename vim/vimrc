@@ -44,7 +44,7 @@ Plug 'preservim/tagbar'
 Plug 'stephpy/vim-yaml'
 Plug 'yegappan/lsp'
 Plug 'vim/killersheep'
-Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'towolf/vim-helm'
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
@@ -55,7 +55,7 @@ if has('termguicolors')
 	set termguicolors
 endif
 
-if &term == 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty'
+if &term == 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty' || &term == 'xterm-256color'
 	let &t_SI .= "\<Esc>[6 q"
 	let &t_EI .= "\<Esc>[2 q"
 endif

@@ -29,7 +29,6 @@ require('packer').startup(function()
 	-- UI to select things (files, grep results, open buffers...)
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 	use 'joshdick/onedark.vim' -- Theme inspired by Atom
-	use 'AlessandroYorba/Alduin'
 	use 'arcticicestudio/nord-vim'
 	use 'itchyny/lightline.vim' -- Fancier statusline
 	-- use 'ggandor/lightspeed.nvim'
@@ -62,24 +61,24 @@ require('packer').startup(function()
 	use 'sainnhe/sonokai'
 	-- PlantUML
 	use 'aklt/plantuml-syntax'
-	-- use {
-	-- 	'kyazdani42/nvim-tree.lua',
-	-- 	requires = {
-	-- 		'kyazdani42/nvim-web-devicons', -- optional, for file icon
-	-- 	},
-	-- 	config = function() 
-	-- 		vim.g.nvim_tree_group_empty = 1
-	-- 		vim.api.nvim_set_keymap('n', '<f9>', ':NvimTreeToggle<cr>', {
-	-- 			noremap = true,
-	-- 			silent = true
-	-- 		})
-	-- 		require'nvim-tree'.setup {
-	-- 			view = {
-	-- 				width = 50
-	-- 			}
-	-- 		} 
-	-- 	end
-	-- }
+	use {
+		'kyazdani42/nvim-tree.lua',
+		requires = {
+			'kyazdani42/nvim-web-devicons', -- optional, for file icon
+		},
+		config = function() 
+			vim.g.nvim_tree_group_empty = 1
+			vim.api.nvim_set_keymap('n', '<f9>', ':NvimTreeToggle<cr>', {
+				noremap = true,
+				silent = true
+			})
+			require'nvim-tree'.setup {
+				view = {
+					width = 50
+				}
+			} 
+		end
+	}
 	use {
 		'weirongxu/plantuml-previewer.vim',
 		requires = 'tyru/open-browser.vim'
@@ -96,6 +95,7 @@ require('packer').startup(function()
 	-- 	end
 	-- }
 	use 'airblade/vim-rooter'
+	use 'towolf/vim-helm'
 end)
 
 vim.o.tabstop = 4
