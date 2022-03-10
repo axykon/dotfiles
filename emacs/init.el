@@ -276,7 +276,8 @@
               (lambda (r)
                 (replace-regexp-in-string "\\\\\\([.'()\\:\";=*<>_%]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
-  (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename))
+  (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
+  (define-key eglot-mode-map (kbd "C-c C-r") 'eglot-reconnect))
 
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
