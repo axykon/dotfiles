@@ -233,8 +233,7 @@
                                                  '((:gopls .
                                                            ((hoverKind ."FullDocumentation")
                                                             (staticcheck . t)
-                                                            (usePlaceholders . t)
-                                                            (linksInHover . :json-false)))))
+                                                            (usePlaceholders . t)))))
                                    (eglot-ensure)
                                    (add-hook 'before-save-hook #'eglot-format-buffer -10 t))))
 
