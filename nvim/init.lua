@@ -133,7 +133,6 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.g.sonokai_style = 'espresso'
 vim.cmd [[colorscheme sonokai]]
 
 --Set statusbar
@@ -163,12 +162,9 @@ augroup end
 false
 )
 
--- Y yank until the end of line  (note: this is now a default on master)
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
-
 --Map blankline
 vim.g.indent_blankline_char = '┊'
-vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
+vim.g.indent_blankline_filetype_exclude = { 'help', 'packer', 'go' }
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_char_highlight = 'LineNr'
 vim.g.indent_blankline_show_trailing_blankline_indent = false
@@ -306,19 +302,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
--- Enable the following language servers
--- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'jdtls' }
--- for _, lsp in ipairs(servers) do
--- 	nvim_lsp[lsp].setup {
--- 		on_attach = on_attach,
--- 		capabilities = capabilities,
--- 		settings = {
--- 			gopls = {
--- 				usePlaceholders = true
--- 			}
--- 		}
--- 	}
--- end
 local lsp_installer = require("nvim-lsp-installer")
 
 -- Register a handler that will be called for all installed servers.
