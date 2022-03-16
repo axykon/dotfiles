@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+kubectl=$HOME/.local/bin/kubectl
+release=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+curl -sL "https://storage.googleapis.com/kubernetes-release/release/$release/bin/linux/amd64/kubectl" \
+		 -o $kubectl
+
+chmod 0755 $kubectl
+
+bashcompdir=$HOME/.local/share/bash-completion/completions
+[[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+bashcomp=$bashcompdir/kubectl
+$kubectl completion bash  > $bashcomp
+chmod 0644 $bashcomp
