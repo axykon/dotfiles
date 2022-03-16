@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+version="v0.12.0"
+kind=$HOME/.local/bin/kind
+curl -sL https://kind.sigs.k8s.io/dl/${version}/kind-linux-amd64 \
+	-o $kind
+
+chmod 0755 $kind
+
+bashcompdir=$HOME/.local/share/bash-completion/completions
+[[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+bashcomp=$bashcompdir/kind
+$kind completion bash  > $bashcomp
+chmod 0644 $bashcomp

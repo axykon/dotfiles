@@ -67,18 +67,6 @@
       "kindest/node" = "docker.io/kindest/node"
   #+end_src
 
-  #+begin_src sh :var version="0.11.1" :results output silent :dir /sudo::/tmp
-    set -e
-    kind=/usr/local/bin/kind
-    curl -sL https://kind.sigs.k8s.io/dl/v${version}/kind-linux-amd64 \
-         -o $kind
-    chmod 0755 $kind
-
-    bashcomp=/etc/bash_completion.d/kind
-    $kind completion bash  > $bashcomp
-    chmod 0644 $bashcomp
-  #+end_src
-
 * Install kubectl
   #+begin_src sh :results output silent :dir /sudo::/tmp
     set -e
