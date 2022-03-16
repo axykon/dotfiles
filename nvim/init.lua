@@ -25,8 +25,6 @@ require('packer').startup(function()
 	use 'stephpy/vim-yaml'
 	use 'aymericbeaumet/vim-symlink'
 	use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
-	use 'ludovicchabant/vim-gutentags' -- Automatic tags management
-	-- UI to select things (files, grep results, open buffers...)
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 	use 'joshdick/onedark.vim' -- Theme inspired by Atom
 	use 'arcticicestudio/nord-vim'
