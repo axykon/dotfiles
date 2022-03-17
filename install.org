@@ -125,13 +125,6 @@
   #+end_src
   Then run ~istioctl install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
 
-* Install k9s
-  #+begin_src sh :var version="v0.25.18" :results output silent :dir /sudo::/tmp
-    set -e
-    curl -L https://github.com/derailed/k9s/releases/download/${version}/k9s_Linux_x86_64.tar.gz \
-        | tar -C /usr/local/bin -xz --mode=0755 k9s
-  #+end_src
-  
 * Install rust-analyzer
   #+begin_src sh :results output silent
     curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz \
