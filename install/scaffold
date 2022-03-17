@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+skaffold=$HOME/.local/bin/skaffold
+curl -Lo $skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+chmod 0755 $skaffold
+
+bashcompdir=$HOME/.local/share/bash-completion/completions
+[[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+bashcomp=$bashcompdir/skaffold
+skaffold completion bash > $bashcomp
+chmod 0644 $bashcomp

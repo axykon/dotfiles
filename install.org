@@ -67,19 +67,6 @@
       "kindest/node" = "docker.io/kindest/node"
   #+end_src
 
-* Install kubectl
-  #+begin_src sh :results output silent :dir /sudo::/tmp
-    set -e
-    kubectl=/usr/local/bin/kubectl
-    curl -sL "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
-         -o $kubectl
-    chmod 0755 $kubectl
-
-    bashcomp=/etc/bash_completion.d/kubectl
-    $kubectl completion bash  > $bashcomp
-    chmod 0644 $bashcomp
-  #+end_src
-
 * Install kustomize
   #+begin_src sh :var version="v3.8.5" :results output silent :dir /tmp
     set -e
@@ -96,9 +83,10 @@
 
 * Install scaffold
   #+begin_src sh :results output silent :var version="1.26.1" :dir /tmp
+    version="v1.26.1"
     set -e
     skaffold=$HOME/.local/bin/skaffold
-    curl -Lo $skaffold https://storage.googleapis.com/skaffold/releases/v${version}/skaffold-linux-amd64
+    curl -Lo $skaffold https://storage.googleapis.com/skaffold/releases/${version}/skaffold-linux-amd64
     chmod 0755 $skaffold
 
     bashcompdir=$HOME/.local/share/bash-completion/completions
