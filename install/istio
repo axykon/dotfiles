@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+cd /tmp
+version="1.13.2"
+[[ -d istio-$version ]] \
+    || curl -sL "https://github.com/istio/istio/releases/download/$version/istio-$version-linux-amd64.tar.gz" \
+    | tar -xz
+
+cd istio-$version
+install -D --mode=0755 bin/istioctl $HOME/.local/bin
+install -D --mode=0644 tools/istioctl.bash $HOME/.local/share/bash-completion/completions/_istioctl
+mkdir -p $HOME/.local/share/istio
+cp -r samples $HOME/.local/share/istio

@@ -96,21 +96,6 @@
     chmod 0644 $bashcomp
   #+end_src
 
-* Install istio
-  #+begin_src sh :var version="1.10.0" :results output silent :dir /tmp
-    set -e
-    [[ -d istio-$version ]] \
-        || curl -sL "https://github.com/istio/istio/releases/download/$version/istio-$version-linux-amd64.tar.gz" \
-            | tar -xz
-
-    cd istio-$version
-    install -D --mode=0755 bin/istioctl $HOME/.local/bin
-    install -D --mode=0644 tools/istioctl.bash $HOME/.local/share/bash-completion/completions/_istioctl
-    mkdir -p $HOME/.local/share/istio
-    cp -r samples $HOME/.local/share/istio
-  #+end_src
-  Then run ~istioctl install --set profile=demo --set values.global.imagePullPolicy=IfNotPresent~
-
 * Install rust-analyzer
   #+begin_src sh :results output silent
     curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz \
