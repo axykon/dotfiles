@@ -131,11 +131,13 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.cmd [[colorscheme sonokai]]
+-- vim.cmd [[colorscheme sonokai]]
+vim.cmd [[colorscheme tokyonight]]
 
 --Set statusbar
 vim.g.lightline = {
-	colorscheme = 'sonokai',
+	-- colorscheme = 'sonokai',
+	colorscheme = 'tokyonight',
 	active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
 	component_function = { gitbranch = 'fugitive#head' },
 }
