@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+minikube=$HOME/.local/bin/minikube
+curl -Lf --no-progress-meter "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64" \
+	-o $minikube
+
+chmod 0755 $minikube
+
+bashcompdir=$HOME/.local/share/bash-completion/completions
+[[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+bashcomp=$bashcompdir/minikube
+$minikube completion bash  > $bashcomp
+chmod 0644 $bashcomp
