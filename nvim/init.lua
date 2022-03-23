@@ -385,5 +385,6 @@ cmp.setup {
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb{ignore={'jdtls'}}]]
 vim.cmd [[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]]
 vim.cmd [[autocmd Filetype html setlocal ts=2 sw=2 expandtab]]
+vim.cmd [[autocmd Filetype helm setlocal ts=2 sw=2 expandtab]]
 
 require'telescope'.load_extension('project')
