@@ -57,6 +57,7 @@ require('packer').startup(function()
 	use 'nvim-telescope/telescope-project.nvim'
 	use 'vim-test/vim-test'
 	use 'sainnhe/sonokai'
+	use { 'nvim-telescope/telescope-file-browser.nvim' }
 	-- PlantUML
 	use 'aklt/plantuml-syntax'
 	use {
@@ -203,19 +204,28 @@ require('telescope').setup {
 			-- },
 		},
 	},
+	extensions = {
+		file_browser = {
+			theme = 'ivy',
+		},
+		project = {
+			base_dirs = {
+				'~/pro',
+			},
+		},
+	},
 }
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').git_files()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>pr', [[<cmd>lua require'telescope'.extensions.project.project{}<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><space>', '<cmd>Telescope buffers<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sf', '<cmd>Telescope find_files<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>Telescope git_files<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>Telescope help_tags<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sd', '<cmd>Telescope grep_string<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sp', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>?', '<cmd>Telescope oldfiles<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>pr', '<cmd>Telescope project theme=dropdown<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope file_browser<cr>', { noremap = true, silent = true })
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
@@ -388,3 +398,4 @@ vim.cmd [[autocmd Filetype html setlocal ts=2 sw=2 expandtab]]
 vim.cmd [[autocmd Filetype helm setlocal ts=2 sw=2 expandtab]]
 
 require'telescope'.load_extension('project')
+require'telescope'.load_extension('file_browser')
