@@ -100,6 +100,7 @@ end)
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.scrolloff = 3
+vim.o.showmode = false
 
 --Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
