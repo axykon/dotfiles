@@ -154,15 +154,11 @@ vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true,
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
 -- Highlight on yank
-vim.api.nvim_exec(
-[[
-augroup YankHighlight
-autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-augroup end
-]],
-false
-)
+vim.api.nvim_create_augroup('YankHighlight', {})
+vim.api.nvim_create_autocmd('TextYankPost', {
+	group = 'YankHighlight',
+	callback = function() vim.highlight.on_yank() end
+})
 
 --Map blankline
 vim.g.indent_blankline_char = '┊'
