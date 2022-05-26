@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+kops=$HOME/.local/bin/kops
+curl -Lo $kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod 0755 $kops
+
+bashcompdir=$HOME/.local/share/bash-completion/completions
+[[ -d $bashcompdir ]] || mkdir -p $bashcompdir
+bashcomp=$bashcompdir/kops
+$kops completion bash  > $bashcomp
+chmod 0644 $bashcomp
