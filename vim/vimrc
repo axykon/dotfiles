@@ -5,6 +5,7 @@ set shiftwidth=4
 set updatetime=300
 set nowrap
 set fillchars=vert:\│
+set ttimeoutlen=50
 
 nnoremap <space> <nop>
 map <space> <leader>
@@ -18,33 +19,33 @@ endif
 call plug#begin('~/.vim/plugged')
 " Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
-Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'
 Plug 'aymericbeaumet/vim-symlink'
-Plug 'felipec/vim-felipec'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+" Plug 'felipec/vim-felipec'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'morhetz/gruvbox'
-Plug 'romainl/apprentice'
+" Plug 'junegunn/limelight.vim'
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'morhetz/gruvbox'
+" Plug 'romainl/apprentice'
 Plug 'ryanoasis/vim-devicons'
-Plug 'sainnhe/gruvbox-material'
+" Plug 'sainnhe/gruvbox-material'
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-rsi'
+" Plug 'tpope/vim-vinegar'
 Plug 'vim-test/vim-test'
 Plug 'voldikss/vim-floaterm'
-Plug 'preservim/tagbar'
-Plug 'stephpy/vim-yaml'
+" Plug 'preservim/tagbar'
+" Plug 'stephpy/vim-yaml'
 Plug 'yegappan/lsp'
-Plug 'vim/killersheep'
-Plug 'towolf/vim-helm'
+" Plug 'vim/killersheep'
+" Plug 'towolf/vim-helm'
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
@@ -97,16 +98,11 @@ nnoremap <leader>g :GFiles<cr>
 
 let lspServers = [
 			\ {
-				\	'filetype': ['go'],
-				\	'path': '/home/axykon/go/bin/gopls',
-				\	'args': []
-				\  },
-				\  {
-					\  'filetype': ['javascript'],
-					\  'path': '/home/axykon/.local/bin/typescript-language-server',
-					\  'args': ['--stdio']
-					\ }
-					\ ]
+			\	'filetype': ['go'],
+			\	'path': '/home/axykon/go/bin/gopls',
+			\	'args': []
+			\  },
+			\ ]
 
 " call g:LspAddServer(lspServers)
 
