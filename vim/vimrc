@@ -24,7 +24,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 " Plug 'tpope/vim-rsi'
-" Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 " Plug 'stephpy/vim-yaml'
 Plug 'vim/killersheep'
 " Plug 'towolf/vim-helm'
@@ -38,6 +38,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/sonokai'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'sainnhe/everforest'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -257,3 +259,6 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" File types
+autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
