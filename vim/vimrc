@@ -38,7 +38,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/sonokai'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'sainnhe/everforest'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -50,7 +49,7 @@ Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 call plug#end()
 
 " Correct RGB escape codes for vim inside tmux
-if &term =~ "tmux"
+if &term =~ "tmux" || &term =~ "foot"
   let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
   let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 endif
@@ -111,18 +110,6 @@ set shortmess+=c
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=1
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=auto
-endif
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -185,7 +172,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json,go setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
