@@ -73,9 +73,10 @@ let g:lightline = {
 \   'colorscheme': 'sonokai',
 \   'active': {
 \     'left': [[ 'mode', 'paste'],
-\              [ 'gitbranch', 'readonly', 'modified' ]]
+\              [ 'cocstatus', 'gitbranch', 'readonly', 'modified' ]]
 \   },
 \   'component_function': {
+\     'cocstatus': 'coc#status',
 \     'gitbranch': 'FugitiveHead',
 \   }
 \ }
