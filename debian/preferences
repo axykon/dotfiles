@@ -5,3 +5,39 @@ Pin-Priority: 900
 Package: *
 Pin: release a=testing
 Pin-Priority: 50
+
+Package: *pipewire*
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: libspa-0.2-*
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: *wireplumber*
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: libc6*
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: libc-*
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: locales
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: libxfixes3
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: vim*
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: nodejs
+Pin: origin "deb.nodesource.com"
+Pin-Priority: 900
