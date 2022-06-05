@@ -41,3 +41,11 @@ Pin-Priority: 900
 Package: nodejs
 Pin: origin "deb.nodesource.com"
 Pin-Priority: 900
+
+Package: foot*
+Pin: release n=bookworm
+Pin-Priority: 900
+
+Package: libwayland-client0
+Pin: release n=bookworm
+Pin-Priority: 900
