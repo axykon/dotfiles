@@ -49,3 +49,7 @@ Pin-Priority: 900
 Package: libwayland-client0
 Pin: release n=bookworm
 Pin-Priority: 900
+
+Package: tmux
+Pin: release n=bookworm
+Pin-Priority: 900
