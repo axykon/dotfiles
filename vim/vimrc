@@ -48,7 +48,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 call plug#end()
 
-" Correct RGB escape codes for vim inside tmux
 if &term =~ "tmux" || &term =~ "foot"
   let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
   let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
@@ -58,7 +57,7 @@ if has('termguicolors')
   set termguicolors
 endif
 
-if &term == 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty' || &term == 'xterm-256color'
+if &term == 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty' || &term == 'xterm-256color' || &term == "foot"
   let &t_SI .= "\<Esc>[6 q"
   let &t_EI .= "\<Esc>[2 q"
 endif
