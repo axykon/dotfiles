@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-version="v3.8.1"
+version="v3.9.0"
 curl -sL "https://get.helm.sh/helm-$version-linux-amd64.tar.gz" \
     | tar -C $HOME/.local/bin -xz --strip-components=1 --mode=0755 \
     linux-amd64/helm
