@@ -1,0 +1,7 @@
+#!/bin/bash
+
+[[ -z "$1" ]] && { echo "need access point url as an argument"; exit 1; }
+
+for pkg in "linux_f5epi.x86_64.deb" "linux_f5vpn.x86_64.deb"; do
+  curl -L -o /tmp/$pkg $1/public/download/$pkg
+done
