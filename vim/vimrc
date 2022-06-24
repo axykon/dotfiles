@@ -254,3 +254,5 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " File types
 autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
+
+autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
