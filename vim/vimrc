@@ -48,6 +48,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
+Plug 'jasonccox/vim-wayland-clipboard'
 call plug#end()
 
 if &term =~ "tmux" || &term =~ "foot"
