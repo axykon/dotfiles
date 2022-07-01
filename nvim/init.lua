@@ -5,7 +5,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 vim.opt.expandtab = true
-    
+
 vim.cmd([[
 augroup Packer
     autocmd!
@@ -60,42 +60,6 @@ require('packer').startup(function()
     }
     use 'airblade/vim-rooter'
     use 'towolf/vim-helm'
-    use {
-        "nvim-neorg/neorg",
-        config = function()
-            require('neorg').setup {
-                load = {
-                    ["core.defaults"] = {},
-                    ["core.norg.dirman"] = {
-                        config = {
-                            workspaces = {
-                                tasks = "/home/axykon/neorg",
-                            },
-                            autochdir = true,
-                            index = "index.norg",
-                        }
-                    },
-                    ["core.norg.concealer"] = {
-                        config = {
-                            preset = 'basic'
-                        }
-                    },
-                    ['core.gtd.base'] = {
-                        config = {
-                            workspace = 'tasks',
-                            default_lists = {
-                                inbox = 'inbox.norg'
-                            }
-                        }
-                    },
-                    ["core.gtd.ui"] = {},
-                    ['core.gtd.queries'] = {},
-                    ['core.gtd.helpers'] = {},
-                }
-            }
-        end,
-        requires = "nvim-lua/plenary.nvim"
-    }
 end)
 
 vim.o.tabstop = 4
@@ -183,15 +147,8 @@ require('telescope').setup {
         layout_strategy = 'vertical',
         layout_config = { height = 0.9, width = 0.9 },
         scroll_strategy = 'limit',
-        vimgrep_arguments = {
-            'rg',
-            '--hidden',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case'
+        vimgrep_arguments = { 'rg', '--hidden', '--color=never', '--no-heading', '--with-filename',
+                              '--line-number', '--column', '--smart-case'
         },
         mappings = {
             -- i = {
@@ -277,9 +234,11 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- LSP settings
-local nvim_lsp = require 'lspconfig'
+local lsp_installer = require("nvim-lsp-installer")
+lsp_installer.setup {}
+
 local on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local opts = { noremap = true, silent = true }
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -309,35 +268,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local lsp_installer = require("nvim-lsp-installer")
-
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-    }
-
-    if server.name == 'gopls' then
-        opts.settings = {
-            gopls = {
-                usePlaceholders = true
-            }
+local lspconfig = require('lspconfig')
+lspconfig.jdtls.setup { on_attach = on_attach }
+lspconfig.gopls.setup { 
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            usePlaceholders = true
         }
-    end
-
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
-
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
-end)
-
-
+    }
+}
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
@@ -347,6 +288,11 @@ local luasnip = require 'luasnip'
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
+    window = {
+        documentation = {
+            max_width = 120
+        }
+    },
     snippet = {
         expand = function(args)
             require('luasnip').lsp_expand(args.body)
