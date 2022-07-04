@@ -24,6 +24,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'junegunn/vim-plug'
 Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 " Plug 'tpope/vim-rsi'
@@ -50,6 +51,7 @@ Plug 'vim-test/vim-test'
 Plug 'voldikss/vim-floaterm'
 Plug 'Yggdroot/indentLine'
 Plug 'jasonccox/vim-wayland-clipboard'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 call plug#end()
 
 if &term =~ "tmux" || &term =~ "foot"
