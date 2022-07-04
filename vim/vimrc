@@ -10,7 +10,7 @@ set fillchars=vert:\│
 set number
 set signcolumn=auto
 set incsearch
-set path=.,,**
+set path=.,,
 set wildmenu
 set wildoptions=pum
 
