@@ -54,7 +54,7 @@ Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 call plug#end()
 
-if &term =~ "tmux" || &term =~ "foot"
+if index(["tmux-256color", "foot"],  &term) != -1
   let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
   let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 endif
@@ -63,7 +63,7 @@ if has('termguicolors')
   set termguicolors
 endif
 
-if &term == 'xterm-kitty' || &term == 'tmux-256color' || &term == 'alacritty' || &term == 'xterm-256color' || &term == "foot"
+if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
   let &t_SI .= "\<Esc>[6 q"
   let &t_EI .= "\<Esc>[2 q"
 endif
