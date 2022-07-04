@@ -99,6 +99,10 @@ nnoremap <leader><space> :Buffers<cr>
 nnoremap <leader>? :History<cr>
 nnoremap <leader>g :GFiles<cr>
 
+" Indent lines
+let g:indentLine_enabled = 0
+nnoremap <silent> <leader>\| :IndentLinesToggle<CR>
+
 function! s:helptab()
   if &buftype == 'help'
     wincmd T
