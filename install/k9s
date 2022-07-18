@@ -1,5 +1,5 @@
 #!/bin/bash
-version="v0.25.21"
+version="v0.26.0"
 set -e
 curl -L https://github.com/derailed/k9s/releases/download/${version}/k9s_Linux_x86_64.tar.gz \
 	| tar -C $HOME/.local/bin -xz --mode=0755 k9s
