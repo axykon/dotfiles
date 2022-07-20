@@ -53,6 +53,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'hashivim/vim-terraform'
+Plug 'machakann/vim-highlightedyank'
 call plug#end()
 
 if index(["tmux-256color", "foot"],  &term) != -1
