@@ -8,7 +8,7 @@ set ttimeoutlen=50
 set nowrap
 set fillchars=vert:\│
 set number
-set signcolumn=auto
+set signcolumn=number
 set incsearch
 set path=.,,
 set wildmenu
@@ -17,7 +17,7 @@ set wildoptions=pum
 nnoremap <space> <nop>
 map <space> <leader>
 
-let data_dir = '~/.vim'
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -27,7 +27,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
-" Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-vinegar'
 Plug 'stephpy/vim-yaml'
 Plug 'vim/killersheep'
@@ -43,6 +42,9 @@ Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
+Plug 'sainnhe/edge'
+Plug 'sainnhe/gruvbox-material'
+Plug 'cocopon/iceberg.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -78,7 +80,7 @@ set laststatus=2
 set noshowmode
 let g:sonokai_style = 'andromeda'
 let g:lightline = {
-\   'colorscheme': 'sonokai',
+\   'colorscheme': 'iceberg',
 \   'active': {
 \     'left': [[ 'mode', 'paste'],
 \              [ 'cocstatus', 'gitbranch', 'readonly', 'modified' ]]
@@ -89,10 +91,10 @@ let g:lightline = {
 \   }
 \ }
 
-runtime ftplugin/man.vim
-
 set background=dark
-colorscheme sonokai
+colorscheme iceberg
+
+runtime ftplugin/man.vim
 
 let test#strategy = 'vimterminal'
 nnoremap <leader>tn :TestNearest<cr>
