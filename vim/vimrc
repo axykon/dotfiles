@@ -107,6 +107,11 @@ nnoremap <leader>g :GFiles<cr>
 let g:indentLine_enabled = 0
 nnoremap <silent> <leader>\| :IndentLinesToggle<CR>
 
+" Highlight yanked text
+let g:highlightedyank_highlight_duration = 300
+let g:highlightedyank_highlight_in_visual = 0
+highlight link HighlightedyankRegion IncSearch
+
 function! s:helptab()
   if &buftype == 'help'
     wincmd T
