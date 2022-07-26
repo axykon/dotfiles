@@ -73,8 +73,10 @@ Plug 'saadparwaiz1/cmp_luasnip', Cond(has('nvim'))
 Plug 'L3MON4D3/LuaSnip', Cond(has('nvim'))
 
 " Vim only
+Plug 'jasonccox/vim-wayland-clipboard', Cond(!has('nvim'))
 Plug 'prabirshrestha/vim-lsp', Cond(!has('nvim'))
 Plug 'mattn/vim-lsp-settings', Cond(!has('nvim'))
+Plug 'machakann/vim-highlightedyank', Cond(!has('nvim'))
 
 call plug#end()
 
