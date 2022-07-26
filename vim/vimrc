@@ -55,6 +55,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'hashivim/vim-terraform'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'ghifarit53/tokyonight-vim'
 
 function! Cond(cond, ...) abort
   let opts = get(a:000, 0, {})
@@ -123,7 +124,7 @@ augroup Colors
 augroup end
 
 set background=dark
-colorscheme gruvbox-material
+colorscheme sonokai
 
 runtime ftplugin/man.vim
 
