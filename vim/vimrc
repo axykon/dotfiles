@@ -44,7 +44,6 @@ Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/gruvbox-material'
-Plug 'cocopon/iceberg.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -56,31 +55,54 @@ Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'hashivim/vim-terraform'
 Plug 'machakann/vim-highlightedyank'
-call plug#end()
 
-if index(["tmux-256color", "foot"],  &term) != -1
-  let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-  let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
-endif
+function! Cond(cond, ...) abort
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+" Neovim only
+Plug 'nvim-lua/plenary.nvim', Cond(has('nvim'))
+Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim'), {'tag': '0.1.0'})
+Plug 'williamboman/nvim-lsp-installer', Cond(has('nvim'))
+Plug 'neovim/nvim-lspconfig', Cond(has('nvim'))
+Plug 'hrsh7th/nvim-cmp', Cond(has('nvim'))
+Plug 'hrsh7th/cmp-nvim-lua', Cond(has('nvim'))
+Plug 'hrsh7th/cmp-nvim-lsp', Cond(has('nvim'))
+Plug 'saadparwaiz1/cmp_luasnip', Cond(has('nvim'))
+Plug 'L3MON4D3/LuaSnip', Cond(has('nvim'))
+
+" Vim only
+Plug 'prabirshrestha/vim-lsp', Cond(!has('nvim'))
+Plug 'mattn/vim-lsp-settings', Cond(!has('nvim'))
+
+call plug#end()
 
 if has('termguicolors')
   set termguicolors
 endif
 
-if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
-  let &t_SI .= "\<Esc>[6 q"
-  let &t_EI .= "\<Esc>[2 q"
-endif
+if !has('nvim') 
+  if index(["tmux-256color", "foot"],  &term) != -1
+    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+  endif
 
-if &term == 'xterm-kitty'
-  let &t_ut=''
+  if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
+    let &t_SI .= "\<Esc>[6 q"
+    let &t_EI .= "\<Esc>[2 q"
+  endif
+
+  if &term == 'xterm-kitty'
+    let &t_ut=''
+  endif
 endif
 
 set laststatus=2
 set noshowmode
 let g:sonokai_style = 'andromeda'
 let g:lightline = {
-\   'colorscheme': 'iceberg',
+\   'colorscheme': 'gruvbox_material',
 \   'active': {
 \     'left': [[ 'mode', 'paste'],
 \              [ 'cocstatus', 'gitbranch', 'readonly', 'modified' ]]
@@ -92,7 +114,7 @@ let g:lightline = {
 \ }
 
 set background=dark
-colorscheme iceberg
+colorscheme gruvbox-material
 
 runtime ftplugin/man.vim
 
@@ -100,10 +122,16 @@ let test#strategy = 'vimterminal'
 nnoremap <leader>tn :TestNearest<cr>
 nnoremap <leader>tl :TestLast<cr>
 
-" fzf
-nnoremap <leader><space> :Buffers<cr>
-nnoremap <leader>? :History<cr>
-nnoremap <leader>g :GFiles<cr>
+" Fuzzy search
+if has('nvim')
+  nnoremap <leader><space> :Telescope buffers<cr>
+  nnoremap <leader>? :Telescope oldfiles<cr>
+  nnoremap <leader>g :Telescope git_files<cr>
+else
+  nnoremap <leader><space> :Buffers<cr>
+  nnoremap <leader>? :History<cr>
+  nnoremap <leader>g :GFiles<cr>
+endif
 
 " Indent lines
 let g:indentLine_enabled = 0
@@ -129,3 +157,103 @@ augroup end
 autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
 
 autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
+
+" LSP
+if has('nvim')
+  lua require("nvim-lsp-installer").setup{}
+
+  function! NvimOnLspAttachBuf()
+    setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+    nnoremap <buffer><silent> K :lua vim.lsp.buf.hover()<cr>
+    nnoremap <buffer><silent> gd :lua vim.lsp.buf.definition()<cr>
+    nnoremap <buffer><silent> <C-k> :lua vim.lsp.buf.signature_help()<cr>
+    nnoremap <buffer><silent> <leader>rn :lua vim.lsp.buf.rename()<cr>
+    nnoremap <buffer><silent> <leader>gr :lua vim.lsp.buf.references()<cr>
+    nnoremap <buffer><silent> <leader>ca :lua vim.lsp.buf.code_action()<cr>
+    nnoremap <buffer><silent> <leader>e :lua vim.diagnostic.open_float()<cr>
+    nnoremap <buffer><silent> <leader>q :lua vim.diagnostic.setloclist()<cr>
+    nnoremap <buffer><silent> <leader>so :Telescope lsp_document_symbols theme=ivy<cr>
+
+    command! Format execute 'lua vim.lsp.buf.formatting()'
+  endfunction
+
+lua <<EOF
+  local on_attach = function(_, bufnr) vim.fn.NvimOnLspAttachBuf() end
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+  local lspconfig = require('lspconfig')
+  lspconfig.gopls.setup { 
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      gopls = {
+        usePlaceholders = true
+      }
+    }
+  }
+  local cmp = require('cmp')
+  cmp.setup {
+    window = {
+      documentation = {
+        max_width = 120
+      }
+    },
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+      end,
+    },
+    mapping = {
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+    },
+    sources = {
+      { name = 'luasnip' },
+      { name = 'nvim_lsp' },
+      { name = 'nvim_lua' },
+    },
+  }
+EOF
+else
+  let g:lsp_work_done_progress_enabled=1
+  let g:lsp_diagnostics_echo_cursor=1
+
+  function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gT <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.go call execute('LspDocumentFormatSync')
+  endfunction
+
+  augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  augroup END
+endif
