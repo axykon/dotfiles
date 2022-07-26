@@ -103,7 +103,6 @@ set laststatus=2
 set noshowmode
 let g:sonokai_style = 'andromeda'
 let g:lightline = {
-\   'colorscheme': 'gruvbox_material',
 \   'active': {
 \     'left': [[ 'mode', 'paste'],
 \              [ 'cocstatus', 'gitbranch', 'readonly', 'modified' ]]
@@ -113,6 +112,17 @@ let g:lightline = {
 \     'gitbranch': 'FugitiveHead',
 \   }
 \ }
+
+function s:update_status_colors()
+  let g:lightline.colorscheme = substitute(g:colors_name, '-', '_', '')
+  call lightline#disable()
+  call lightline#enable()
+endfunction
+
+augroup Colors
+  au!
+  autocmd ColorScheme * call s:update_status_colors()
+augroup end
 
 set background=dark
 colorscheme gruvbox-material
