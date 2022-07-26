@@ -119,7 +119,7 @@ colorscheme gruvbox-material
 
 runtime ftplugin/man.vim
 
-let test#strategy = 'vimterminal'
+let test#strategy = has('nvim') ? 'neovim' : 'vimterminal'
 nnoremap <leader>tn :TestNearest<cr>
 nnoremap <leader>tl :TestLast<cr>
 
