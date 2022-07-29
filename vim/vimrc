@@ -88,6 +88,8 @@ if !has('nvim')
   if index(["tmux-256color", "foot"],  &term) != -1
     let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
     let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+    let &t_fe = "\<Esc>[?1004h"
+    let &t_fd = "\<Esc>[?1004l"
   endif
 
   if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
@@ -111,6 +113,8 @@ let g:lightline = {
 \     'gitbranch': 'FugitiveHead',
 \   }
 \ }
+
+autocmd! FocusGained * call lightline#update()
 
 function s:update_status_colors()
   let g:lightline.colorscheme = substitute(g:colors_name, '-', '_', '')
