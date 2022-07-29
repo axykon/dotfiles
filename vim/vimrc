@@ -88,8 +88,12 @@ if !has('nvim')
   if index(["tmux-256color", "foot"],  &term) != -1
     let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
     let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+
+    " Handle focus events
     let &t_fe = "\<Esc>[?1004h"
     let &t_fd = "\<Esc>[?1004l"
+    execute "set <FocusGained>=\<Esc>[I"
+    execute "set <FocusLost>=\<Esc>[O"
   endif
 
   if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
@@ -114,7 +118,9 @@ let g:lightline = {
 \   }
 \ }
 
-autocmd! FocusGained * call lightline#update()
+if !has('nvim')
+  autocmd! FocusGained * call lightline#update()
+endif
 
 function s:update_status_colors()
   let g:lightline.colorscheme = substitute(g:colors_name, '-', '_', '')
