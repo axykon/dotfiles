@@ -224,6 +224,7 @@ if has('nvim')
     nnoremap <buffer><silent> <leader>e :lua vim.diagnostic.open_float()<cr>
     nnoremap <buffer><silent> <leader>q :lua vim.diagnostic.setloclist()<cr>
     nnoremap <buffer><silent> <leader>gs :Telescope lsp_document_symbols theme=ivy<cr>
+    nnoremap <buffer><silent> <leader>gS :Telescope lsp_dynamic_workspace_symbols theme=ivy<cr>
 
     command! Format execute 'lua vim.lsp.buf.formatting()'
   endfunction
@@ -235,6 +236,10 @@ lua <<EOF
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
   local lspconfig = require('lspconfig')
+  lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    capabilities = capabilities
+  }
   lspconfig.gopls.setup { 
     on_attach = on_attach,
     capabilities = capabilities,
