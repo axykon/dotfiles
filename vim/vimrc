@@ -65,7 +65,7 @@ endfunction
 " Neovim only
 Plug 'nvim-lua/plenary.nvim', Cond(has('nvim'))
 Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim'), {'tag': '0.1.0'})
-Plug 'williamboman/mason', Cond(has('nvim'))
+Plug 'williamboman/mason.nvim', Cond(has('nvim'))
 Plug 'neovim/nvim-lspconfig', Cond(has('nvim'))
 Plug 'hrsh7th/nvim-cmp', Cond(has('nvim'))
 Plug 'hrsh7th/cmp-nvim-lua', Cond(has('nvim'))
