@@ -107,7 +107,8 @@
 (use-package flymake
   :bind (:map flymake-mode-map
               ("M-n" . 'flymake-goto-next-error)
-              ("M-p" . 'flymake-goto-prev-error)))
+              ("M-p" . 'flymake-goto-prev-error)
+              ("C-x !" . 'flymake-show-buffer-diagnostics)))
 
 ;; VC diff highlight
 (use-package diff-hl)
