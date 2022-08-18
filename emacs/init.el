@@ -380,6 +380,12 @@
         (toggle-truncate-lines nil)))
     (switch-to-buffer buffer-name)))
 
+(use-package eshell
+  :hook
+  (eshell-mode . (lambda ()
+                   (setq-local imenu-generic-expression
+                               '(("Prompt" " $ \\(.*\\)" 1))))))
+
 ;; Ligatures
 ;; https://github.com/mickeynp/ligature.el
 (use-package ligature
