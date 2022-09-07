@@ -12,10 +12,13 @@ set signcolumn=number
 set incsearch
 set path=.,,
 set wildmenu
-set wildoptions=pum
+if has('popup')
+  set wildoptions=pum
+endif
 set nohlsearch
 set laststatus=2
 set noshowmode
+set belloff=all
 
 nnoremap <space> <nop>
 map <space> <leader>
