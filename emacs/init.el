@@ -169,7 +169,10 @@
 (use-package consult
   :bind (
          ("C-c ." . consult-imenu)
-         ("C-s" . consult-line)))
+         ("C-s" . consult-line))
+  :config
+  (if (not (display-graphic-p))
+      (setq completion-in-region-function #'consult-completion-in-region)))
 
 (use-package marginalia
   :bind (("M-A" . marginalia-cycle)
@@ -251,21 +254,14 @@
 ;; Corfu
 (use-package corfu
   :diminish
+  :if (display-graphic-p)
   :hook ((prog-mode . corfu-mode)
          (eshell-mode . corfu-mode))
   :custom
   (corfu-auto t)
   (corfu-quit-at-boundary t)
   :config
-  (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle))
-
-(use-package kind-icon
-  :ensure t
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  (define-key corfu-map (kbd "M-d") #'corfu-info-documentation))
 
 ;; Eglot
 (use-package eglot
@@ -444,3 +440,66 @@
   (setq compilation-scroll-output 'first-error)
   (setq auto-revert-check-vc-info t)
   (global-set-key (kbd "M-o") 'other-window))
+
+(defun eshell/ccat (file)
+  "Like `cat' but output with Emacs syntax highlighting."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (let ((buffer-file-name file))
+      (delay-mode-hooks
+        (set-auto-mode)
+        (if (fboundp 'font-lock-ensure)
+            (font-lock-ensure)
+          (with-no-warnings
+            (font-lock-fontify-buffer)))))
+    (buffer-string)))
+
+;; (defun my-change-window-divider ()
+;;   (let ((display-table (or buffer-display-table standard-display-table)))
+;;     (set-display-table-slot display-table 5 ?│)
+;;     (set-window-display-table (selected-window) display-table)))
+
+;; (add-hook 'window-configuration-change-hook 'my-change-window-divider)
+
+;; (if (not (display-graphic-p))
+;;     (progn
+;;       (setq wl-copy-process nil)
+;;       (defun wl-copy (text)
+;;         (setq wl-copy-process (make-process :name "wl-copy"
+;;                                             :buffer nil
+;;                                             :command '("wl-copy" "-f" "-n")
+;;                                             :connection-type 'pipe))
+;;         (process-send-string wl-copy-process text)
+;;         (process-send-eof wl-copy-process))
+;;       (defun wl-paste ()
+;;         (if (and wl-copy-process (process-live-p wl-copy-process))
+;;             nil ; should return nil if we're the current paste owner
+;;           (shell-command-to-string "wl-paste -n | tr -d \r")))
+;;       (setq interprogram-cut-function 'wl-copy)
+;;       (setq interprogram-paste-function 'wl-paste)))
+
+(with-eval-after-load 'eglot
+  (let ((cache
+         (expand-file-name (md5 (project-root (eglot--current-project)))
+                           (locate-user-emacs-file
+                            "eglot-eclipse-jdt-cache")))
+        (lombok (concat "--jvm-arg=-javaagent:" (expand-file-name "~/.local/lib/java/lombok.jar"))))
+    (add-to-list 'eglot-server-programs
+                 `(java-mode "~/jdtls/bin/jdtls" "-data" ,cache ,lombok))))
+
+(with-eval-after-load 'eglot
+  ;;; eclipse-jdt breaks the spec which in turn breaks code actions
+  ;;; This behaviour can't be disabled and needs to be worked around
+  (cl-defmethod eglot-execute-command
+    (_server (_cmd (eql java.apply.workspaceEdit)) arguments)
+    "Eclipse JDT breaks spec and replies with edits as arguments."
+    (mapc #'eglot--apply-workspace-edit arguments)))
+
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-default-style "java")
+                            (c-set-offset 'arglist-intro '+)
+                            (c-set-offset 'arglist-close '0)
+                            (c-set-offset 'case-label '+)
+                            (display-line-numbers-mode 1)
+                            (auto-complete-mode t)
+                            ))

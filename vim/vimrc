@@ -58,6 +58,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'hashivim/vim-terraform'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'ghifarit53/tokyonight-vim'
 
 function! Cond(cond, ...) abort
@@ -79,6 +80,9 @@ Plug 'hrsh7th/cmp-vsnip', Cond(has('nvim'))
 Plug 'jasonccox/vim-wayland-clipboard', Cond(!has('nvim'))
 Plug 'machakann/vim-highlightedyank', Cond(!has('nvim'))
 Plug 'natebosch/vim-lsc', Cond(!has('nvim'))
+Plug 'liuchengxu/graphviz.vim', Cond(!has('nvim'))
+" Plug 'habamax/vim-dir', Cond(!has('nvim'))
+Plug 'preservim/tagbar', Cond(!has('nvim'))
 
 call plug#end()
 
@@ -86,7 +90,7 @@ if has('termguicolors')
   set termguicolors
 endif
 
-if !has('nvim') 
+if !has('nvim')
   if index(["tmux-256color", "foot"],  &term) != -1
     let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
     let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
@@ -128,6 +132,8 @@ function s:update_status_colors()
   let g:lightline.colorscheme = substitute(g:colors_name, '-', '_', '')
   call lightline#disable()
   call lightline#enable()
+  highlight link lscDiagnosticError ErrorMsg
+  highlight link lscDiagnosticWarning WarningMsg
 endfunction
 
 augroup Colors
@@ -242,7 +248,7 @@ lua <<EOF
     on_attach = on_attach,
     capabilities = capabilities
   }
-  lspconfig.gopls.setup { 
+  lspconfig.gopls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -283,19 +289,31 @@ lua <<EOF
   }
 EOF
 else
+  function! FindProjectRoot(marker_file_name)
+    let marker_file = findfile(a:marker_file_name, '.;')
+    if marker_file != ""
+      let root_dir = fnamemodify(marker_file, ':p:h')
+    else
+      let root_dir = getcwd()
+    endif
+    echom "Root dir is" root_dir
+    return root_dir
+  endfunction
+
   let g:lsc_server_commands = {
-        \ 'go': {
-          \ 'command': 'gopls serve',
-          \ 'log_level': 'Info',
-          \ 'suppress_stderr': v:false 
-          \ },
-        \ 'rust': {
-          \ 'command': 'rust-analyzer',
-          \ 'suppress_stderr': v:true
-          \ },
+        \ 'go': #{
+        \   command: 'gopls serve',
+        \   log_level: -1,
+        \   suppress_stderr: v:true,
+        \   message_hooks: #{
+        \     initialize: #{
+        \       rootUri: {method, params -> lsc#uri#documentUri(FindProjectRoot('go.mod'))},
+        \     },
+        \   },
+        \ },
+        \ 'rust': #{command: 'rust-analyzer', suppress_stderr: v:true},
+        \ 'sh': #{command: 'bash-language-server start', suppress_stderr: v:true}
         \ }
   let g:lsc_auto_map = v:true
   set completeopt-=preview
-  highlight link lscDiagnosticError ErrorMsg
-  highlight link lscDiagnosticWarning WarningMsg
 endif
