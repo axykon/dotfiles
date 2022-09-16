@@ -18,10 +18,10 @@ local config = {
 			signatureHelp = { enabled = true },
 			contentProvider = { preferred = 'fernflower' },
 			configuration = {
-				runtimes = {
-					{ name = "JavaSE-11", path = "/usr/lib/jvm/java-1.11.0-openjdk-amd64" },
-					{ name = "JavaSE-17", path = "/usr/lib/jvm/java-1.17.0-openjdk-amd64" }
-				}
+				-- runtimes = {
+				-- 	{ name = "JavaSE-11", path = "/usr/lib/jvm/java-1.11.0-openjdk-amd64" },
+				-- 	{ name = "JavaSE-17", path = "/usr/lib/jvm/java-1.17.0-openjdk-amd64" }
+				-- }
 			}
 		}
 	},
