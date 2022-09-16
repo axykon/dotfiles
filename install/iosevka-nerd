@@ -1,0 +1,5 @@
+#!/bin/bash
+
+tag=$(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | jq -r .tag_name)
+curl -fLo /tmp/iosevka.zip https://github.com/ryanoasis/nerd-fonts/releases/download/${tag}/Iosevka.zip
+unzip /tmp/iosevka.zip '*Mono.ttf' -d ~/.local/share/fonts -x '*Windows Compatible*' && rm /tmp/iosevka.zip
