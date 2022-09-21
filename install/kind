@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-version="v0.14.0"
+version=$(curl -s https://api.github.com/repos/kubernetes-sigs/kind/releases/latest  | jq -r '.tag_name')
 kind=$HOME/.local/bin/kind
 curl -sL https://kind.sigs.k8s.io/dl/${version}/kind-linux-amd64 \
 	-o $kind
