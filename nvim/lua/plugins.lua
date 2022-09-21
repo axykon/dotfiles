@@ -15,6 +15,7 @@ return require('packer').startup(function(use)
 	use 'tpope/vim-vinegar'
 	use 'tpope/vim-fugitive'
 	use 'tpope/vim-rhubarb'
+	use 'junegunn/gv.vim'
 	use 'numToStr/Comment.nvim'
 	use 'vim-test/vim-test'
 	use 'ghifarit53/tokyonight-vim'
