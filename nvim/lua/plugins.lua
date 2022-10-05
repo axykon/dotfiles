@@ -12,6 +12,7 @@ return require('packer').startup(function(use)
 	use 'neovim/nvim-lspconfig'
 	use 'mfussenegger/nvim-jdtls'
 	use 'sainnhe/sonokai'
+	use 'aymericbeaumet/vim-symlink'
 	use 'tpope/vim-vinegar'
 	use 'tpope/vim-fugitive'
 	use 'tpope/vim-rhubarb'
@@ -27,6 +28,7 @@ return require('packer').startup(function(use)
 	use 'towolf/vim-helm'
 	use 'tanvirtin/monokai.nvim'
 	use 'airblade/vim-rooter'
+	use 'jbyuki/venn.nvim'
 	use 'nvim-telescope/telescope-ui-select.nvim'
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = 'nvim-lua/plenary.nvim'
