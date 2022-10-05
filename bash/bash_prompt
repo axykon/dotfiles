@@ -268,3 +268,5 @@ function wrap {
     printf "${c_token}${beg_token}${text}${c_token}${end_token}"
   fi
 }
+
+ps1_colorful_theme
