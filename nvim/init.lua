@@ -1,8 +1,8 @@
 require "plugins"
 
 vim.o.completeopt = 'menu,menuone,noselect'
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 vim.o.termguicolors = true
 vim.o.completeopt = 'menu'
 vim.o.showcmd = false
