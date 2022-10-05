@@ -19,6 +19,10 @@ end
 require('mason').setup{}
 require('Comment').setup{}
 
+local luasnip = require('luasnip')
+vim.keymap.set({'i', 's'}, '<Tab>', function() if luasnip.expand_or_jumpable() then luasnip.expand_or_jump() end end, { silent = true })
+vim.keymap.set({'i', 's'}, '<S-Tab>', function() if luasnip.jumpable(-1) then luasnip.jump(-1) end end, {silent = true})
+
 local cmp = require('cmp')
 cmp.setup {
 	snippet = {
@@ -38,6 +42,7 @@ cmp.setup {
       { name = 'luasnip' },
     })
 }
+
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
