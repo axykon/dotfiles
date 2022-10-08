@@ -245,7 +245,10 @@
 
 ;; Rust
 (use-package rust-mode
-     :defer t)
+  :defer t
+  :config
+  (yas-minor-mode-on)
+  (eglot-ensure))
 
 ;; Direnv
 (use-package direnv
@@ -273,7 +276,9 @@
                 (replace-regexp-in-string "\\\\\\([.'()\\:\";=*<>_%]\\|-\\|/\\|\\[\\|\\]\\)" "\\1" r)))
   (define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c r") 'eglot-rename)
-  (define-key eglot-mode-map (kbd "C-c C-r") 'eglot-reconnect))
+  (define-key eglot-mode-map (kbd "C-c C-r") 'eglot-reconnect)
+  (add-to-list 'eglot-server-programs '(go-mode . ("~/.local/share/nvim/mason/bin/gopls")))
+  (add-to-list 'eglot-server-programs '(rust-mode . ("~/.local/share/nvim/mason/bin/rust-analyzer"))))
 
 ;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
