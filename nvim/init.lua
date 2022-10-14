@@ -89,12 +89,12 @@ end
 local lspconfig = require('lspconfig')
 lspconfig['tsserver'].setup{
     on_attach = on_attach,
-    flags = lsp_flags,
-		settings = {
-			gopls = {
-				usePlaceholders = true
-			}
-		}
+    flags = lsp_flags
+}
+
+lspconfig['bashls'].setup {
+	on_attach = on_attach,
+	flags = lsp_flags
 }
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
