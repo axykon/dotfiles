@@ -1,0 +1,1 @@
+/home/axykon/pro/misc/dotfiles/bash/bash_prompt
