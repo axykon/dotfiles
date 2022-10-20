@@ -16,6 +16,10 @@ if vim.g.neovide then
   vim.o.guifont = 'Iosevka:h20'
 end
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function() vim.highlight.on_yank() end
+})
+
 require('mason').setup{}
 require('Comment').setup{}
 
