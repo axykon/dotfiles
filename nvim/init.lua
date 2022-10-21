@@ -13,7 +13,7 @@ vim.cmd 'colorscheme sonokai'
 if vim.g.neovide then
   -- vim.g.neovide_cursor_trail_legnth = 0
   -- vim.g.neovide_cursor_animation_length = 1
-  vim.o.guifont = 'Iosevka:h20'
+  vim.o.guifont = 'Iosevka:h18'
 end
 
 vim.api.nvim_create_autocmd("TextYankPost", {
