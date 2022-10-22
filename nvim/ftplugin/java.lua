@@ -4,7 +4,7 @@ local root_dir = require('jdtls.setup').find_root(root_markers)
 local home = os.getenv('HOME')
 local workspace_dir = home .. "/.local/cache/nvim-jdtls/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local config = {
 	cmd = {
 		'jdtls',
@@ -19,8 +19,8 @@ local config = {
 			contentProvider = { preferred = 'fernflower' },
 			configuration = {
 				-- runtimes = {
-				-- 	{ name = "JavaSE-11", path = "/usr/lib/jvm/java-1.11.0-openjdk-amd64" },
-				-- 	{ name = "JavaSE-17", path = "/usr/lib/jvm/java-1.17.0-openjdk-amd64" }
+				-- 	{ name = "JavaSE-11", path = "/usr/lib/jvm/java-11-openjdk-amd64" },
+				-- 	{ name = "JavaSE-17", path = "/usr/lib/jvm/java-17-openjdk-amd64" }
 				-- }
 			},
 			import = {
