@@ -1,7 +1,7 @@
 set encoding=utf-8
 set hidden
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set updatetime=300
 set ttimeoutlen=50
@@ -12,7 +12,7 @@ set signcolumn=number
 set incsearch
 set path=.,,
 set wildmenu
-if has('popup')
+if has('popupwin')
   set wildoptions=pum
 endif
 set nohlsearch
@@ -51,47 +51,30 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-dadbod'
 Plug 'junegunn/gv.vim'
 Plug 'vim-test/vim-test'
 Plug 'voldikss/vim-floaterm'
 Plug 'Yggdroot/indentLine'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'hashivim/vim-terraform'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+" Plug 'hrsh7th/vim-vsnip'
+" Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'ghifarit53/tokyonight-vim'
-
-function! Cond(cond, ...) abort
-  let opts = get(a:000, 0, {})
-  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
-endfunction
-
-" Neovim only
-Plug 'nvim-lua/plenary.nvim', Cond(has('nvim'))
-Plug 'nvim-telescope/telescope.nvim', Cond(has('nvim'), {'tag': '0.1.0'})
-Plug 'williamboman/mason.nvim', Cond(has('nvim'))
-Plug 'neovim/nvim-lspconfig', Cond(has('nvim'))
-Plug 'hrsh7th/nvim-cmp', Cond(has('nvim'))
-Plug 'hrsh7th/cmp-nvim-lua', Cond(has('nvim'))
-Plug 'hrsh7th/cmp-nvim-lsp', Cond(has('nvim'))
-Plug 'hrsh7th/cmp-vsnip', Cond(has('nvim'))
-
-" Vim only
-Plug 'jasonccox/vim-wayland-clipboard', Cond(!has('nvim'))
-Plug 'machakann/vim-highlightedyank', Cond(!has('nvim'))
-Plug 'natebosch/vim-lsc', Cond(!has('nvim'))
-Plug 'liuchengxu/graphviz.vim', Cond(!has('nvim'))
-" Plug 'habamax/vim-dir', Cond(!has('nvim'))
-Plug 'preservim/tagbar', Cond(!has('nvim'))
-
+Plug 'jasonccox/vim-wayland-clipboard'
+Plug 'machakann/vim-highlightedyank'
+Plug 'liuchengxu/graphviz.vim'
+" Plug 'habamax/vim-dir'
+Plug 'natebosch/vim-lsc'
+Plug 'preservim/tagbar'
+Plug 'yegappan/lsp'
 call plug#end()
 
 if has('termguicolors')
   set termguicolors
 endif
 
-if !has('nvim')
-  if index(["tmux-256color", "foot"],  &term) != -1
+if index(["tmux-256color", "foot"],  &term) != -1
     let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
     let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 
@@ -100,16 +83,15 @@ if !has('nvim')
     let &t_fd = "\<Esc>[?1004l"
     execute "set <FocusGained>=\<Esc>[I"
     execute "set <FocusLost>=\<Esc>[O"
-  endif
+endif
 
-  if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
+if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
     let &t_SI .= "\<Esc>[6 q"
     let &t_EI .= "\<Esc>[2 q"
-  endif
+endif
 
-  if &term == 'xterm-kitty'
+if &term == 'xterm-kitty'
     let &t_ut=''
-  endif
 endif
 
 let g:sonokai_style = 'andromeda'
@@ -124,9 +106,7 @@ let g:lightline = {
 \   }
 \ }
 
-if !has('nvim')
-  autocmd! FocusGained * call lightline#update()
-endif
+autocmd! FocusGained * call lightline#update()
 
 function s:update_status_colors()
   let g:lightline.colorscheme = substitute(g:colors_name, '-', '_', '')
@@ -146,58 +126,45 @@ colorscheme nord
 
 runtime ftplugin/man.vim
 
-let test#strategy = has('nvim') ? 'neovim' : 'vimterminal'
+let test#strategy = 'vimterminal'
 nnoremap <leader>tn :TestNearest<cr>
 nnoremap <leader>tl :TestLast<cr>
 
 " Fuzzy search
-if has('nvim')
-  nnoremap <leader><space> :Telescope buffers<cr>
-  nnoremap <leader>? :Telescope oldfiles<cr>
-  nnoremap <leader>g :Telescope git_files<cr>
-else
-  nnoremap <leader><space> :Buffers<cr>
-  nnoremap <leader>? :History<cr>
-  nnoremap <leader>g :GFiles<cr>
-endif
+nnoremap <leader><space> :Buffers<cr>
+nnoremap <leader>? :History<cr>
+nnoremap <leader>g :GFiles<cr>
 
 " Snippets support
 " Expand
-imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+" imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+" smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
 
 " Expand or jump
-imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+" imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+" smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
 
 " Jump forward or backward
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+" imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+" smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+" imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+" smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
 " See https://github.com/hrsh7th/vim-vsnip/pull/50
-nmap        s   <Plug>(vsnip-select-text)
-xmap        s   <Plug>(vsnip-select-text)
-nmap        S   <Plug>(vsnip-cut-text)
-xmap        S   <Plug>(vsnip-cut-text)
+" nmap        s   <Plug>(vsnip-select-text)
+" xmap        s   <Plug>(vsnip-select-text)
+" nmap        S   <Plug>(vsnip-cut-text)
+" xmap        S   <Plug>(vsnip-cut-text)
 
 " Indent lines
 let g:indentLine_enabled = 0
 nnoremap <silent> <leader>\| :IndentLinesToggle<CR>
 
 " Highlight yanked text
-if has('nvim')
-  augroup YankHighlight
-    au!
-    autocmd TextYankPost * lua vim.highlight.on_yank()
-  augroup end
-else
-  let g:highlightedyank_highlight_duration = 300
-  let g:highlightedyank_highlight_in_visual = 0
-  highlight link HighlightedyankRegion IncSearch
-endif
+let g:highlightedyank_highlight_duration = 300
+let g:highlightedyank_highlight_in_visual = 0
+highlight link HighlightedyankRegion IncSearch
 
 function! s:helptab()
   if &buftype == 'help'
@@ -209,111 +176,27 @@ augroup vimrc
   autocmd BufEnter *.txt call s:helptab()
 augroup end
 
-
 " File types
-autocmd Filetype go setlocal ts=4 sw=4 noexpandtab
+autocmd Filetype go set noexpandtab
 
 autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
 
 " LSP
-if has('nvim')
-  lua require("nvim-lsp-installer").setup{}
+let lspServers = [
+			\     #{
+			\        filetype: ['go'],
+			\        path: 'gopls',
+			\      },
+			\     #{
+			\        filetype: ['rust'],
+			\        path: 'rust-analyzer',
+			\      }
+			\   ]
+autocmd VimEnter * call LspAddServer(lspServers)
 
-  function! NvimOnLspAttachBuf()
-    " Not needed as nvim-cmp is used for completion
-    " setlocal omnifunc=v:lua.vim.lsp.omnifunc
+let lspOpts = {'autoHighlightDiags': v:true}
+autocmd VimEnter * call LspOptionsSet(lspOpts)
 
-    nnoremap <buffer><silent> K :lua vim.lsp.buf.hover()<cr>
-    nnoremap <buffer><silent> gd :lua vim.lsp.buf.definition()<cr>
-    nnoremap <buffer><silent> <C-k> :lua vim.lsp.buf.signature_help()<cr>
-    nnoremap <buffer><silent> <leader>rn :lua vim.lsp.buf.rename()<cr>
-    nnoremap <buffer><silent> <leader>gr :lua vim.lsp.buf.references()<cr>
-    nnoremap <buffer><silent> <leader>ca :lua vim.lsp.buf.code_action()<cr>
-    nnoremap <buffer><silent> <leader>e :lua vim.diagnostic.open_float()<cr>
-    nnoremap <buffer><silent> <leader>q :lua vim.diagnostic.setloclist()<cr>
-    nnoremap <buffer><silent> <leader>gs :Telescope lsp_document_symbols theme=ivy<cr>
-    nnoremap <buffer><silent> <leader>gS :Telescope lsp_dynamic_workspace_symbols theme=ivy<cr>
+command -nargs=+ LspHover2 :LspHover
 
-    command! Format execute 'lua vim.lsp.buf.formatting()'
-  endfunction
-
-lua <<EOF
-  local on_attach = function(_, bufnr) vim.fn.NvimOnLspAttachBuf() end
-
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-  local lspconfig = require('lspconfig')
-  lspconfig.rust_analyzer.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-  }
-  lspconfig.gopls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-      gopls = {
-        usePlaceholders = true
-      }
-    }
-  }
-  local cmp = require('cmp')
-  cmp.setup {
-    window = {
-      documentation = {
-        max_width = 120
-      }
-    },
-    snippet = {
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-      end,
-    },
-    mapping = {
-      ['<C-p>'] = cmp.mapping.select_prev_item(),
-      ['<C-n>'] = cmp.mapping.select_next_item(),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<cr>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      },
-    },
-    sources = {
-      { name = 'luasnip' },
-      { name = 'nvim_lsp' },
-      { name = 'nvim_lua' },
-    },
-  }
-EOF
-else
-  function! FindProjectRoot(marker_file_name)
-    let marker_file = findfile(a:marker_file_name, '.;')
-    if marker_file != ""
-      let root_dir = fnamemodify(marker_file, ':p:h')
-    else
-      let root_dir = getcwd()
-    endif
-    echom "Root dir is" root_dir
-    return root_dir
-  endfunction
-
-  let g:lsc_server_commands = {
-        \ 'go': #{
-        \   command: 'gopls serve',
-        \   log_level: -1,
-        \   suppress_stderr: v:true,
-        \   message_hooks: #{
-        \     initialize: #{
-        \       rootUri: {method, params -> lsc#uri#documentUri(FindProjectRoot('go.mod'))},
-        \     },
-        \   },
-        \ },
-        \ 'rust': #{command: 'rust-analyzer', suppress_stderr: v:true},
-        \ 'sh': #{command: 'bash-language-server start', suppress_stderr: v:true}
-        \ }
-  let g:lsc_auto_map = v:true
-  set completeopt-=preview
-endif
+autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHover2
