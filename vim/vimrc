@@ -19,6 +19,7 @@ set nohlsearch
 set laststatus=2
 set noshowmode
 set belloff=all
+set scrolloff=3
 
 nnoremap <space> <nop>
 map <space> <leader>
