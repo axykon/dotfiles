@@ -59,6 +59,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'Yggdroot/indentLine'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'hashivim/vim-terraform'
+Plug 'aklt/plantuml-syntax'
 " Plug 'hrsh7th/vim-vsnip'
 " Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'ghifarit53/tokyonight-vim'
@@ -193,10 +194,9 @@ let lspServers = [
 			\        path: 'rust-analyzer',
 			\      }
 			\   ]
-autocmd VimEnter * call LspAddServer(lspServers)
-
 let lspOpts = {'autoHighlightDiags': v:true}
-autocmd VimEnter * call LspOptionsSet(lspOpts)
+
+autocmd VimEnter * call LspAddServer(lspServers) | call LspOptionsSet(lspOpts)
 
 command -nargs=+ LspHover2 :LspHover
 
