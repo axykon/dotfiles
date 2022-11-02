@@ -8,6 +8,7 @@ vim.o.completeopt = 'menu'
 vim.o.showcmd = false
 vim.o.showmode = false
 vim.o.signcolumn = 'yes'
+vim.o.scrolloff = 3
 vim.cmd 'colorscheme sonokai'
 
 if vim.g.neovide then
