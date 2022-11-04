@@ -3,8 +3,8 @@ if [[ -z $TMUX ]]; then
         PATH=$HOME/.local/bin:$PATH
     fi
 
-    if [[ -d $HOME/.bash_profile.d ]]; then
-        for f in $HOME/.bash_profile.d/*.sh; do
+    if [[ -d $HOME/.env.d ]]; then
+        for f in $HOME/.env.d/*.sh; do
             source $f
         done
     fi

@@ -112,8 +112,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [[ -d ~/.bashrc.d ]]; then
-	for f in ~/.bashrc.d/*; do
+if [[ -d ~/.env.d ]]; then
+	for f in ~/.env.d/*; do
 		. $f
 	done
 fi
