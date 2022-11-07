@@ -67,7 +67,6 @@ Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'machakann/vim-highlightedyank'
 Plug 'liuchengxu/graphviz.vim'
 " Plug 'habamax/vim-dir'
-Plug 'natebosch/vim-lsc'
 Plug 'preservim/tagbar'
 Plug 'yegappan/lsp'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
