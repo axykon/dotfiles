@@ -123,6 +123,7 @@ augroup Colors
 augroup end
 
 set background=dark
+let g:sonokai_style = 'shusia'
 colorscheme sonokai
 
 runtime ftplugin/man.vim
