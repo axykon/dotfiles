@@ -25,7 +25,7 @@ set hlsearch
 
 nnoremap <space> <nop>
 map <space> <leader>
-nnoremap <C-l> :noh<cr><C-l>
+nnoremap <C-l> :noh<CR><C-l>
 
 let plug_path = glob('~/.vim/autoload/plug.vim')
 if empty(plug_path)
