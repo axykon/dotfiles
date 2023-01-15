@@ -9,12 +9,14 @@ vim.o.showcmd = false
 vim.o.showmode = false
 vim.o.signcolumn = 'yes'
 vim.o.scrolloff = 3
-vim.cmd 'colorscheme sonokai'
+vim.cmd.colorscheme('sonokai')
 
 if vim.g.neovide then
   -- vim.g.neovide_cursor_trail_legnth = 0
   -- vim.g.neovide_cursor_animation_length = 1
   vim.o.guifont = 'Iosevka:h18'
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_fullscreen = true
 end
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -79,16 +81,14 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
+  vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, bufopts)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 
-	vim.keymap.set('n', '<space>ds', telescope_builtin.lsp_document_symbols, bufopts)
+  vim.keymap.set('n', '<space>ds', telescope_builtin.lsp_document_symbols, bufopts)
 end
 
 local lspconfig = require('lspconfig')
