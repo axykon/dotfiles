@@ -22,6 +22,7 @@ set belloff=all
 set scrolloff=3
 set hlsearch
 set completeopt=menu,menuone
+set mouse=a
 
 nnoremap <space> <nop>
 map <space> <leader>
@@ -219,6 +220,7 @@ autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
 " ALE
 let g:ale_completion_enabled = 1
 let g:ale_floating_preview = 1
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
 let g:ale_linters = {
 			\ 'rust': ['analyzer'],
 			\ }
