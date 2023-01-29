@@ -55,7 +55,7 @@ Plug 'sainnhe/edge'
 Plug 'sainnhe/gruvbox-material'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'rbong/vim-flog', { 'branch': 'v1' }
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-dadbod'
 Plug 'junegunn/gv.vim'
