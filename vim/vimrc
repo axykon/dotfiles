@@ -1,4 +1,3 @@
-set encoding=utf-8
 set hidden
 set tabstop=4
 set shiftwidth=4
@@ -22,6 +21,7 @@ set noshowmode
 set belloff=all
 set scrolloff=3
 set hlsearch
+set completeopt=menu,menuone
 
 nnoremap <space> <nop>
 map <space> <leader>
@@ -54,6 +54,7 @@ Plug 'sainnhe/edge'
 Plug 'sainnhe/gruvbox-material'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'rbong/vim-flog', { 'branch': 'v1' }
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-dadbod'
 Plug 'junegunn/gv.vim'
@@ -73,8 +74,9 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'liuchengxu/graphviz.vim'
 " Plug 'habamax/vim-dir'
 Plug 'preservim/tagbar'
-Plug 'yegappan/lsp'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'yegappan/lsp'
+Plug 'dense-analysis/ale'
+Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
 if has('termguicolors')
@@ -130,7 +132,7 @@ augroup end
 
 set background=dark
 " let g:sonokai_style = 'shusia'
-colorscheme sonokai
+colorscheme ayu
 
 runtime ftplugin/man.vim
 
@@ -186,28 +188,40 @@ autocmd Filetype go set noexpandtab
 autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
 
 " LSP
-let lspServers = [
-			\     #{
-			\        filetype: ['go'],
-			\        path: 'gopls',
-			\      },
-			\     #{
-			\        filetype: ['rust'],
-			\        path: 'rust-analyzer',
-			\      },
-            \     #{
-            \        filetype: ['java'],
-            \        path: expand('~/.local/lib/java/jdtls/bin/jdtls'),
-            \        args: ['-data', expand('~/.local/cache/jdtls'),
-            \               '--jvm-arg=-javaagent:/home/axykon/.local/lib/java/lombok.jar'],
-            \      },
-			\   ]
-autocmd VimEnter * call LspAddServer(lspServers)
+" let lspServers = [
+" 			\     {
+"             \       'filetype': ['go'],
+" 			\       'path': 'gopls',
+" 			\     },
+" 			\     {
+" 			\        'filetype': ['rust'],
+" 			\        'path': 'rustup',
+" 			\        'args': ['run', 'stable', 'rust-analyzer'],
+" 			\     },
+"             \     {
+"             \        'filetype': ['java'],
+"             \        'path': expand('~/.local/lib/java/jdtls/bin/jdtls'),
+"             \        'args': ['-data', expand('~/.local/cache/jdtls'),
+"             \               '--jvm-arg=-javaagent:/home/axykon/.local/lib/java/lombok.jar'],
+"             \      },
+" 			\   ]
+" let lspOpts = {
+"             \ 'autoHighlightDiags': v:true,
+"             \ 'autoPopulateDiags': v:true,
+"             \ }
+" autocmd VimEnter * 
+"             \ call LspAddServer(lspServers) |
+"             \ call LspOptionsSet(lspOpts)
 
-let lspOpts = {'autoHighlightDiags': v:true}
-autocmd VimEnter * call LspOptionsSet(lspOpts)
+" command! -nargs=+ LspHoverK :LspHover
+" autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHoverK
 
-command! -nargs=+ LspHover2 :LspHover
+" ALE
+let g:ale_completion_enabled = 1
+let g:ale_floating_preview = 1
+let g:ale_linters = {
+			\ 'rust': ['analyzer'],
+			\ }
+let g:ale_rust_analyzer_executable = glob('`rustup which rust-analyzer`')
 
-autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHover2
-
+autocmd! User ALELSPStarted nmap K :ALEHover<CR>
