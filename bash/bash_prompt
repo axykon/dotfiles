@@ -179,7 +179,7 @@ function setup_ps1 {
   PS1+="\$(wrap '<> ' \$(color_jobs $c_shell_jobs))"
 
   # Second part of the line drawing
-  PS1+="\n${c_token}└─ "
+  PS1+="\n${c_token}└─❯ "
 
   # Color our text input; cmd output is sent to c_normal in TRAP above
   PS1+="${c_text_input}"
