@@ -112,6 +112,20 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# aws-cli completion
+if [[ -x /usr/local/bin/aws_completer ]]; then
+    complete -C /usr/local/bin/aws_completer aws
+fi
+
+# direnv
+if which direnv >/dev/null; then
+    eval "$(direnv hook bash)"
+fi
+
+if [[ -d $HOME/sdk/maven ]]; then
+    PATH=$PATH:$HOME/sdk/maven/bin
+fi
+
 if [[ -d ~/.env.d ]]; then
 	for f in ~/.env.d/*; do
 		. $f
