@@ -217,11 +217,11 @@ bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bar {
     position top
 
-    font JetBrains Mono 10
+    font Iosevka 10
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command i3status-rs $HOME/.config/i3status-rust/config.toml
+    # status_command i3status-rs $HOME/.config/i3status-rust/config.toml
 
     colors {
         statusline #ffffff
