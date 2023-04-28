@@ -34,6 +34,8 @@ if empty(plug_path)
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+let g:lsp_provider = 'lsp'
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 Plug 'airblade/vim-gitgutter'
@@ -44,7 +46,6 @@ Plug 'vim/killersheep'
 Plug 'towolf/vim-helm'
 Plug 'airblade/vim-rooter'
 Plug 'aymericbeaumet/vim-symlink'
-Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
@@ -67,17 +68,17 @@ Plug 'hashivim/vim-terraform'
 Plug 'aklt/plantuml-syntax'
 Plug 'tyru/open-browser.vim'
 Plug 'weirongxu/plantuml-previewer.vim'
-" Plug 'hrsh7th/vim-vsnip'
-" Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'machakann/vim-highlightedyank'
 Plug 'liuchengxu/graphviz.vim'
-" Plug 'habamax/vim-dir'
 Plug 'preservim/tagbar'
-" Plug 'yegappan/lsp'
-Plug 'dense-analysis/ale'
+Plug 'yegappan/lsp', lsp_provider == 'lsp' ? {} : { 'on' : [] }
+Plug 'dense-analysis/ale', lsp_provider == 'ale' ? {} : { 'on': [] }
 Plug 'ayu-theme/ayu-vim'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
+Plug 'rafi/awesome-vim-colorschemes'
 call plug#end()
 
 if has('termguicolors')
@@ -106,69 +107,22 @@ endif
 
 let g:sonokai_style = 'andromeda'
 let g:sonokai_spell_foreground = 'colored'
-let g:lightline = {
-\   'active': {
-\     'left': [[ 'mode', 'paste'],
-\              [ 'gitbranch', 'readonly', 'modified' ]]
-\   },
-\   'component_function': {
-\     'gitbranch': 'FugitiveHead',
-\   }
-\ }
-
-autocmd! FocusGained * call lightline#update()
-
-function s:update_status_colors()
-  let g:lightline.colorscheme = substitute(g:colors_name, '-', '_', '')
-  call lightline#disable()
-  call lightline#enable()
-  highlight link lscDiagnosticError ErrorMsg
-  highlight link lscDiagnosticWarning WarningMsg
-endfunction
-
-augroup Colors
-  au!
-  autocmd ColorScheme * call s:update_status_colors()
-augroup end
 
 set background=dark
-" let g:sonokai_style = 'shusia'
-colorscheme ayu
+colorscheme PaperColor
 
 runtime ftplugin/man.vim
 
-let test#strategy = 'vimterminal'
+" let test#strategy = 'vimterminal'
 nnoremap <leader>tn :TestNearest<cr>
 nnoremap <leader>tl :TestLast<cr>
 
 " Fuzzy search
 " let g:fzf_command_prefix = 'Fzf'
-let g:fzf_layout = { 'down': '~30%' }
+" let g:fzf_layout = { 'down': '~30%' }
 nnoremap <leader><space> :Buffers<cr>
 nnoremap <leader>? :History<cr>
 nnoremap <leader>g :GFiles<cr>
-
-" Snippets support
-" Expand
-" imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-" smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-
-" Expand or jump
-" imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-" smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-
-" Jump forward or backward
-" imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-" smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-" imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-" smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
-" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
-" See https://github.com/hrsh7th/vim-vsnip/pull/50
-" nmap        s   <Plug>(vsnip-select-text)
-" xmap        s   <Plug>(vsnip-select-text)
-" nmap        S   <Plug>(vsnip-cut-text)
-" xmap        S   <Plug>(vsnip-cut-text)
 
 " Indent lines
 let g:indentLine_enabled = 0
@@ -188,34 +142,50 @@ autocmd Filetype go set noexpandtab
 
 autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
 
-" LSP
-" let lspServers = [
-" 			\     {
-"             \       'filetype': ['go'],
-" 			\       'path': 'gopls',
-" 			\     },
-" 			\     {
-" 			\        'filetype': ['rust'],
-" 			\        'path': 'rustup',
-" 			\        'args': ['run', 'stable', 'rust-analyzer'],
-" 			\     },
-"             \     {
-"             \        'filetype': ['java'],
-"             \        'path': expand('~/.local/lib/java/jdtls/bin/jdtls'),
-"             \        'args': ['-data', expand('~/.local/cache/jdtls'),
-"             \               '--jvm-arg=-javaagent:/home/axykon/.local/lib/java/lombok.jar'],
-"             \      },
-" 			\   ]
-" let lspOpts = {
-"             \ 'autoHighlightDiags': v:true,
-"             \ 'autoPopulateDiags': v:true,
-"             \ }
-" autocmd VimEnter * 
-"             \ call LspAddServer(lspServers) |
-"             \ call LspOptionsSet(lspOpts)
+command Transparent highlight Normal guibg=NONE |
+			\ highlight LineNr guibg=NONE |
+			\ highlight EndOfBuffer guibg=NONE
 
-" command! -nargs=+ LspHoverK :LspHover
-" autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHoverK
+" Rooter
+let g:rooter_manual_only = 1
+
+" LSP
+let lspServers = [
+			\     {
+            \       'filetype': ['go', 'gomod'],
+			\       'path': 'gopls',
+            \       'rootSearch': ['go.mod'],
+			\	    'syncInit': v:true,
+			\     },
+			\     {
+			\        'filetype': ['rust'],
+			\        'path': 'rustup',
+			\        'args': ['run', 'stable', 'rust-analyzer'],
+            \        'syncInit': v:true,
+			\     },
+            \     {
+            \        'filetype': ['java'],
+            \        'path': expand('~/.local/lib/java/jdtls/bin/jdtls'),
+            \        'args': ['-data', expand('~/.local/cache/jdtls'),
+            \               '--jvm-arg=-javaagent:/home/axykon/.local/lib/java/lombok.jar'],
+            \      },
+			\   ]
+let lspOpts = {
+            \ 'autoHighlightDiags': v:true,
+            \ 'autoPopulateDiags': v:true,
+			\ 'highlightDiagInline': v:true,
+			\ 'autoComplete': v:true,
+			\ 'echoSignature': v:false,
+            \ }
+
+if lsp_provider == 'lsp'
+    autocmd VimEnter * 
+                \ call LspAddServer(lspServers) |
+                \ call LspOptionsSet(lspOpts)
+
+	command! -nargs=+ LspHoverK :LspHover
+	autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHoverK
+endif
 
 " ALE
 let g:ale_completion_enabled = 1
@@ -225,5 +195,35 @@ let g:ale_linters = {
 			\ 'rust': ['analyzer'],
 			\ }
 let g:ale_rust_analyzer_executable = glob('`rustup which rust-analyzer`')
+let g:ale_completion_symbols = {
+			\ 'text': '',
+			\ 'method': '',
+			\ 'function': '',
+			\ 'constructor': '',
+			\ 'field': '',
+			\ 'variable': '',
+			\ 'class': '',
+			\ 'interface': '',
+			\ 'module': '',
+			\ 'property': '',
+			\ 'unit': 'v',
+			\ 'value': 'v',
+			\ 'enum': 't',
+			\ 'keyword': 'v',
+			\ 'snippet': 'v',
+			\ 'color': 'v',
+			\ 'file': 'v',
+			\ 'reference': 'v',
+			\ 'folder': 'v',
+			\ 'enum_member': 'm',
+			\ 'constant': 'm',
+			\ 'struct': 't',
+			\ 'event': 'v',
+			\ 'operator': 'f',
+			\ 'type_parameter': 'p',
+			\ '<default>': 'v'
+			\ }
 
-autocmd! User ALELSPStarted nmap K :ALEHover<CR>
+autocmd! User ALELSPStarted 
+			\ nmap K :ALEHover<CR> |
+			\ nmap gd :ALEGoToDefinition<CR>
