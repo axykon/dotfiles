@@ -14,10 +14,10 @@ set smartcase
 set path=.,,
 set wildmenu
 if has('popupwin')
-  set wildoptions=pum
+   set wildoptions=pum
 endif
 set laststatus=2
-set noshowmode
+set showtabline=1
 set belloff=all
 set scrolloff=3
 set hlsearch
@@ -33,10 +33,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" lsp provider: lsp | ale
 let g:lsp_provider = 'lsp'
 
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/vim-plug'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-vinegar'
@@ -45,13 +46,14 @@ Plug 'vim/killersheep'
 Plug 'towolf/vim-helm'
 Plug 'airblade/vim-rooter'
 Plug 'aymericbeaumet/vim-symlink'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/sonokai'
 Plug 'sainnhe/everforest'
 Plug 'sainnhe/edge'
+Plug 'sjl/badwolf'
 Plug 'sainnhe/gruvbox-material'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -78,23 +80,18 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'rose-pine/vim'
+Plug 'tpope/vim-flagship'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'Donaldttt/fuzzyy'
+Plug 'girishji/scope.vim'
 call plug#end()
 
 if has('termguicolors')
   set termguicolors
 endif
 
-if index(["tmux-256color", "foot"],  &term) != -1
-    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
-
-    " Handle focus events
-    let &t_fe = "\<Esc>[?1004h"
-    let &t_fd = "\<Esc>[?1004l"
-    execute "set <FocusGained>=\<Esc>[I"
-    execute "set <FocusLost>=\<Esc>[O"
-endif
-
+" Cursor shape
 if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
     let &t_SI .= "\<Esc>[6 q"
     let &t_EI .= "\<Esc>[2 q"
@@ -107,21 +104,25 @@ endif
 let g:sonokai_style = 'andromeda'
 let g:sonokai_spell_foreground = 'colored'
 
+let g:gitgutter_sign_priority = 0
+
 set background=dark
-colorscheme PaperColor
+let ayucolor='dark'
+" colorscheme rosepine
+colorscheme dracula
 
 runtime ftplugin/man.vim
 
-" let test#strategy = 'vimterminal'
+let test#strategy = 'vimterminal'
 nnoremap <leader>tn :TestNearest<cr>
 nnoremap <leader>tl :TestLast<cr>
 
 " Fuzzy search
 " let g:fzf_command_prefix = 'Fzf'
 " let g:fzf_layout = { 'down': '~30%' }
-nnoremap <leader><space> :Buffers<cr>
-nnoremap <leader>? :History<cr>
-nnoremap <leader>g :GFiles<cr>
+nnoremap <leader><space> <cmd>Scope Buffer<cr>
+nnoremap <leader>? <cmd>Scope MRU<cr>
+nnoremap <leader>g <cmd>Scope GitFile<cr>
 
 " Indent lines
 let g:indentLine_enabled = 0
@@ -141,6 +142,8 @@ autocmd Filetype go set noexpandtab
 
 autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
 
+autocmd FocusGained * let &stl=&stl
+
 command Transparent highlight Normal guibg=NONE |
 			\ highlight LineNr guibg=NONE |
 			\ highlight EndOfBuffer guibg=NONE
@@ -153,7 +156,7 @@ let lspServers = [
 			\     {
             \       'filetype': ['go', 'gomod'],
 			\       'path': 'gopls',
-            \       'rootSearch': ['go.mod'],
+            \       'rootSearch': ['go.work', 'go.mod', '.git/'],
 			\	    'syncInit': v:true,
 			\     },
 			\     {
@@ -162,6 +165,11 @@ let lspServers = [
 			\        'args': ['run', 'stable', 'rust-analyzer'],
             \        'syncInit': v:true,
 			\     },
+            \     {
+            \       'filetype': ['javascript'],
+            \       'path': 'typescript-language-server',
+            \       'args': ['--stdio'],
+            \     },
             \     {
             \        'filetype': ['java'],
             \        'path': expand('~/.local/lib/java/jdtls/bin/jdtls'),
@@ -175,6 +183,10 @@ let lspOpts = {
 			\ 'highlightDiagInline': v:true,
 			\ 'autoComplete': v:true,
 			\ 'echoSignature': v:false,
+			\ 'showDiagWithVirtualText': v:true,
+			\ 'diagVirtualTextAlign': 'after',
+			\ 'showDiagInPopup': v:true,
+			\ 'outlineWinSize': 50,
             \ }
 
 if lsp_provider == 'lsp'
@@ -182,47 +194,32 @@ if lsp_provider == 'lsp'
                 \ call LspAddServer(lspServers) |
                 \ call LspOptionsSet(lspOpts)
 
-	command! -nargs=+ LspHoverK :LspHover
-	autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHoverK
+	autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHover
+
+	nnoremap <leader>e :LspDiagCurrent<cr>
+	nnoremap <leader>a :LspCodeAction<cr>
+	nnoremap <leader>o <cmd>LspDocumentSymbol<cr>
 endif
 
 " ALE
-let g:ale_completion_enabled = 1
-let g:ale_floating_preview = 1
-let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
-let g:ale_linters = {
-			\ 'rust': ['analyzer'],
-			\ }
-let g:ale_rust_analyzer_executable = glob('`rustup which rust-analyzer`')
-let g:ale_completion_symbols = {
-			\ 'text': '',
-			\ 'method': '',
-			\ 'function': '',
-			\ 'constructor': '',
-			\ 'field': '',
-			\ 'variable': '',
-			\ 'class': '',
-			\ 'interface': '',
-			\ 'module': '',
-			\ 'property': '',
-			\ 'unit': 'v',
-			\ 'value': 'v',
-			\ 'enum': 't',
-			\ 'keyword': 'v',
-			\ 'snippet': 'v',
-			\ 'color': 'v',
-			\ 'file': 'v',
-			\ 'reference': 'v',
-			\ 'folder': 'v',
-			\ 'enum_member': 'm',
-			\ 'constant': 'm',
-			\ 'struct': 't',
-			\ 'event': 'v',
-			\ 'operator': 'f',
-			\ 'type_parameter': 'p',
-			\ '<default>': 'v'
-			\ }
+if lsp_provider == 'ale'
+    let g:ale_enabled = 1
+    let g:ale_completion_enabled = 1
+    let g:ale_floating_preview = 1
+    let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
+    let g:ale_linters = {
+                \ 'rust': ['analyzer'],
+                \ }
+    " let g:ale_rust_analyzer_executable = glob('`rustup which rust-analyzer`')
+	augroup HoverAfterComplete                                                        
+		autocmd!                                                                    
+		" display argument list of the selected completion candidate
+		" using ALEHover
+		autocmd User ALECompletePost ALEHover                                       
+	augroup END
 
-autocmd! User ALELSPStarted 
-			\ nmap K :ALEHover<CR> |
-			\ nmap gd :ALEGoToDefinition<CR>
+	autocmd! User ALELSPStarted 
+				\ nmap K :ALEHover<CR> |
+				\ nmap gd :ALEGjToDefinition<CR>
+endif
+
