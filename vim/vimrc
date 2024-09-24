@@ -29,16 +29,16 @@ map <space> <leader>
 nnoremap <C-l> :noh<CR><C-l>
 
 
-let s:plug_path = (has('win32') ? '~/vimfiles' : '~/.vim') .. '/autoload/plug.vim'
-if empty(glob(s:plug_path))
-  silent execute '!curl -fLo ' .. expand(s:plug_path) .. ' --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+let s:vimfiles = has('win32') ? '~/vimfiles' : '~/.vim'
+if empty(glob(s:vimfiles .. '/autoload/plug.vim'))
+  silent execute '!curl -fLo ' .. expand(s:vimfiles .. '/autoload/plug.vim') .. ' --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " lsp provider: lsp | ale
 let g:lsp_provider = 'lsp'
 
-call plug#begin('~/.vim/plugged')
+call plug#begin(s:vimfiles .. '/plugged')
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
@@ -161,24 +161,7 @@ let lspServers = [
             \       'rootSearch': ['go.work', 'go.mod', '.git/'],
 			\	    'syncInit': v:true,
 			\     },
-			\     {
-			\        'filetype': ['rust'],
-			\        'path': 'rustup',
-			\        'args': ['run', 'stable', 'rust-analyzer'],
-            \        'syncInit': v:true,
-			\     },
-            \     {
-            \       'filetype': ['javascript'],
-            \       'path': 'typescript-language-server',
-            \       'args': ['--stdio'],
-            \     },
-            \     {
-            \        'filetype': ['java'],
-            \        'path': expand('~/.local/lib/java/jdtls/bin/jdtls'),
-            \        'args': ['-data', expand('~/.local/cache/jdtls'),
-            \               '--jvm-arg=-javaagent:/home/axykon/.local/lib/java/lombok.jar'],
-            \      },
-			\   ]
+			\    ]
 let lspOpts = {
             \ 'autoHighlightDiags': v:true,
             \ 'autoPopulateDiags': v:true,
