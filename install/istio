@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 cd /tmp
-version="1.15.3"
+version="1.19.3"
 [[ -d istio-$version ]] \
     || curl -sL "https://github.com/istio/istio/releases/download/$version/istio-$version-linux-amd64.tar.gz" \
     | tar -xz
