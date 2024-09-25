@@ -87,6 +87,7 @@ Plug 'tpope/vim-flagship'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'Donaldttt/fuzzyy'
 Plug 'girishji/scope.vim'
+Plug 'rbong/vim-flog'
 call plug#end()
 
 if has('termguicolors')
