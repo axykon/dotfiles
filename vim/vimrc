@@ -155,14 +155,43 @@ command Transparent highlight Normal guibg=NONE |
 let g:rooter_manual_only = 1
 
 " LSP
-let lspServers = [
-			\     {
-            \       'filetype': ['go', 'gomod'],
-			\       'path': 'gopls',
-            \       'rootSearch': ['go.work', 'go.mod', '.git/'],
-			\	    'syncInit': v:true,
-			\     },
-			\    ]
+let lspServers = []
+if executable('gopls')
+	let lspServers = lspServers->add({
+				\   'filetype': ['go', 'gomod'],
+				\   'path': 'gopls',
+				\   'rootSearch': ['go.work', 'go.mod', '.git/'],
+				\   'syncInit': v:true,
+				\ })
+endif
+
+if executable('rust-analyzer')
+	let lspServers = lspServers->add({
+				\   'filetype': ['rust'],
+				\   'path': 'rustup',
+				\   'args': ['run', 'stable', 'rust-analyzer'],
+				\   'syncInit': v:true,
+				\ })
+endif
+
+if executable('typescript-language-server')
+    let lspServers = lspServers->add({
+                \   'filetype': ['javascript'],
+                \   'path': 'typescript-language-server',
+                \   'args': ['--stdio'],
+                \ })
+endif
+if executable('jdtls')
+    let lspServers = lspServers->add({
+                \   'filetype': ['java'],
+                \   'path': 'jdtls',
+                \   'args': [
+                \     '-data', expand('~/.local/cache/jdtls'),
+                \     '--jvm-arg=-javaagent:' .. expand('~/.local/lib/java/lombok.jar'),
+                \   ],
+                \ })
+endif
+
 let lspOpts = {
             \ 'autoHighlightDiags': v:true,
             \ 'autoPopulateDiags': v:true,
