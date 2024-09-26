@@ -148,7 +148,7 @@
 		("C-c l i" . eglot-code-action-organize-imports)
 		("C-c l f" . eglot-format-buffer))
   :custom
-  (eglot-auto-shutdown t)
+  (eglot-autoshutdown t)
   (eglot-extend-to-xref t)
   :hook
   ((go-ts-mode . eglot-ensure))
