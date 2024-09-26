@@ -28,6 +28,9 @@ nnoremap <space> <nop>
 map <space> <leader>
 nnoremap <C-l> :noh<CR><C-l>
 
+if has('win32')
+	set shell=pwsh
+endif
 
 let s:vimfiles = has('win32') ? '~/vimfiles' : '~/.vim'
 if empty(glob(s:vimfiles .. '/autoload/plug.vim'))
