@@ -1,7 +1,9 @@
+set nocp
 set hidden
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set autoindent
 set updatetime=300
 set ttimeoutlen=50
 set nowrap
@@ -13,9 +15,7 @@ set ignorecase
 set smartcase
 set path=.,,
 set wildmenu
-if has('popupwin')
-   set wildoptions=pum
-endif
+set wildoptions=pum
 set laststatus=2
 set showtabline=1
 set belloff=all
@@ -23,142 +23,67 @@ set scrolloff=3
 set hlsearch
 set completeopt=menu,menuone
 set mouse=a
+if has('termguicolors')
+  set termguicolors
+endif
+
+if has('win32')
+  set shell=pwsh
+endif
+
+" Cursor shape
+if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot", 'win32'], &term) != -1
+    let &t_SI .= "\<Esc>[6 q"
+    let &t_EI .= "\<Esc>[2 q"
+endif
+set t_ut=
+
+filetype on
+syntax on
+colorscheme PaperColor
 
 nnoremap <space> <nop>
 map <space> <leader>
 nnoremap <C-l> :noh<CR><C-l>
 
-if has('win32')
-	set shell=pwsh
-endif
+packadd minpac
 
-let s:vimfiles = has('win32') ? '~/vimfiles' : '~/.vim'
-if empty(glob(s:vimfiles .. '/autoload/plug.vim'))
-  silent execute '!curl -fLo ' .. expand(s:vimfiles .. '/autoload/plug.vim') .. ' --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+call minpac#init()
 
-" lsp provider: lsp | ale
-let g:lsp_provider = 'lsp'
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('rose-pine/vim', {'name': 'rose-pine'})
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('Donaldttt/fuzzyy')
+call minpac#add('yegappan/lsp')
+call minpac#add('preservim/vim-markdown')
+call minpac#add('girishji/scope.vim')
+call minpac#add('itchyny/lightline.vim')
+call minpac#add('catppuccin/vim', {'name': 'catppuccin'})
+call minpac#add('tpope/vim-vinegar')
+call minpac#add('tpope/vim-dadbod')
+call minpac#add('vim-test/vim-test')
+call minpac#add('sainnhe/gruvbox-material')
+call minpac#add('NLKNguyen/papercolor-theme')
 
-call plug#begin(s:vimfiles .. '/plugged')
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'airblade/vim-gitgutter'
-Plug 'arcticicestudio/nord-vim'
-Plug 'tpope/vim-vinegar'
-Plug 'stephpy/vim-yaml'
-Plug 'vim/killersheep'
-Plug 'towolf/vim-helm'
-Plug 'airblade/vim-rooter'
-Plug 'aymericbeaumet/vim-symlink'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'sainnhe/sonokai'
-Plug 'sainnhe/everforest'
-Plug 'sainnhe/edge'
-Plug 'sjl/badwolf'
-Plug 'sainnhe/gruvbox-material'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-dadbod'
-Plug 'junegunn/gv.vim'
-Plug 'vim-test/vim-test'
-Plug 'voldikss/vim-floaterm'
-Plug 'Yggdroot/indentLine'
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-Plug 'hashivim/vim-terraform'
-Plug 'aklt/plantuml-syntax'
-Plug 'tyru/open-browser.vim'
-Plug 'weirongxu/plantuml-previewer.vim'
-Plug 'ghifarit53/tokyonight-vim'
-Plug 'jasonccox/vim-wayland-clipboard'
-Plug 'machakann/vim-highlightedyank'
-Plug 'liuchengxu/graphviz.vim'
-Plug 'preservim/tagbar'
-Plug 'yegappan/lsp', lsp_provider == 'lsp' ? {} : { 'on' : [] }
-Plug 'dense-analysis/ale', lsp_provider == 'ale' ? {} : { 'on': [] }
-Plug 'ayu-theme/ayu-vim'
-Plug 'godlygeek/tabular'
-Plug 'preservim/vim-markdown'
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'rose-pine/vim'
-Plug 'tpope/vim-flagship'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'Donaldttt/fuzzyy'
-Plug 'girishji/scope.vim'
-Plug 'rbong/vim-flog'
-call plug#end()
-
-if has('termguicolors')
-  set termguicolors
-endif
-
-" Cursor shape
-if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot"], &term) != -1
-    let &t_SI .= "\<Esc>[6 q"
-    let &t_EI .= "\<Esc>[2 q"
-endif
-
-if &term == 'xterm-kitty'
-    let &t_ut=''
-endif
-
-let g:sonokai_style = 'andromeda'
-let g:sonokai_spell_foreground = 'colored'
-
-let g:gitgutter_sign_priority = 0
-
-set background=dark
-let ayucolor='dark'
-" colorscheme rosepine
-colorscheme dracula
-
-runtime ftplugin/man.vim
-
-let test#strategy = 'vimterminal'
-nnoremap <leader>tn :TestNearest<cr>
-nnoremap <leader>tl :TestLast<cr>
-
-" Fuzzy search
-" let g:fzf_command_prefix = 'Fzf'
-" let g:fzf_layout = { 'down': '~30%' }
-nnoremap <leader><space> <cmd>Scope Buffer<cr>
-nnoremap <leader>? <cmd>Scope MRU<cr>
-nnoremap <leader>g <cmd>Scope GitFile<cr>
-
-" Indent lines
-let g:indentLine_enabled = 0
-nnoremap <silent> <leader>\| :IndentLinesToggle<CR>
-
-" Highlight yanked text
-let g:highlightedyank_highlight_duration = 300
-let g:highlightedyank_highlight_in_visual = 0
-highlight link HighlightedyankRegion IncSearch
-
-" PlantUML
-let g:plantuml_previewer#plantuml_jar_path = expand('~/.local/lib/java/plantuml.jar')
-let g:plantuml_previewer#save_format = 'svg'
-
-" File types
-autocmd Filetype go set noexpandtab
-
-autocmd BufNew,BufNewFile,BufRead */Jenkinsfile :setfiletype groovy
-
-autocmd FocusGained * let &stl=&stl
-
-command Transparent highlight Normal guibg=NONE |
-			\ highlight LineNr guibg=NONE |
-			\ highlight EndOfBuffer guibg=NONE
-
-" Rooter
-let g:rooter_manual_only = 1
+" Status Line
+let g:lightline = {
+    \   'colorscheme': 'PaperColor',
+    \   'active': {
+    \     'left': [[ 'mode', 'paste' ],
+    \              [ 'readonly', 'filename', 'modified' ]]
+    \   },
+    \ }
 
 " LSP
 let lspServers = []
+if executable('typescript-language-server')
+    let lspServers = lspServers->add({
+                \   'filetype': ['javascript', 'typescript'],
+                \   'path': 'typescript-language-server.cmd',
+                \   'args': ['--stdio', '--log-level', '4'],
+                \ })
+endif
 if executable('gopls')
 	let lspServers = lspServers->add({
 				\   'filetype': ['go', 'gomod'],
@@ -177,13 +102,7 @@ if executable('rust-analyzer')
 				\ })
 endif
 
-if executable('typescript-language-server')
-    let lspServers = lspServers->add({
-                \   'filetype': ['javascript'],
-                \   'path': 'typescript-language-server',
-                \   'args': ['--stdio'],
-                \ })
-endif
+
 if executable('jdtls')
     let lspServers = lspServers->add({
                 \   'filetype': ['java'],
@@ -207,37 +126,12 @@ let lspOpts = {
 			\ 'outlineWinSize': 50,
             \ }
 
-if lsp_provider == 'lsp'
-    autocmd VimEnter * 
-                \ call LspAddServer(lspServers) |
-                \ call LspOptionsSet(lspOpts)
+autocmd VimEnter * 
+    \ call LspAddServer(lspServers) |
+    \ call LspOptionsSet(lspOpts)
 
-	autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHover
+autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg=:LspHover
 
-	nnoremap <leader>e :LspDiagCurrent<cr>
-	nnoremap <leader>a :LspCodeAction<cr>
-	nnoremap <leader>o <cmd>LspDocumentSymbol<cr>
-endif
-
-" ALE
-if lsp_provider == 'ale'
-    let g:ale_enabled = 1
-    let g:ale_completion_enabled = 1
-    let g:ale_floating_preview = 1
-    let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
-    let g:ale_linters = {
-                \ 'rust': ['analyzer'],
-                \ }
-    " let g:ale_rust_analyzer_executable = glob('`rustup which rust-analyzer`')
-	augroup HoverAfterComplete                                                        
-		autocmd!                                                                    
-		" display argument list of the selected completion candidate
-		" using ALEHover
-		autocmd User ALECompletePost ALEHover                                       
-	augroup END
-
-	autocmd! User ALELSPStarted 
-				\ nmap K :ALEHover<CR> |
-				\ nmap gd :ALEGjToDefinition<CR>
-endif
-
+nnoremap    nnoremap   nnoremap <leader>e :LspDiagCurrent<cr>
+nnoremap <leader>a :LspCodeAction<cr>
+nnoremap <leader>o <cmd>LspDocumentSymbol<cr>
