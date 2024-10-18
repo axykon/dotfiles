@@ -22,6 +22,10 @@
 ;; (define-key completion-in-region-mode-map (kbd "C-n") 'minibuffer-next-completion)
 ;; (define-key completion-in-region-mode-map (kbd "C-p") 'minibuffer-previous-completion)
 
+;; In WSL2 use browsers installed as windows programms
+;; TODO: override other browser programms
+(when (getenv "WSL_DISTRO_NAME")
+  (setopt browse-url-firefox-program "firefox.exe"))
 (setq treesit-language-source-alist
 	  '(
 		(bash "https://github.com/tree-sitter/tree-sitter-bash")
