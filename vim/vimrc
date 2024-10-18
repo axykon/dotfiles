@@ -23,6 +23,7 @@ set scrolloff=3
 set hlsearch
 set completeopt=menu,menuone
 set mouse=a
+set background=dark
 if has('termguicolors')
   set termguicolors
 endif
