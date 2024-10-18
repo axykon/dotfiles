@@ -236,6 +236,9 @@
   (add-to-list 'nerd-icons-extension-icon-alist
 			   '("go" nerd-icons-sucicon "nf-seti-go2" :face nerd-icons-blue)))
 
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
 
 (use-package doom-themes
   :ensure
