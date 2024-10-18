@@ -344,9 +344,12 @@
      (warning ,(nerd-icons-faicon "nf-fa-warning") compilation-warning)
      (note ,(nerd-icons-faicon "nf-fa-circle_info") compilation-info))))
 
-(use-package eglot
+(use-package eglot)
+
+(use-package eldoc
   :custom
-  (eldoc-idle-delay 0.1))
+  (eldoc-idle-delay 0.1)
+  (eldoc-echo-area-use-multiline-p nil))
 
 (use-package combobulate
   :preface
