@@ -297,7 +297,7 @@
   ;;         (concat (getenv "HOME") "/.emacs.d/node_modules"  ":"
   ;;                 (getenv "NODE_PATH")))
   :custom
-  (org-agenda-files '("~/org/" "~/Documents/notes/" "~/Documents/notes/journal/"))
+  (org-agenda-files '("~/org/todo.org"))
   :config
   (setq org-src-fontify-natively t
         org-hide-emphasis-markers t
