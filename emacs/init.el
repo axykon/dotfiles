@@ -279,6 +279,9 @@
   (web-mode-engines-alist
    '(("go" . "\\.tpl\\'"))))
 
+(use-package uniline
+  :defer t)
+
 (use-package unfill
   :ensure)
 
