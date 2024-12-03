@@ -22,10 +22,13 @@
 ;; (define-key completion-in-region-mode-map (kbd "C-n") 'minibuffer-next-completion)
 ;; (define-key completion-in-region-mode-map (kbd "C-p") 'minibuffer-previous-completion)
 
+(set-frame-font "JetBrains Mono-12")
+
 ;; In WSL2 use browsers installed as windows programms
 ;; TODO: override other browser programms
 (when (getenv "WSL_DISTRO_NAME")
   (setopt browse-url-firefox-program "firefox.exe"))
+
 (setq treesit-language-source-alist
 	  '(
 		(bash "https://github.com/tree-sitter/tree-sitter-bash")
@@ -66,6 +69,7 @@
   (package-vc-install "https://github.com/slotThe/vc-use-package"))
 (require 'vc-use-package)
 
+(setopt indent-tabs-mode nil)
 (setopt tab-width 4)
 
 (use-package tab-bar
@@ -75,7 +79,14 @@
   (tab-bar-tab-hints t)
   (tab-bar-select-tab-modifiers '(control)))
 
+(use-package xclip
+  :ensure
+  :if (getenv "WSL_DISTRO_NAME")
+  :config
+  (xclip-mode))
+
 (use-package vterm
+  :disabled
   :ensure
   :config
   (setq vterm-timer-delay 0.01))
@@ -85,6 +96,10 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package catppuccin-theme
+  :config
+  (load-theme 'catppuccin :no-confirm))
 
 (use-package vertico
   :ensure
@@ -105,6 +120,16 @@
   :ensure
   :config
   (marginalia-mode))
+
+(use-package project-mode-line-tag
+  :ensure
+  :config
+  (project-mode-line-tag-mode 1))
+
+(use-package rainbow-delimiters
+  :ensure
+  :config
+  (rainbow-delimiters-mode 1))
 
 (use-package go-ts-mode
   :custom
@@ -161,11 +186,23 @@
   :hook
   ((go-ts-mode . eglot-ensure))
   :config
+  (add-to-list 'eglot-server-programs
+			   `((java-mode java-ts-mode) .
+				 (
+				  ,(expand-file-name "~/.local/lib/jvm/jdtls/bin/jdtls")
+				  "-data" ,(expand-file-name "cache/java-workspace" user-emacs-directory)
+				  ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar"))
+				  :initializationOptions
+				  (:autobuild (:enabled t)
+							  :contentProvider (:preferred "fernflower")
+							  :extendedClientCapabilities (:classFileContentsSupport t)))))
+  
   (setq-default eglot-workspace-configuration
 				'((:gopls .
 						  ((staticcheck . t)
 						   (usePlaceholders . t)
 						   (matcher . "Fuzzy"))))))
+
 
 (use-package eglot-booster
   :vc (:fetcher github :repo jdtsmith/eglot-booster)
@@ -177,13 +214,23 @@
   :ensure
   :defer t)
 
-(use-package eglot-java-mode
-  :defer t
-  ;; :hook
-  ;; (java-ts-mode)
-  )
+;; (setq eglot-java-user-init-opts-fn 'custom-eglot-java-init-opts)
+;; (defun custom-eglot-java-init-opts (server eglot-java-eclipse-jdt)
+;;   "Custom options that will be merged with any default settings."
+;;   '(:settings
+;;     (:java
+;;      (:format
+;;       (:settings
+;;        (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+;;        :enabled t)))))
+;; (use-package eglot-java-mode
+;;   :defer t
+;;   ;; :hook
+;;   ;; (java-ts-mode)
+;;   )
 
 (use-package lspce
+  :disabled
   :config (progn
             (setq lspce-send-changes-idle-time 0.1)
             (setq lspce-show-log-level-in-modeline t) ;; show log level in mode line
@@ -215,13 +262,6 @@
   (package-vc-install "https://github.com/slotThe/vc-use-package"))
 (require 'vc-use-package)
 
-(use-package pg :vc
-  (:fetcher github :repo emarsden/pg-el))
-
-(use-package pgmacs :vc
-  (:fetcher github :repo emarsden/pgmacs))
-
-
 (use-package denote
   :ensure
   :custom
@@ -235,10 +275,6 @@
 			   '(go-ts-mode nerd-icons-sucicon "nf-seti-go2" :face nerd-icons-blue))
   (add-to-list 'nerd-icons-extension-icon-alist
 			   '("go" nerd-icons-sucicon "nf-seti-go2" :face nerd-icons-blue)))
-
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
 
 (use-package doom-themes
   :ensure
