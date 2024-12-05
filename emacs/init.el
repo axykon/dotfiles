@@ -82,6 +82,8 @@
 (use-package xclip
   :ensure
   :if (getenv "WSL_DISTRO_NAME")
+  :custom
+  (xclip-program "pwsh.exe")
   :config
   (xclip-mode))
 

@@ -1,5 +1,7 @@
 (setq inhibit-startup-message t)
-(tool-bar-mode -1)
 (menu-bar-mode -1)
-(setopt scroll-bar-mode nil)
-(setq font-use-system-font t)
+
+(when window-system
+  (tool-bar-mode -1)
+  (setq font-use-system-font t)  
+  (setopt scroll-bar-mode nil))
