@@ -27,7 +27,11 @@
 ;; In WSL2 use browsers installed as windows programms
 ;; TODO: override other browser programms
 (when (getenv "WSL_DISTRO_NAME")
-  (setopt browse-url-firefox-program "firefox.exe"))
+  ;; (setopt browse-url-firefox-program "firefox.exe")
+  (setopt browse-url-chrome-program "/mnt/c/Users/akravtsov/AppData/Local/Google/Chrome/Application/chrome.exe")
+  (defun wsl-copy (text)
+    (call-process-region text nil "clip.exe"))
+  (setq interprogram-cut-function 'wsl-copy))
 
 (setq treesit-language-source-alist
 	  '(
@@ -78,14 +82,6 @@
   (tab-bar-new-button-show nil)
   (tab-bar-tab-hints t)
   (tab-bar-select-tab-modifiers '(control)))
-
-(use-package xclip
-  :ensure
-  :if (getenv "WSL_DISTRO_NAME")
-  :custom
-  (xclip-program "pwsh.exe")
-  :config
-  (xclip-mode))
 
 (use-package vterm
   :disabled
