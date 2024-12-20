@@ -30,7 +30,7 @@
   ;; (setopt browse-url-firefox-program "firefox.exe")
   (setopt browse-url-chrome-program "/mnt/c/Users/akravtsov/AppData/Local/Google/Chrome/Application/chrome.exe")
   (defun wsl-copy (text)
-    (call-process-region text nil "clip.exe"))
+    (call-process-region text nil "win32yank.exe" nil nil nil "-i"))
   (setq interprogram-cut-function 'wsl-copy))
 
 (setq treesit-language-source-alist
