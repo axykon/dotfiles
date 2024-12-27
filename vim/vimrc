@@ -81,7 +81,7 @@ let lspServers = []
 if executable('typescript-language-server')
     let lspServers = lspServers->add({
                 \   'filetype': ['javascript', 'typescript'],
-                \   'path': 'typescript-language-server.cmd',
+                \   'path': 'typescript-language-server',
                 \   'args': ['--stdio', '--log-level', '4'],
                 \ })
 endif
