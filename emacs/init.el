@@ -28,10 +28,7 @@
 ;; TODO: override other browser programms
 (when (getenv "WSL_DISTRO_NAME")
   ;; (setopt browse-url-firefox-program "firefox.exe")
-  (setopt browse-url-chrome-program "/mnt/c/Users/akravtsov/AppData/Local/Google/Chrome/Application/chrome.exe")
-  (defun wsl-copy (text)
-    (call-process-region text nil "win32yank.exe" nil nil nil "-i"))
-  (setq interprogram-cut-function 'wsl-copy))
+  (setopt browse-url-chrome-program "/mnt/c/Users/akravtsov/AppData/Local/Google/Chrome/Application/chrome.exe"))
 
 (setq treesit-language-source-alist
 	  '(
@@ -82,6 +79,10 @@
   (tab-bar-new-button-show nil)
   (tab-bar-tab-hints t)
   (tab-bar-select-tab-modifiers '(control)))
+
+(use-package clipetty
+  :config
+  (global-clipetty-mode))
 
 (use-package vterm
   :disabled
