@@ -57,7 +57,7 @@
 
 (setq major-mode-remap-alist
       '((java-mode . java-ts-mode)
-	(js-mode . js-ts-mode)))
+	    (javascript-mode . js-ts-mode)))
 
 (require 'package)
 (setq use-package-compute-statistics t)
@@ -141,7 +141,12 @@
 (use-package java-ts-mode)
 (use-package js-ts-mode
   :bind
-  ([remap js-find-symbol] . xref-find-definitions))
+  ([remap js-find-symbol] . xref-find-definitions)
+  :mode
+  ("\\.[m]?js\\'")
+  :custom
+  (js-indent-level 2))
+
 (use-package typescript-ts-mode)
 
 (use-package corfu
@@ -153,8 +158,8 @@
 
 (use-package corfu-terminal
   :ensure
-  :if
-  (not (display-graphic-p))
+  :unless
+  (or (display-graphic-p) (featurep 'tty-child-frames))
   :hook
   (corfu-mode . corfu-terminal-mode))
 
@@ -172,6 +177,7 @@
   :defer t
   :bind
   (:map eglot-mode-map
+        ("C-c l r" . eglot-reconnect)
 		("C-c l a" . eglot-code-actions)
 		("C-c l i" . eglot-code-action-organize-imports)
 		("C-c l f" . eglot-format-buffer))
@@ -179,7 +185,8 @@
   (eglot-autoshutdown t)
   (eglot-extend-to-xref t)
   :hook
-  ((go-ts-mode . eglot-ensure))
+  ((go-ts-mode . eglot-ensure)
+   (js-ts-mode . eglot-ensure))
   :config
   (add-to-list 'eglot-server-programs
 			   `((java-mode java-ts-mode) .
@@ -385,26 +392,26 @@
   (eldoc-idle-delay 0.1)
   (eldoc-echo-area-use-multiline-p nil))
 
-(use-package combobulate
-  :preface
-  ;; You can customize Combobulate's key prefix here.
-  ;; Note that you may have to restart Emacs for this to take effect!
-  (setq combobulate-key-prefix "C-c o")
+;; (use-package combobulate
+;;   :preface
+;;   ;; You can customize Combobulate's key prefix here.
+;;   ;; Note that you may have to restart Emacs for this to take effect!
+;;   (setq combobulate-key-prefix "C-c o")
 
-  ;; Optional, but recommended.
-  ;;
-  ;; You can manually enable Combobulate with `M-x
-  ;; combobulate-mode'.
-  :hook ((python-ts-mode . combobulate-mode)
-         (js-ts-mode . combobulate-mode)
-         (css-ts-mode . combobulate-mode)
-         ;;(yaml-ts-mode . combobulate-mode)
-         (json-ts-mode . combobulate-mode)
-         (typescript-ts-mode . combobulate-mode)
-         (tsx-ts-mode . combobulate-mode))
-  ;; Amend this to the directory where you keep Combobulate's source
-  ;; code.
-  :load-path ("~/pro/ext/combobulate"))
+;;   ;; Optional, but recommended.
+;;   ;;
+;;   ;; You can manually enable Combobulate with `M-x
+;;   ;; combobulate-mode'.
+;;   :hook ((python-ts-mode . combobulate-mode)
+;;          (js-ts-mode . combobulate-mode)
+;;          (css-ts-mode . combobulate-mode)
+;;          ;;(yaml-ts-mode . combobulate-mode)
+;;          (json-ts-mode . combobulate-mode)
+;;          (typescript-ts-mode . combobulate-mode)
+;;          (tsx-ts-mode . combobulate-mode))
+;;   ;; Amend this to the directory where you keep Combobulate's source
+;;   ;; code.
+;;   :load-path ("~/pro/ext/combobulate"))
 
 ;; Custom functions
 (defun ak/show-buffer-file-name ()
@@ -480,3 +487,13 @@
 (if (file-readable-p custom-file)
     (load-file custom-file))
 (put 'narrow-to-region 'disabled nil)
+
+
+(defun ak/open-hover-link (pos)
+  (interactive "d")
+  (message "position is %d" pos)
+  (let ((link (get-text-property pos 'help-echo)))
+    (if link
+        (browse-url link))))
+
+(global-set-key (kbd "C-c C-o") 'ak/open-hover-link)
