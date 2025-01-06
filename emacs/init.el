@@ -491,7 +491,6 @@
 
 (defun ak/open-hover-link (pos)
   (interactive "d")
-  (message "position is %d" pos)
   (let ((link (get-text-property pos 'help-echo)))
     (if link
         (browse-url link))))
