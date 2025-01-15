@@ -499,3 +499,10 @@
         (browse-url link))))
 
 (global-set-key (kbd "C-c C-o") 'ak/open-hover-link)
+
+(add-hook 'window-configuration-change-hook
+          (lambda ()
+            (unless (display-graphic-p)
+              (let ((display-table (or buffer-display-table
+                                       standard-display-table)))
+                (set-display-table-slot display-table 'vertical-border ?│)))))
