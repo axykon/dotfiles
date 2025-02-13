@@ -33,15 +33,13 @@ if has('win32')
 endif
 
 " Cursor shape
-if index(["xterm-kitty", "tmux-256color", "alacritty", "xterm-256color", "foot", 'win32'], &term) != -1
-    let &t_SI .= "\<Esc>[6 q"
-    let &t_EI .= "\<Esc>[2 q"
-endif
+let &t_SI .= "\<Esc>[6 q"
+let &t_EI .= "\<Esc>[2 q"
 set t_ut=
 
 filetype on
 syntax on
-colorscheme PaperColor
+colorscheme rosepine
 
 nnoremap <space> <nop>
 map <space> <leader>
@@ -57,6 +55,7 @@ call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-commentary')
 call minpac#add('Donaldttt/fuzzyy')
 call minpac#add('yegappan/lsp')
+call minpac#add('godlygeek/tabular')
 call minpac#add('preservim/vim-markdown')
 call minpac#add('girishji/scope.vim')
 call minpac#add('itchyny/lightline.vim')
@@ -69,7 +68,7 @@ call minpac#add('NLKNguyen/papercolor-theme')
 
 " Status Line
 let g:lightline = {
-    \   'colorscheme': 'PaperColor',
+    \   'colorscheme': 'rosepine',
     \   'active': {
     \     'left': [[ 'mode', 'paste' ],
     \              [ 'readonly', 'filename', 'modified' ]]
