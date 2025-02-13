@@ -510,3 +510,29 @@
               (let ((display-table (or buffer-display-table
                                        standard-display-table)))
                 (set-display-table-slot display-table 'vertical-border ?│)))))
+
+(defun ak/jdt-file-name-handler (operation &rest args)
+  "Support Eclipse jdtls `jdt://' uri scheme."
+  (let* ((uri (car args))
+         (cache-dir "/tmp/.eglot")
+         (source-file
+          (expand-file-name
+           (file-name-concat
+            cache-dir
+            (save-match-data
+              (when (string-match "jdt://contents/\\(.*?\\)/\\(.*\\)\.class\\?" uri)
+                (format "%s.java" (replace-regexp-in-string "/" "." (match-string 2 uri) t t))))))))
+    (unless (file-readable-p source-file)
+      (let ((content (jsonrpc-request (eglot-current-server) :java/classFileContents (list :uri uri)))
+            (metadata-file (format "%s.%s.metadata"
+                                   (file-name-directory source-file)
+                                   (file-name-base source-file))))
+        (unless (file-directory-p cache-dir) (make-directory cache-dir t))
+        (with-temp-file source-file (insert content))
+        (with-temp-file metadata-file (insert uri))))
+    source-file))
+(add-to-list 'file-name-handler-alist '("\\`jdt://" . ak/jdt-file-name-handler))
+
+(add-to-list 'load-path "~/.emacs.d/local")
+(require 'google-java-format)
+(setopt google-java-format-executable "~/.local/bin/google-java-format")
