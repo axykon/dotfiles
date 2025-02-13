@@ -466,7 +466,7 @@
          (buffer-name (format "*k8s-log-%s*" pod)))
     (unless (get-buffer buffer-name)
       (progn
-        (start-process process-name buffer-name "kubectl" "-n" "local" "logs" "-f" "--tail" "10" pod)
+        (start-process process-name buffer-name "kubectl" "-n" "local" "logs" "-f" "--tail" "100" pod)
         (set-buffer buffer-name)
         (view-mode t)
         (hl-line-mode)
