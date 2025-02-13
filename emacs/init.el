@@ -135,6 +135,10 @@
 (use-package tab-bar
   :custom
   (tab-bar-close-button-show nil))
+
+(use-package surround
+  :ensure t
+  :bind-keymap ("M-'" . surround-keymap))
   
 (use-package yaml-ts-mode)
 (use-package json-ts-mode)
