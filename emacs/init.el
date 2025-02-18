@@ -399,6 +399,10 @@
   (eldoc-idle-delay 0.1)
   (eldoc-echo-area-use-multiline-p nil))
 
+(use-package compile
+  :custom
+  (compilation-scroll-output t))
+
 ;; (use-package combobulate
 ;;   :preface
 ;;   ;; You can customize Combobulate's key prefix here.
