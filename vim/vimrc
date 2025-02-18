@@ -39,7 +39,7 @@ set t_ut=
 
 filetype on
 syntax on
-colorscheme rosepine
+colorscheme catppuccin_mocha
 
 nnoremap <space> <nop>
 map <space> <leader>
@@ -50,10 +50,8 @@ packadd minpac
 call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
-call minpac#add('rose-pine/vim', {'name': 'rose-pine'})
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-commentary')
-call minpac#add('Donaldttt/fuzzyy')
 call minpac#add('yegappan/lsp')
 call minpac#add('godlygeek/tabular')
 call minpac#add('preservim/vim-markdown')
