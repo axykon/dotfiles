@@ -324,6 +324,19 @@
   (web-mode-engines-alist
    '(("go" . "\\.tpl\\'"))))
 
+(use-package transient
+  :ensure
+  :bind
+  ("C-x #" . 'resize-window)
+  :config
+  (transient-define-prefix resize-window ()
+    :transient-suffix 'transient--do-stay
+    :transient-non-suffix 'transient--do-warn
+    [("<right>" "wider" enlarge-window-horizontally)
+     ("<left>" "narrower" shrink-window-horizontally)
+     ("<up>" "taller" enlarge-window)
+     ("<down>" "shorter" shrink-window)]))
+
 (use-package uniline
   :defer t)
 
