@@ -327,7 +327,7 @@
 (use-package transient
   :ensure
   :bind
-  ("C-x #" . 'resize-window)
+  ("C-c #" . 'resize-window)
   :config
   (transient-define-prefix resize-window ()
     :transient-suffix 'transient--do-stay
