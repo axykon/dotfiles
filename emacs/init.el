@@ -292,6 +292,8 @@
 (use-package indent-bars
   :vc (:fetcher github :repo jdtsmith/indent-bars)
   :defer t
+  :bind
+  ("C-c i" . indent-bars-mode)
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-no-descend-string t)
