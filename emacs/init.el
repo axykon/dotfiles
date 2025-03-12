@@ -196,7 +196,7 @@
 			   `((java-mode java-ts-mode) .
 				 (
 				  ,(expand-file-name "~/.local/lib/jvm/jdtls/bin/jdtls")
-				  "-data" ,(expand-file-name "cache/java-workspace" user-emacs-directory)
+				  "-data" ,(expand-file-name "~/.cache/jdtls")
 				  ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar"))
 				  :initializationOptions
 				  (:autobuild (:enabled t)
