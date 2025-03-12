@@ -81,7 +81,6 @@
   (tab-bar-select-tab-modifiers '(control)))
 
 (use-package vterm
-  :disabled
   :ensure
   :config
   (setq vterm-timer-delay 0.01))
@@ -181,7 +180,8 @@
   :defer t
   :bind
   (:map eglot-mode-map
-        ("C-c l r" . eglot-reconnect)
+        ("C-c l <DEL>" . eglot-reconnect)
+        ("C-c l r" . eglot-rename)
 		("C-c l a" . eglot-code-actions)
 		("C-c l i" . eglot-code-action-organize-imports)
 		("C-c l f" . eglot-format-buffer))
@@ -207,10 +207,12 @@
 				'((:gopls .
 						  ((staticcheck . t)
 						   (usePlaceholders . t)
-						   (matcher . "Fuzzy"))))))
+						   ;; (matcher . "Fuzzy")
+                           )))))
 
 
 (use-package eglot-booster
+  :disabled
   :vc (:fetcher github :repo jdtsmith/eglot-booster)
   :after eglot
   :config
@@ -494,22 +496,24 @@
         (toggle-truncate-lines nil)))
     (switch-to-buffer buffer-name)))
 
-;; https://justinchips.medium.com/have-vim-emacs-tmux-use-system-clipboard-4c9d901eef40
-(defun yank-to-clipboard ()
+;; Inspired by https://justinchips.medium.com/have-vim-emacs-tmux-use-system-clipboard-4c9d901eef40
+(defun yank-to-clipboard (text)
   "Use ANSI OSC 52 escape sequence to attempt clipboard copy"
   ;; https://sunaku.github.io/tmux-yank-osc52.html
   (interactive)
   (let ((tmx_tty (shell-command-to-string "tmux display-message -p '#{client_tty}'"))
-        (base64_text (base64-encode-string (encode-coding-string (substring-no-properties (nth 0 kill-ring)) 'utf-8) t)))
+        (base64_text (base64-encode-string (encode-coding-string (substring-no-properties text) 'utf-8) t)))
     ;; Check if inside TMUX
     (if (getenv "TMUX")
         (shell-command
          (format "printf \"\033]52;c;%s\a\" > %s" base64_text tmx_tty))
       ;; Check if inside SSH
       (if (getenv "SSH_TTY")
-          (shell-command (format "printf \"\033]52;c;%s\a\" > %s" base64_text (getenv "SSH_TTY")))
+          (shell-co
+           mmand (format "printf \"\033]52;c;%s\a\" > %s" base64_text (getenv "SSH_TTY")))
         ;; Send to current TTY
         (send-string-to-terminal (format "\033]52;c;%s\a" base64_text))))))
+(setq interprogram-cut-function 'yank-to-clipboard)
 
 ;; Load custom file if exists
 (if (file-readable-p custom-file)
