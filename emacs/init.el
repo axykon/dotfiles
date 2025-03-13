@@ -497,23 +497,14 @@
     (switch-to-buffer buffer-name)))
 
 ;; Inspired by https://justinchips.medium.com/have-vim-emacs-tmux-use-system-clipboard-4c9d901eef40
-(defun yank-to-clipboard (text)
+(defun copy-to-clipboard (text)
   "Use ANSI OSC 52 escape sequence to attempt clipboard copy"
   ;; https://sunaku.github.io/tmux-yank-osc52.html
-  (interactive)
   (let ((tmx_tty (shell-command-to-string "tmux display-message -p '#{client_tty}'"))
         (base64_text (base64-encode-string (encode-coding-string (substring-no-properties text) 'utf-8) t)))
-    ;; Check if inside TMUX
-    (if (getenv "TMUX")
-        (shell-command
-         (format "printf \"\033]52;c;%s\a\" > %s" base64_text tmx_tty))
-      ;; Check if inside SSH
-      (if (getenv "SSH_TTY")
-          (shell-co
-           mmand (format "printf \"\033]52;c;%s\a\" > %s" base64_text (getenv "SSH_TTY")))
         ;; Send to current TTY
-        (send-string-to-terminal (format "\033]52;c;%s\a" base64_text))))))
-(setq interprogram-cut-function 'yank-to-clipboard)
+        (send-string-to-terminal (format "\033]52;c;%s\a" base64_text))))
+(setq interprogram-cut-function 'copy-to-clipboard)
 
 ;; Load custom file if exists
 (if (file-readable-p custom-file)
