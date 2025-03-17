@@ -88,7 +88,7 @@
 (use-package orderless
   :ensure
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(basic orderless))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package catppuccin-theme
