@@ -36,7 +36,7 @@
 		(c "https://github.com/tree-sitter/tree-sitter-c")
 		(cpp "https://github.com/tree-sitter/tree-sitter-cpp")
 		(css "https://github.com/tree-sitter/tree-sitter-css")
-		(docker "https://github.com/camdencheek/tree-sitter-dockerfile")
+		(dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
 		(go "https://github.com/tree-sitter/tree-sitter-go")
 		(gomod "https://github.com/camdencheek/tree-sitter-go-mod" "main" "src")
 		(html "https://github.com/tree-sitter/tree-sitter-html")
@@ -51,9 +51,6 @@
 		(typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
 		(yaml "https://github.com/ikatyang/tree-sitter-yaml")
 		))
-
-(setq treesit-load-name-override-list
-	  '((dockerfile "libtree-sitter-docker" "tree_sitter_dockerfile")))
 
 (setq major-mode-remap-alist
       '((java-mode . java-ts-mode)
@@ -138,6 +135,9 @@
 (use-package surround
   :ensure t
   :bind-keymap ("M-'" . surround-keymap))
+
+(use-package dockerfile-ts-mode
+  :mode "[.]?Dockerfile\\'")
   
 (use-package yaml-ts-mode)
 (use-package json-ts-mode)
