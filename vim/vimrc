@@ -119,9 +119,10 @@ let lspOpts = {
 			\ 'autoComplete': v:true,
 			\ 'echoSignature': v:false,
 			\ 'showDiagWithVirtualText': v:true,
-			\ 'diagVirtualTextAlign': 'after',
+			\ 'diagVirtualTextAlign': 'below',
 			\ 'showDiagInPopup': v:true,
 			\ 'outlineWinSize': 50,
+            \ 'usePopupInCodeAction': v:true,
             \ }
 
 autocmd VimEnter * 
