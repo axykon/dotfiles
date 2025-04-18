@@ -103,6 +103,7 @@
   :ensure
   :bind
   ([remap imenu] . consult-imenu)
+  ("C-c l d" . consult-flymake)
   :custom
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref))
@@ -295,7 +296,7 @@
   :vc (:fetcher github :repo jdtsmith/indent-bars)
   :defer t
   :bind
-  ("C-c i" . indent-bars-mode)
+  ("C-c |" . indent-bars-mode)
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-no-descend-string t)
