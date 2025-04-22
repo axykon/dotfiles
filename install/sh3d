@@ -9,11 +9,13 @@ ICON_DIR=$HOME/.local/share/icons
 
 [[ -d $APP_DIR ]] || mkdir -p $APP_DIR
 
-curl -L -o ${APP_DIR}/${APP_NAME}.jar \
+echo "Downloading app..."
+curl -L -# -o ${APP_DIR}/${APP_NAME}.jar \
      https://sourceforge.net/projects/sweethome3d/files/SweetHome3D/SweetHome3D-${APP_VER}/SweetHome3D-${APP_VER}.jar/download
 
+echo "Downloading icon..."
 [[ -d $ICON_DIR ]] || mkdir -p $ICON_DIR
-curl -L -o $HOME/.local/share/icons/sh3d.png https://www.sweethome3d.com/blog/images/5.2/SweetHome3DIcon512x512.png
+curl -L -# -o $HOME/.local/share/icons/sh3d.png https://www.sweethome3d.com/blog/images/5.2/SweetHome3DIcon512x512.png
 
 declare -A LIBS=(
     ["model-contributions"]="https://sourceforge.net/projects/sweethome3d/files/SweetHome3D-models/3DModels-${MODELS_VER}/3DModels-Contributions-${MODELS_VER}.zip/download"
