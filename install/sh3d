@@ -9,6 +9,8 @@ ICON_DIR=$HOME/.local/share/icons
 
 [[ -d $APP_DIR ]] || mkdir -p $APP_DIR
 
+cd $APP_DIR || exit 1
+
 echo "Downloading app..."
 curl -L -# -o ${APP_DIR}/${APP_NAME}.jar \
      https://sourceforge.net/projects/sweethome3d/files/SweetHome3D/SweetHome3D-${APP_VER}/SweetHome3D-${APP_VER}.jar/download
