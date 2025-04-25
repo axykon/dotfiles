@@ -39,12 +39,13 @@ set t_ut=
 
 filetype on
 syntax on
-colorscheme catppuccin_mocha
+
 
 nnoremap <space> <nop>
 map <space> <leader>
 nnoremap <C-l> :noh<CR><C-l>
 
+" https://github.com/k-takata/minpac?tab=readme-ov-file#installation
 packadd minpac
 
 call minpac#init()
@@ -59,10 +60,12 @@ call minpac#add('girishji/scope.vim')
 call minpac#add('itchyny/lightline.vim')
 call minpac#add('catppuccin/vim', {'name': 'catppuccin'})
 call minpac#add('tpope/vim-vinegar')
-call minpac#add('tpope/vim-dadbod')
+call minpac#add('tpope/vim-dadbod', {'type': 'opt'})
 call minpac#add('vim-test/vim-test')
 call minpac#add('sainnhe/gruvbox-material')
-call minpac#add('NLKNguyen/papercolor-theme')
+call minpac#add('vim-scripts/DrawIt', {'type': 'opt'})
+
+colorscheme catppuccin_mocha
 
 " Status Line
 let g:lightline = {
