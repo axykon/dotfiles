@@ -215,9 +215,10 @@
 
 
 (use-package eglot-booster
-  :disabled
   :vc (:fetcher github :repo jdtsmith/eglot-booster)
   :after eglot
+  :custom
+  (eglot-booster-io-only t)
   :config
   (eglot-booster-mode))
 
