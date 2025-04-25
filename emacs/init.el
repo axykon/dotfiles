@@ -69,6 +69,8 @@
 
 (setopt indent-tabs-mode nil)
 (setopt tab-width 4)
+(add-hook 'after-save-hook
+          #'executable-make-buffer-file-executable-if-script-p)
 
 (use-package tab-bar
   :custom
