@@ -131,6 +131,8 @@
   :config
   (display-line-numbers-mode))
 
+(use-package gotest-ts)
+
 (use-package tab-bar
   :custom
   (tab-bar-close-button-show nil))
