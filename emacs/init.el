@@ -6,11 +6,11 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ;; Backup and autosave
-(setq backup-directory-alist '((".*" . "~/.emacs.d/backup")))
-(setq version-control t)
-(setq delete-old-versions t)
-(setq auto-save-list-file-prefix "~/.emacs.d/autosave/")
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosave/" t)))
+(setq backup-directory-alist '((".*" . "~/.emacs.d/backup"))
+	  version-control t
+	  delete-old-versions t
+	  auto-save-list-file-prefix "~/.emacs.d/autosave/"
+	  auto-save-file-name-transforms '((".*" "~/.emacs.d/autosave/" t)))
 
 ;; (setq completions-format 'one-column)
 ;; (setq completion-auto-help 'always)
@@ -67,7 +67,6 @@
   (package-vc-install "https://github.com/slotThe/vc-use-package"))
 (require 'vc-use-package)
 
-(setopt indent-tabs-mode nil)
 (setopt tab-width 4)
 (add-hook 'after-save-hook
           #'executable-make-buffer-file-executable-if-script-p)
@@ -128,8 +127,8 @@
 (use-package go-ts-mode
   :custom
   (go-ts-mode-indent-offset 4)
-  :config
-  (display-line-numbers-mode))
+  :hook
+  (go-ts-mode . (lambda () (display-line-numbers-mode))))
 
 (use-package gotest-ts)
 
