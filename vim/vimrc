@@ -57,24 +57,25 @@ call minpac#add('yegappan/lsp')
 call minpac#add('godlygeek/tabular')
 call minpac#add('preservim/vim-markdown')
 call minpac#add('girishji/scope.vim')
-call minpac#add('itchyny/lightline.vim')
+" call minpac#add('itchyny/lightline.vim')
 call minpac#add('catppuccin/vim', {'name': 'catppuccin'})
 call minpac#add('tpope/vim-vinegar')
 call minpac#add('tpope/vim-dadbod', {'type': 'opt'})
 call minpac#add('vim-test/vim-test')
 call minpac#add('sainnhe/gruvbox-material')
+call minpac#add('morhetz/gruvbox')
 call minpac#add('vim-scripts/DrawIt', {'type': 'opt'})
 
 colorscheme catppuccin_mocha
 
 " Status Line
-let g:lightline = {
-    \   'colorscheme': 'rosepine',
-    \   'active': {
-    \     'left': [[ 'mode', 'paste' ],
-    \              [ 'readonly', 'filename', 'modified' ]]
-    \   },
-    \ }
+" let g:lightline = {
+"     \   'colorscheme': 'rosepine',
+"     \   'active': {
+"     \     'left': [[ 'mode', 'paste' ],
+"     \              [ 'readonly', 'filename', 'modified' ]]
+"     \   },
+"     \ }
 
 " LSP
 let lspServers = []
@@ -126,6 +127,10 @@ let lspOpts = {
 			\ 'showDiagInPopup': v:true,
 			\ 'outlineWinSize': 50,
             \ 'usePopupInCodeAction': v:true,
+            \ 'popupBorder': v:true,
+            \ 'popupBorderHighlight': 'Normal',
+            \ 'popupHighlight': 'Normal',
+            \ 'popupBorderChars': ['─', '│', '─', '│', '┌', '┐', '┘', '└'],
             \ }
 
 autocmd VimEnter * 
@@ -137,3 +142,40 @@ autocmd! User LspAttached setlocal tagfunc=lsp#lsp#TagFunc | setlocal keywordprg
 nnoremap    nnoremap   nnoremap <leader>e :LspDiagCurrent<cr>
 nnoremap <leader>a :LspCodeAction<cr>
 nnoremap <leader>o <cmd>LspDocumentSymbol<cr>
+
+
+" highlight LspCompletionPopup guibg=NONE ctermbg=NONE
+" highlight LspCompletionPopupBorder guibg=NONE ctermbg=NONE
+" let g:LspCompletionPopupBorderhighlight = ['LspCompletionPopupBorder']
+" let g:LspCompletionPopupBorder = [1, 1, 1, 1]
+" let g:LspCompletionPopupBorderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+" 
+" highlight LspHoverPopup guibg=NONE ctermbg=NONE
+" highlight LspHoverPopupBorder guibg=NONE ctermbg=NONE
+" let g:LspHoverPopupBorderhighlight = ['LspHoverPopupBorder']
+" let g:LspHoverPopupBorder = []
+" let g:LspHoverPopupBorderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
+" 
+" highlight LspPeekPopup guibg=NONE ctermbg=NONE
+" highlight LspPeekPopupBorder guibg=NONE ctermbg=NONE
+" let g:LspPeekPopupBorderhighlight = ['LspPeekPopupBorder']
+" let g:LspPeekPopupBorder = []
+" let g:LspPeekPopupBorderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+" 
+" highlight LspSymbolMenuPopup guibg=NONE ctermbg=NONE
+" highlight LspSymbolMenuPopupBorder guibg=NONE ctermbg=NONE
+" let g:LspSymbolMenuPopupBorderhighlight = ['LspSymbolMenuPopupBorder']
+" let g:LspSymbolMenuPopupBorder = []
+" let g:LspSymbolMenuPopupBorderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+" 
+" highlight link LspSignatureHelpPopup Pmenu
+" highlight LspSignatureHelpPopupBorder guibg=NONE ctermbg=NONE
+" let g:LspSignatureHelpPopupBorderhighlight = ['LspSignatureHelpPopupBorder']
+" let g:LspSignatureHelpPopupBorder = [0, 0, 0, 0]
+" let g:LspSignatureHelpPopupBorderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+" 
+" highlight LspTypeHierarchyPopup guibg=NONE ctermbg=NONE
+" highlight LspTypeHierarchyPopupBorder guibg=NONE ctermbg=NONE
+" let g:LspTypeHierarchyPopupBorderhighlight = ['LspTyperHierarchyPopupBorder']
+" let g:LspTypeHierarchyPopupBorder = []
+" let g:LspTypeHierarchyPopupBorderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
